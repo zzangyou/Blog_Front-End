@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    "Vue.volar",
+    "eamodio.gitlens",
+    "pkief.material-icon-theme",
+    "streetsidesoftware.code-spell-checker",
+    "dbaeumer.vscode-eslint",
+    "wix.vscode-import-cost",
+    "editorconfig.editorconfig",
+    "esbenp.prettier-vscode",
+    "syler.sass-indented"
+  ]
+}
