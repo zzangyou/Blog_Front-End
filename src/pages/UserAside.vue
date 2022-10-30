@@ -1,6 +1,5 @@
-<script setup></script>
 <template>
 <div>
-im usermain
+im useraside
 </div>
 </template>

@@ -4,9 +4,17 @@ import { RouterView } from 'vue-router';
 </script>
 
 <template>
-<n-message-provider>
 
     <RouterView />
-</n-message-provider>
+
 
 </template>
+<style lang="scss">
+#app{
+  height: 100% ;
+  width: 100%;
+  padding: 0;
+  max-width: 100%;
+}
+  
+</style>

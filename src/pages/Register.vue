@@ -71,7 +71,7 @@ export default defineComponent({
       ]
     };
     return {
-       PersonCircle,
+      PersonCircle,
       formRef,
       rPasswordFormItemRef,
       model: modelRef,

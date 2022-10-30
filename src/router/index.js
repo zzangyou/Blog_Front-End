@@ -4,14 +4,22 @@ import Home from '@/pages/Home.vue';
 import User from '@/pages/User.vue';
 import Login from '@/pages/Login.vue';
 import Register from '@/pages/Register.vue';
+import HomeAside from '@/pages/HomeAside.vue'
+import UserAside from '@/pages/UserAside.vue'
 
 const routes = [
   {
     path: '/',
     component: CommonLayout,
     children: [
-      { path: '', component: Home },
-      { path: '/user/:id', component: User },
+      { path: '', components: {
+        default:Home,
+        aside:HomeAside
+      } },
+      { path: '/user/:id', components: {
+        default:User,
+        aside:UserAside
+      } },
     ],
   },
   { path: '/login', component: Login },
