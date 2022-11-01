@@ -122,6 +122,9 @@ return{
      :label-position="labelPosition"
   >
   <h4 class="non-select jss3 css-1pyxybg">登录</h4>
+     <el-form-item label="Age" prop="age">
+      <el-input v-model.number="ruleForm.age" />
+    </el-form-item>
     <el-form-item label="Password" prop="pass">
       <el-input v-model="ruleForm.pass" type="password" autocomplete="off" />
     </el-form-item>
@@ -132,9 +135,7 @@ return{
         autocomplete="off"
       />
     </el-form-item>
-    <el-form-item label="Age" prop="age">
-      <el-input v-model.number="ruleForm.age" />
-    </el-form-item>
+ 
     <el-form-item>
       <el-button type="primary" @click="submitForm(ruleFormRef)"
         >提交</el-button
