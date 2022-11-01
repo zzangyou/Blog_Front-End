@@ -10,7 +10,7 @@ import TopicReco from '@/components/TopicReco.vue'
 <el-container>
     <Header />
   <el-container>
-    <el-container>
+    <el-container class="main">
        <el-aside>
     <router-view name="aside">
    </router-view>
@@ -18,7 +18,7 @@ import TopicReco from '@/components/TopicReco.vue'
       <el-main >
          <router-view name="default"></router-view>
       </el-main>
-       <topic-reco></topic-reco>
+      <el-aside> <topic-reco></topic-reco></el-aside>
 
     </el-container>   
        <el-footer>im Footer</el-footer>
@@ -30,5 +30,15 @@ import TopicReco from '@/components/TopicReco.vue'
 </template>
 
 <style lang="scss">
-
+ .el-aside{
+    flex: 1;
+}
+.el-main{
+  flex:3
+}
+.main{
+  margin-top: 56px;
+ height: 100%;
+  
+}
 </style>

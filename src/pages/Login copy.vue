@@ -7,95 +7,13 @@ import {
 
 </script> -->
 <script>
-
-import { defineComponent, reactive, ref } from 'vue';
-// import { FormInstance } from 'element-plus'
+import { defineComponent, ref } from 'vue';
 export default defineComponent({
    components: {
-       
+ 
   },
   setup() {
-const ruleFormRef = ref('')
-
-const checkAge = (rule, value, callback) => {
-  if (!value) {
-    return callback(new Error('Please input the age'))
-  }
-  setTimeout(() => {
-    if (!Number.isInteger(value)) {
-      callback(new Error('Please input digits'))
-    } else {
-      if (value < 18) {
-        callback(new Error('Age must be greater than 18'))
-      } else {
-        callback()
-      }
-    }
-  }, 1000)
-}
-
-const validatePass = (rule, value, callback) => {
-  if (value === '') {
-    callback(new Error('Please input the password'))
-  } else {
-    if (ruleForm.checkPass !== '') {
-      if (!ruleFormRef.value) return
-      ruleFormRef.value.validateField('checkPass', () => null)
-    }
-    callback()
-  }
-}
-const validatePass2 = (rule, value, callback) => {
-  if (value === '') {
-    callback(new Error('Please input the password again'))
-  } else if (value !== ruleForm.pass) {
-    callback(new Error('Two inputs don\'t match!'))
-  } else {
-    callback()
-  }
-}
-
-const ruleForm = reactive({
-  pass: '',
-  checkPass: '',
-  age: '',
-})
-
-const rules = reactive({
-  pass: [{ validator: validatePass, trigger: 'blur' }],
-  checkPass: [{ validator: validatePass2, trigger: 'blur' }],
-  age: [{ validator: checkAge, trigger: 'blur' }],
-})
-
-const submitForm = (formEl) => {
-  if (!formEl) return
-  formEl.validate((valid) => {
-    if (valid) {
-      console.log('submit!')
-    } else {
-      console.log('error submit!')
-      return false
-    }
-  })
-}
-
-const resetForm = (formEl) => {
-  if (!formEl) return
-  formEl.resetFields()
-}
-const labelPosition = ref('top')
-return{
-    checkAge,
-    validatePass,
-    validatePass2,
-    rules,
-    submitForm,
-    resetForm,
-    ruleForm,
-    labelPosition
-
-
-}
+ 
   }
 });
 </script>
@@ -112,38 +30,74 @@ return{
           <div class="ka-wrapper">
               <div class="ka-content">
                   <div class="jss2 css-ykq3zm">
-                   <el-form
-    ref="ruleFormRef"
-    :model="ruleForm"
-    status-icon
-    :rules="rules"
-    label-width="120px"
-    class="demo-ruleForm"
-     :label-position="labelPosition"
-  >
-  <h4 class="non-select jss3 css-1pyxybg">登录</h4>
-    <el-form-item label="Password" prop="pass">
-      <el-input v-model="ruleForm.pass" type="password" autocomplete="off" />
-    </el-form-item>
-    <el-form-item label="Confirm" prop="checkPass">
-      <el-input
-        v-model="ruleForm.checkPass"
+                    <n-form ref="formRef" :model="model" :rules="rules" class="flex flex-column">
+                     <h4 class="non-select jss3 css-1pyxybg">登录</h4>
+            <n-form-item path="userid" label="账号">
+              <span class="logo-box">
+                  <n-icon size="30" :depth="3" class="logo">
+            <PersonCircle />
+          </n-icon>
+              </span>
+               <n-popover trigger="hover" :overlap="overlap" placement="bottom-end">
+            <template #trigger>
+              <n-input  v-model:value="model.userid" @keydown.enter.prevent on-focus="changeInput"/>
+            </template>
+            <span>请填写此字段</span>
+          </n-popover>
+      
+
+    </n-form-item>
+    <n-form-item path="password" label="密码">
+            <span class="logo-box">
+          <n-icon size="27" :depth="3" class="logo">
+    <LockClosed />
+  </n-icon>
+      </span>
+       <n-popover trigger="hover" :overlap="overlap" placement="bottom-end">
+    <template #trigger>
+<n-input
+        v-model:value="model.password"
         type="password"
-        autocomplete="off"
+        @input="handlePasswordInput"
+        @keydown.enter.prevent
       />
-    </el-form-item>
-    <el-form-item label="Age" prop="age">
-      <el-input v-model.number="ruleForm.age" />
-    </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="submitForm(ruleFormRef)"
-        >提交</el-button
-      >
-      <el-button @click="resetForm(ruleFormRef)">Reset</el-button>
-    </el-form-item>
-  </el-form>
+    </template>
+    <span>请填写此字段</span>
+  </n-popover>
+      
+    </n-form-item>
+    <div class="flex flex-column flex-center">
+      <div class="flex" style="margin-bottom: 1rem;">
+<router-link style="margin-right: 0.5rem;" class="css-1uop71e" active-class="active" to="/">
+<button class="css-qqvxpj" style="color:#3F51B5">回到首页</button></router-link>
+<router-link style="margin-right: 0.5rem;" class="css-1uop71e" active-class="active" to="/register">
+<button class="css-r8ryou" style="color:#3F51B5">没有账号?前往注册</button>
+</router-link>
+    </div>
+    </div>
+    
+    <n-row :gutter="[0, 24]">
+      <n-col :span="24">
+        <div style="display: flex; justify-content: center">
+          <n-button
+            :disabled="model.userid === null"
+            round
+            type="primary" color="#3F51B5"
+            @click="handleValidateButtonClick"
+          >
+            登录
+          </n-button>
+        </div>
+      </n-col>
+    </n-row>
+  </n-form>
+
   <pre>{{ JSON.stringify(model, null, 2) }}
 </pre>
+
+
+
+
                   </div>
               </div>
           </div>
