@@ -1,187 +1,143 @@
-<!-- <script setup>
-import { RouterView } from 'vue-router';
-/* import { defineComponent, ref } from 'vue';
-import {
-  useMessage
-} from 'naive-ui'; */
-
-</script> -->
 <script>
-import { defineComponent, ref } from 'vue';
-import { useMessage } from 'naive-ui';
-import { PersonCircle,LockClosed } from '@vicons/ionicons5'
+
+import { defineComponent, reactive, ref } from 'vue';
+// import { FormInstance } from 'element-plus'
 export default defineComponent({
    components: {
-    // eslint-disable-next-line vue/no-unused-components
-  PersonCircle,
-  LockClosed
+       
   },
   setup() {
-   const formRef = ref(null);
-    const rPasswordFormItemRef = ref(null);
-    const message = useMessage();
-    const modelRef = ref({
-      userid: null,
-      password: null,
-      
-    });
-    function validatePasswordStartWith(rule, value) {
-      return !!modelRef.value.password && modelRef.value.password.startsWith(value) && modelRef.value.password.length >= value.length;
-    }
-    function validatePasswordSame(rule, value) {
-      return value === modelRef.value.password;
-    }
+const ruleFormRef = ref('')
 
-    const rules = {
-      userid: [
-        {
-          required: true,
-          validator(rule, value) {
-            if (!value) {
-              return new Error('需要填写账户');
-            } 
-            return true;
-          },
-          trigger: ['input', 'blur']
-        }
-      ],
-      password: [
-        {
-          required: true,
-          message: '请输入密码'
-        }
-      ],
-      
-      reenteredPassword: [
-        {
-          required: true,
-          message: '请再次输入密码',
-          trigger: ['input', 'blur']
-        },
-        {
-          validator: validatePasswordStartWith,
-          message: '两次密码输入不一致',
-          trigger: 'input'
-        },
-        {
-          validator: validatePasswordSame,
-          message: '两次密码输入不一致',
-          trigger: ['blur', 'password-input']
-        }
-      ]
-    };
-    return {
-      PersonCircle,
-      formRef,
-      rPasswordFormItemRef,
-      model: modelRef,
-      rules,
-      handlePasswordInput() {
-        if (modelRef.value.reenteredPassword) {
-          rPasswordFormItemRef.value?.validate({ trigger: 'password-input' });
-        }
-      },
-      handleValidateButtonClick(e) {
-        e.preventDefault();
-        formRef.value?.validate((errors) => {
-          if (!errors) {
-            message.success('验证成功');
-          } else {
-            console.log(errors);
-            message.error('验证失败');
-          }
-        });
+const checkAge = (rule, value, callback) => {
+  if (!value) {
+    return callback(new Error('Please input the age'))
+  }
+  setTimeout(() => {
+    if (!Number.isInteger(value)) {
+      callback(new Error('Please input digits'))
+    } else {
+      if (value < 18) {
+        callback(new Error('Age must be greater than 18'))
+      } else {
+        callback()
       }
-    };
+    }
+  }, 1000)
+}
+
+const validatePass = (rule, value, callback) => {
+  if (value === '') {
+    callback(new Error('Please input the password'))
+  } else {
+    if (ruleForm.checkPass !== '') {
+      if (!ruleFormRef.value) return
+      ruleFormRef.value.validateField('checkPass', () => null)
+    }
+    callback()
+  }
+}
+const validatePass2 = (rule, value, callback) => {
+  if (value === '') {
+    callback(new Error('Please input the password again'))
+  } else if (value !== ruleForm.pass) {
+    callback(new Error('Two inputs don\'t match!'))
+  } else {
+    callback()
+  }
+}
+
+const ruleForm = reactive({
+  pass: '',
+  checkPass: '',
+  age: '',
+})
+
+const rules = reactive({
+  pass: [{ validator: validatePass, trigger: 'blur' }],
+  checkPass: [{ validator: validatePass2, trigger: 'blur' }],
+  age: [{ validator: checkAge, trigger: 'blur' }],
+})
+
+const submitForm = (formEl) => {
+  if (!formEl) return
+  formEl.validate((valid) => {
+    if (valid) {
+      console.log('submit!')
+    } else {
+      console.log('error submit!')
+      return false
+    }
+  })
+}
+
+const resetForm = (formEl) => {
+  if (!formEl) return
+  formEl.resetFields()
+}
+const labelPosition = ref('top')
+return{
+    checkAge,
+    validatePass,
+    validatePass2,
+    rules,
+    submitForm,
+    resetForm,
+    ruleForm,
+    labelPosition
+
+
+}
   }
 });
 </script>
 <template>
 
 <div id="root">
-    <div class="App" style="min-height: 754px;">
-        <div class="Sign flex flex-column">
-          <div class="non-select jss1 css-1vbrzl8">
-            <h3 class="css-1eezi6a">
-              Blog
-            </h3>
-          </div>
-          <div class="ka-wrapper">
-              <div class="ka-content">
-                  <div class="jss2 css-ykq3zm">
-                    <n-form ref="formRef" :model="model" :rules="rules" class="flex flex-column">
-                     <h4 class="non-select jss3 css-1pyxybg">注册</h4>
-    <n-form-item path="userid" label="账号">
-      <span class="logo-box">
-          <n-icon size="30" :depth="3" class="logo">
-    <PersonCircle />
-  </n-icon>
-      </span>
-       <n-popover trigger="hover" :overlap="overlap" placement="bottom-end">
-    <template #trigger>
-      <n-input  v-model:value="model.userid" @keydown.enter.prevent on-focus="changeInput"/>
-    </template>
-    <span>请填写此字段</span>
-  </n-popover>
-      
-
-    </n-form-item>
-    <n-form-item path="password" label="密码">
-            <span class="logo-box">
-          <n-icon size="27" :depth="3" class="logo">
-    <LockClosed />
-  </n-icon>
-      </span>
-       <n-popover trigger="hover" :overlap="overlap" placement="bottom-end">
-    <template #trigger>
-<n-input
-        v-model:value="model.password"
-        type="password"
-        @input="handlePasswordInput"
-        @keydown.enter.prevent
-      />
-    </template>
-    <span>请填写此字段</span>
-  </n-popover>
-      
-    </n-form-item>
-    <n-form-item
-      ref="rPasswordFormItemRef"
-      first
-      path="reenteredPassword"
-      label="重复密码"
-    >
-      <span class="logo-box">
-          <n-icon size="27" :depth="3" class="logo">
-    <LockClosed />
-  </n-icon>
-      </span>
-      <n-input
-        v-model:value="model.reenteredPassword"
-        :disabled="!model.password"
-        type="password"
-        @keydown.enter.prevent
-      />
-    </n-form-item>
-    <div class="flex flex-column flex-center">
-      <div class="flex" style="margin-bottom: 1rem;">
-<router-link style="margin-right: 0.5rem;" class="css-1uop71e" active-class="active" to="/login">
-<button class="css-qqvxpj" style="color:#3F51B5">返回登录</button></router-link>
-<router-link style="margin-right: 0.5rem;margin-left: 1.7rem;" class="css-1uop71e" active-class="active" to="/">
-<button class="css-r8ryou" style="color:#fff;background-color: #3F51B5;margin-left: .575rem;">注册</button>
-</router-link>
-    </div>
-    </div>
-    
-
-  </n-form>
-
-  <pre>{{ JSON.stringify(model, null, 2) }}
-</pre>
-
-
-
-
+   <div class="App" style="min-height: 754px;">
+       <div class="Sign flex">
+         <div class="imgdiv flex">
+           <h3 class="blog animate__animated animate__bounceIn">Welcome Home</h3>
+                <router-link style="margin-right: 0.5rem;" class="css-1uop71e" active-class="active" to="/login">
+            <button  class="css-qqvxpj tologinbtn" style="color:#3F51B5">登录</button></router-link>
+              <img src="../assets/images/111122.png" alt="" class="img">
+              
+         </div>
+         <div class="ka-wrapper  animate__animated animate__backInUp">
+             <div class="ka-content">
+                 <div class="jss2 css-ykq3zm">
+                  <el-form
+                      ref="ruleFormRef"
+                      :model="ruleForm"
+                      status-icon
+                      :rules="rules"
+                      label-width="120px"
+                      class="demo-ruleForm flex flex-column"
+                       :label-position="labelPosition" >
+    <h4 class="non-select jss3 css-1pyxybg">注册</h4>
+        <el-form-item label="账号" prop="age">
+         <el-input v-model.number="ruleForm.age" />
+       </el-form-item>
+       <el-form-item label="密码" prop="pass">
+         <el-input v-model="ruleForm.pass" type="password" autocomplete="off" />
+       </el-form-item>
+       <el-form-item label="确认密码" prop="checkPass">
+         <el-input
+            v-model="ruleForm.checkPass"
+            type="password"
+            autocomplete="off"
+          />
+        </el-form-item>
+     
+        <el-form-item>
+          <el-button type="primary" @click="submitForm(ruleFormRef)"
+            >提交</el-button
+          >
+          <el-button @click="resetForm(ruleFormRef)">Reset</el-button>
+        </el-form-item>
+      </el-form>
+      <pre>{{ JSON.stringify(model, null, 2) }}
+          </pre>
                   </div>
               </div>
           </div>
@@ -198,16 +154,18 @@ export default defineComponent({
 }
 #root, .App, body, html {
     height: 100%;
-    width: 100%;
+    max-width: 100%;
 }
 .App {
     display: flex;
     flex-direction: column;
 }
 .Sign {
-    height: 100%;
-    width: 100%;
-    padding-top: 8rem;
+    position: absolute;
+    left: 20rem;
+    /* height: 100%; */
+    /* width: 100%; */
+    padding-top: 7rem;
     align-items: center;
     justify-content: center;
 }
@@ -215,11 +173,6 @@ export default defineComponent({
     padding: 1rem 2.5rem;
 }
 
-.non-select {
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
 .css-1vbrzl8 {
     background-color: rgb(255, 255, 255);
     color: rgb(0, 0, 0);
@@ -265,6 +218,7 @@ export default defineComponent({
     color: rgb(63, 81, 181);
 }
 .jss2 {
+  width: 16rem;
     padding: 0.5rem 3rem 2rem 3rem;
     background-color: #fafafa;
 }
@@ -337,5 +291,41 @@ label + .css-135qv08 {
 }
 button:hover{
   background: #ecf0f2;
+}
+:deep .el-form-item__content{
+  justify-content: space-between;
+}
+:deep .el-form{
+width: 15rem;
+}
+.imgdiv{
+  /* height: 100%; */
+  left: 480px;
+top: 247px;
+/* width: 405px; */
+opacity: 1;
+border-radius: 10px;
+box-shadow: 0px 10px 30px 0px rgba(135, 186, 210, 0.4);
+}
+.img{
+  height: 486px;
+  opacity: 0.95;
+}
+.blog{
+  position: absolute;
+  top: 16rem;
+  left:3.2rem;
+  color: #fff;
+  z-index: 1;
+  font-size: 2.7rem;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+
+}
+.tologinbtn{
+  position: absolute;
+  z-index: 1;
+  top: 22rem;
+  left: 9.8rem;
+  font-weight: bold;
 }
 </style>

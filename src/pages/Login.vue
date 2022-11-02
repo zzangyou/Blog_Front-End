@@ -9,6 +9,7 @@ import {
 <script>
 
 import { defineComponent, reactive, ref } from 'vue';
+import 'animate.css'
 // import { FormInstance } from 'element-plus'
 export default defineComponent({
    components: {
@@ -103,36 +104,41 @@ return{
 
 <div id="root">
     <div class="App" style="min-height: 754px;">
-        <div class="Sign flex flex-column">
-          <div class="non-select jss1 css-1vbrzl8">
-            <h3 class="css-1eezi6a">
-              Blog
-            </h3>
+        <div class="Sign flex">
+
+          <div class="imgdiv flex">
+            <h3 class="blog animate__animated animate__bounceIn" >Hello! Friend</h3>
+            <router-link style="margin-right: 0.5rem;" class="css-1uop71e" active-class="active" to="/register">
+             <button  class="css-qqvxpj toregbtn" style="color:#3F51B5">注册</button></router-link>
+               <img src="../assets/images/111122.png" alt="" class="img">
           </div>
-          <div class="ka-wrapper">
+          <div class="ka-wrapper animate__animated animate__backInDown">
               <div class="ka-content">
-                  <div class="jss2 css-ykq3zm">
-                   <el-form
-    ref="ruleFormRef"
-    :model="ruleForm"
-    status-icon
-    :rules="rules"
-    label-width="120px"
-    class="demo-ruleForm"
-     :label-position="labelPosition"
-  >
-  <h4 class="non-select jss3 css-1pyxybg">登录</h4>
-     <el-form-item label="Age" prop="age">
-      <el-input v-model.number="ruleForm.age" />
-    </el-form-item>
-    <el-form-item label="Password" prop="pass">
-      <el-input v-model="ruleForm.pass" type="password" autocomplete="off" />
-    </el-form-item>
-    <el-form-item label="Confirm" prop="checkPass">
+
+       <div class="jss2 css-ykq3zm">
+        <el-form
+            ref="ruleFormRef"
+            :model="ruleForm"
+            status-icon
+            :rules="rules"
+            label-width="120px"
+            class="demo-ruleForm flex flex-column"
+             :label-position="labelPosition" >
+        <h4 class="non-select jss3 css-1pyxybg">登录</h4>
+        <el-form-item label="账号" prop="age">
+      <el-icon :size="size" :color="red">
+      <Edit />
+    </el-icon>
+         <el-input v-model.number="ruleForm.age" />
+       </el-form-item>
+       <el-form-item label="密码" prop="pass">
+         <el-input v-model="ruleForm.pass" type="password" autocomplete="off" />
+       </el-form-item>
+        <el-form-item label="确认密码" prop="checkPass">
       <el-input
         v-model="ruleForm.checkPass"
         type="password"
-        autocomplete="off"
+        autocomplete="off" 
       />
     </el-form-item>
  
@@ -168,9 +174,11 @@ return{
     flex-direction: column;
 }
 .Sign {
-    height: 100%;
-    width: 100%;
-    padding-top: 8rem;
+    position: absolute;
+    left: 20rem;
+    /* height: 100%; */
+    /* width: 100%; */
+    padding-top: 7rem;
     align-items: center;
     justify-content: center;
 }
@@ -178,11 +186,6 @@ return{
     padding: 1rem 2.5rem;
 }
 
-.non-select {
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
 .css-1vbrzl8 {
     background-color: rgb(255, 255, 255);
     color: rgb(0, 0, 0);
@@ -228,6 +231,7 @@ return{
     color: rgb(63, 81, 181);
 }
 .jss2 {
+  width: 16rem;
     padding: 0.5rem 3rem 2rem 3rem;
     background-color: #fafafa;
 }
@@ -301,4 +305,40 @@ label + .css-135qv08 {
 button:hover{
   background: #ecf0f2;
 }
+:deep .el-form-item__content{
+  justify-content: space-between;
+}
+:deep .el-form{
+width: 15rem;
+}
+.imgdiv{
+  /* height: 100%; */
+  left: 480px;
+top: 247px;
+/* width: 405px; */
+opacity: 1;
+border-radius: 10px;
+box-shadow: 0px 10px 30px 0px rgba(135, 186, 210, 0.4);
+}
+.img{
+  height: 486px;
+  opacity: 0.95;
+}
+.blog{
+  position: absolute;
+  top: 16rem;
+  left:5.3rem;
+  color: #fff;
+  font-size: 2.7rem;
+  z-index: 1;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+}
+.toregbtn{
+  position: absolute;
+  z-index: 1;
+  top: 22rem;
+  left: 9.8rem;
+  font-weight: bold;
+}
+
 </style>
