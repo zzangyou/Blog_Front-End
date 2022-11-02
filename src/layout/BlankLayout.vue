@@ -1,2 +1,4 @@
 <script setup></script>
-<template><route-view></route-view></template>
+<template>
+  <route-view></route-view>
+</template>

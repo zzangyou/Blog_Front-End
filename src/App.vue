@@ -4,17 +4,13 @@ import { RouterView } from 'vue-router';
 </script>
 
 <template>
-
-    <RouterView />
-
-
+  <RouterView />
 </template>
 <style lang="scss">
-#app{
-  height: 100% ;
+#app {
+  height: 100%;
   width: 100%;
   padding: 0;
   max-width: 100%;
 }
-  
 </style>
