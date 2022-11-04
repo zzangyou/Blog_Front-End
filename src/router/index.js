@@ -12,21 +12,25 @@ const routes = [
     path: '/',
     component: CommonLayout,
     children: [
-      { path: '', components: {
-        default:Home,
-        aside:HomeAside
-      } },
-      { path: '/user/:id', components: {
-        default:User,
-        aside:UserAside
-      } },
+      {
+        path: '', components: {
+          default: Home,
+          aside: HomeAside
+        }
+      },
+      {
+        path: '/user/:id', components: {
+          default: User,
+          aside: UserAside
+        }
+      },
     ],
   },
   { path: '/login', component: Login },
   { path: '/register', component: Register },
 ];
-
+//创建并暴露路由实例，并传递 `routes` 配置
 export const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(),//使用createWebHistory的history模式，即路由路径不带'#'
   routes,
 });

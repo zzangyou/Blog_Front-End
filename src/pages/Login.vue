@@ -29,6 +29,7 @@ const checkAge = (rule, value, callback) => {
     } else {
        var reg=new RegExp(/^.{5,20}$/)
       if (!reg.test(value.toString())) {
+      
         callback(new Error('用户账号长度应为5至20字符'))
       } else {
         callback()
@@ -241,4 +242,4 @@ box-shadow: 0px 10px 30px 0px rgba(135, 186, 210, 0.4);
   border: transparent;
   border-bottom: 2.5px solid #212f80;
 }
-</style>
+

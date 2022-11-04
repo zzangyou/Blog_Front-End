@@ -1,9 +1,11 @@
-import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+
+// 局部引入element-ui
+
+import { defineConfig } from 'vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
-
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
@@ -15,8 +17,8 @@ export default defineConfig({
     }),
     Components({
       resolvers: [ElementPlusResolver({
-           importStyle: 'sass'
-         })],
+        importStyle: 'sass'
+      })],
     }),
   ],
   resolve: {
