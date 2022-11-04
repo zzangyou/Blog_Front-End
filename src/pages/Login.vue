@@ -108,7 +108,6 @@ return{
 <div id="root">
     <div class="App" style="min-height: 754px;">
         <div class="Sign flex">
-
           <div class="imgdiv flex">
             <h3 class="blog animate__animated animate__bounceIn" >Hello! Friend</h3>
             <router-link style="margin-right: 0.5rem;" class="css-1uop71e" active-class="active" to="/register">
@@ -153,8 +152,7 @@ return{
  
     <el-form-item style="margin-top:10px">
       <el-button type="primary" @click="submitForm(ruleFormRef)"
-        >提交</el-button
-      >
+        >提交</el-button>
       <el-button @click="resetForm(ruleFormRef)">Reset</el-button>
     </el-form-item>
   </el-form>
@@ -243,3 +241,4 @@ box-shadow: 0px 10px 30px 0px rgba(135, 186, 210, 0.4);
   border-bottom: 2.5px solid #212f80;
 }
 
+</style>
