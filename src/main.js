@@ -9,6 +9,7 @@ import App from './App.vue';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 // import './styles/element/index.scss'
 const app = createApp(App)
+// 改为单独注册app （为了注册icon）
 const pinia = createPinia();
 // 统一导入icon并注册
 
