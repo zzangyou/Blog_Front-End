@@ -18,7 +18,7 @@ export default defineComponent({
   },
   setup() {
 const ruleFormRef = ref('')
-
+// 账号验证
 const checkAge = (rule, value, callback) => {
   if (!value) {
     return callback(new Error('请输入账号'))
@@ -37,7 +37,7 @@ const checkAge = (rule, value, callback) => {
     }
   }, 1000)
 }
-
+// 密码验证
 const validatePass = (rule, value, callback) => {
   if (value === '') {
     callback(new Error('请输入密码'))
@@ -49,32 +49,24 @@ const validatePass = (rule, value, callback) => {
     callback()
   }
 }
-const validatePass2 = (rule, value, callback) => {
-  if (value === '') {
-    callback(new Error('Please input the password again'))
-  } else if (value !== ruleForm.pass) {
-    callback(new Error('Two inputs don\'t match!'))
-  } else {
-    callback()
-  }
-}
 
 const ruleForm = reactive({
   pass: '',
   checkPass: '',
   age: '',
 })
-
+// 表单验证规则
 const rules = reactive({
   pass: [{ validator: validatePass, trigger: 'blur' }],
   checkPass: [{ validator: validatePass2, trigger: 'blur' }],
   age: [{ validator: checkAge, trigger: 'blur' }],
 })
-
+// 表单提交触发事件
 const submitForm = (formEl) => {
   if (!formEl) return
   formEl.validate((valid) => {
     if (valid) {
+      // 登陆成功后，存储token
       console.log('submit!')
     } else {
       console.log('error submit!')
@@ -82,7 +74,7 @@ const submitForm = (formEl) => {
     }
   })
 }
-
+// 清空表单
 const resetForm = (formEl) => {
   if (!formEl) return
   formEl.resetFields()
@@ -134,7 +126,7 @@ return{
          <Avatar />
        </el-icon>
           </span>
-         <el-input v-model.number="ruleForm.age"  :prefix-icon="Search" class="inputDeep" size="large" >
+         <el-input v-model.number="ruleForm.age"  class="inputDeep" size="large" >
          </el-input>
       </div>
        </el-form-item>
