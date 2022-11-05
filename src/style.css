@@ -88,3 +88,132 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+.flex-column {
+  flex-direction: column;
+}
+.flex {
+  display: flex;
+}
+#root, .App, body, html {
+  height: 100%;
+  width: 100%;
+}
+.App {
+  display: flex;
+  flex-direction: column;
+}
+
+.jss1 {
+  padding: 1rem 2.5rem;
+}
+
+.css-1vbrzl8 {
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  border-radius: 4px;
+  box-shadow: none;
+}
+.css-1eezi6a {
+  margin: 0px;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 3rem;
+  line-height: 1.167;
+  letter-spacing: 0em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: rgb(63, 81, 181);
+}
+.ka-content, .ka-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+.ka-wrapper {
+  height: 100%;
+}
+.css-ykq3zm {
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  border-radius: 4px;
+  box-shadow: rgb(0 0 0 / 20%) 0px 2px 1px -1px, rgb(0 0 0 / 14%) 0px 1px 1px 0px, rgb(0 0 0 / 12%) 0px 1px 3px 0px;
+}
+
+.css-1pyxybg {
+  margin: 0px;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 2.125rem;
+  line-height: 1.235;
+  letter-spacing: 0.00735em;
+  color: rgb(63, 81, 181);
+}
+.jss2 {
+width: 16rem;
+  padding: 0.5rem 3rem 2rem 3rem;
+  background-color: #fafafa;
+}
+.jss3 {
+  margin: 2rem 0;
+  text-align: center;
+}
+.jss4 {
+  margin-bottom: 1.5rem;
+}
+.css-i44wyl {
+  display: inline-flex;
+  flex-direction: column;
+  position: relative;
+  min-width: 0px;
+  padding: 0px;
+  margin: 0px;
+  border: 0px;
+  vertical-align: top;
+}
+.css-uadgdw.Mui-error {
+  color: rgb(211, 47, 47);
+}
+.css-uadgdw {
+  color: rgb(117, 117, 117);
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.4375em;
+  letter-spacing: 0.00938em;
+  padding: 0px;
+  display: block;
+  transform-origin: left top;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 133%;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  transform: translate(0px, -1.5px) scale(0.75);
+  transition: color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms, transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms, max-width 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+
+}
+.css-sp68t1.Mui-error {
+  color: rgb(211, 47, 47);
+}
+.css-135qv08 {
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.4375em;
+  letter-spacing: 0.00938em;
+  color: rgb(0, 0, 0);
+  box-sizing: border-box;
+  cursor: text;
+  display: inline-flex;
+  -webkit-box-align: center;
+  align-items: center;
+  position: relative;
+}
+label + .css-135qv08 {
+  margin-top: 16px;
+}

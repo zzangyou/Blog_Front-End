@@ -8,14 +8,15 @@ import 'reset-css';
 import App from './App.vue';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 // import './styles/element/index.scss'
-
-// 创建pinia
+const app = createApp(App)
 const pinia = createPinia();
-// use(pinia)使用pinia
+// 统一导入icon并注册
+
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-  createApp(App).component(key, component)
+  app.component(key, component)
 }
-createApp(App).use(pinia).use(router).mount('#app');
+app.use(pinia).use(router).mount('#app');
+
 /*
 相当于
 const app = createApp(App);
