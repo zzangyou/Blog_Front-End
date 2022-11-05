@@ -11,6 +11,7 @@ import TopicReco from '@/components/TopicReco.vue';
       <el-container>
         <el-container class="main">
           <el-aside>
+            <!-- 一个视图使用一个组件渲染，因此对于同个路由，多个视图就需要多个组件 -->
             <router-view name="aside"></router-view>
           </el-aside>
 

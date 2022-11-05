@@ -7,15 +7,12 @@ import {
 
 </script> -->
 <script>
-
 import { defineComponent, reactive, ref } from 'vue';
 
-import 'animate.css'
+import 'animate.css';
 // import { FormInstance } from 'element-plus'
 export default defineComponent({
-   components: {
-    
-  },
+  components: {},
   setup() {
 const ruleFormRef = ref('')
 // 账号验证
@@ -147,63 +144,62 @@ return{
   </el-form>
   <pre>{{ JSON.stringify(model, null, 2) }}
 </pre>
-                  </div>
-              </div>
+            </div>
           </div>
         </div>
-        </div>
-</div>
+      </div>
+    </div>
+  </div>
 </template>
 <style lang="scss" scoped>
-
-.logo-box{
+.logo-box {
   padding: 2px 0 0 0;
 }
 .Sign {
-    position: absolute;
-    left: 20rem;
-    /* height: 100%; */
-    /* width: 100%; */
-    padding-top: 7rem;
-    align-items: center;
-    justify-content: center;
+  position: absolute;
+  left: 20rem;
+  /* height: 100%; */
+  /* width: 100%; */
+  padding-top: 7rem;
+  align-items: center;
+  justify-content: center;
 }
-.logo{
+.logo {
   margin: 0 4px;
 }
-button:hover{
+button:hover {
   background: #ecf0f2;
 }
-:deep .el-form-item__content{
+:deep .el-form-item__content {
   justify-content: space-between;
 }
-:deep .el-form{
-width: 15rem;
+:deep .el-form {
+  width: 15rem;
 }
-.imgdiv{
+.imgdiv {
   /* height: 100%; */
   left: 480px;
-top: 247px;
-/* width: 405px; */
-opacity: 1;
-border-radius: 10px;
-box-shadow: 0px 10px 30px 0px rgba(135, 186, 210, 0.4);
+  top: 247px;
+  /* width: 405px; */
+  opacity: 1;
+  border-radius: 10px;
+  box-shadow: 0px 10px 30px 0px rgba(135, 186, 210, 0.4);
 }
-.img{
+.img {
   height: 486px;
   opacity: 0.95;
   margin-left: -10px;
 }
-.blog{
+.blog {
   position: absolute;
   top: 16rem;
-  left:5.3rem;
+  left: 5.3rem;
   color: #fff;
   font-size: 2.7rem;
   z-index: 1;
   font-family: Roboto, Helvetica, Arial, sans-serif;
 }
-.toregbtn{
+.toregbtn {
   position: absolute;
   z-index: 1;
   top: 22rem;
@@ -224,10 +220,9 @@ box-shadow: 0px 10px 30px 0px rgba(135, 186, 210, 0.4);
     }
   }
 }
-.border{
+.border {
   padding-bottom: -5px;
   border: transparent;
   border-bottom: 2.5px solid #212f80;
 }
-
 </style>
