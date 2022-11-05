@@ -7,7 +7,10 @@ import { LS_KEYS } from '@/utils/const';
 export const useUserInfoStore = defineStore('userInfo', {
   state: () => {
     return {
+      // 这里应该是登录态判断
       isLogin: Boolean(localStorage.getItem(LS_KEYS.JWT)),
     };
+
   },
+
 });

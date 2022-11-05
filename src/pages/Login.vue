@@ -58,7 +58,6 @@ const ruleForm = reactive({
 // 表单验证规则
 const rules = reactive({
   pass: [{ validator: validatePass, trigger: 'blur' }],
-  checkPass: [{ validator: validatePass2, trigger: 'blur' }],
   age: [{ validator: checkAge, trigger: 'blur' }],
 })
 // 表单提交触发事件
@@ -83,7 +82,6 @@ const labelPosition = ref('top')
 return{
     checkAge,
     validatePass,
-    validatePass2,
     rules,
     submitForm,
     resetForm,
