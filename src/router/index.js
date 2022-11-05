@@ -13,13 +13,16 @@ const routes = [
     component: CommonLayout,
     children: [
       {
-        path: '', components: {
+        path: '',
+        components: {
           default: Home,
           aside: HomeAside
         }
       },
       {
-        path: '/user/:id', components: {
+        name: 'userInfo',
+        path: '/user/:id',
+        components: {
           default: User,
           aside: UserAside
         }

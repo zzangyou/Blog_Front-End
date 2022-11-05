@@ -8,7 +8,7 @@ import {
 </script> -->
 <script>
 import { defineComponent, reactive, ref } from 'vue';
-// import 'animate.css'
+import 'animate.css';
 // import { FormInstance } from 'element-plus'
 export default defineComponent({
   components: {},
@@ -102,8 +102,8 @@ export default defineComponent({
         <div class="imgdiv flex">
           <h3 class="blog animate__animated animate__bounceIn">Hello! Friend</h3>
           <router-link style="margin-right: 0.5rem" class="css-1uop71e" active-class="active" to="/register">
-            <button class="css-qqvxpj toregbtn" style="color: #3f51b5">注册</button></router-link
-          >
+            <button class="css-qqvxpj toregbtn" style="color: #3f51b5">注册</button>
+          </router-link>
           <img src="../assets/images/111122.png" alt="" class="img" />
         </div>
         <div class="ka-wrapper animate__animated animate__backInDown">

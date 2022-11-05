@@ -8,6 +8,7 @@
       <!-- 首页选项 -->
       <el-menu-item index="1">首页</el-menu-item>
 
+      <!-- 关于换头像？？？ -->
       <!-- 下拉菜单 -->
       <el-dropdown class="el-drown">
         <span class="el-dropdown-link">
@@ -34,6 +35,7 @@
 <script setup>
 import { ref } from 'vue';
 import { ArrowDown } from '@element-plus/icons-vue';
+import { router } from '../router/index';
 
 const activeIndex = ref('1');
 const handleSelect = (key, keyPath) => {
@@ -41,6 +43,13 @@ const handleSelect = (key, keyPath) => {
 };
 function personInfo() {
   // 路由切换
+  console.log(this);
+  router.push({
+    name: 'userInfo',
+    params: {
+      id: 1,
+    },
+  });
 }
 </script>
 
