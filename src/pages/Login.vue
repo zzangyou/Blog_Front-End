@@ -139,7 +139,6 @@ return{
       </div>
 
        </el-form-item>
- 
     <el-form-item style="margin-top:10px">
       <el-button type="primary" @click="submitForm(ruleFormRef)"
         >提交</el-button>

@@ -15,11 +15,10 @@ const EnvConfig ={
         baseApi:'/test.future.com/public'
     },
      prod:{
-        baseApi:'/public'
+        baseApi:'http://localhost:8000/public'
     },
 }
 export default {
     env,
-    // mock的总开关
     ...EnvConfig[env]
 }

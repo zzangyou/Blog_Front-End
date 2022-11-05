@@ -1,5 +1,7 @@
 <template>
-  <div>im homemain</div>
+  <div>im homemain
+
+  </div>
 </template>
 <script>
 export default {};
