@@ -1,6 +1,5 @@
 <template>
   <div class="header">
-
     <!-- 导航栏 -->
     <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
       <!-- logo -->
@@ -30,7 +29,6 @@
         </template>
       </el-dropdown>
     </el-menu>
-
   </div>
 </template>
 

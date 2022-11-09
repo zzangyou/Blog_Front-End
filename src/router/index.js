@@ -11,20 +11,22 @@ const routes = [
   {
     path: '/',
     component: CommonLayout,
+
     children: [
       {
         path: '',
         components: {
-          default: Home,
-          aside: HomeAside
+          aside: HomeAside,
+          mainContent: Home
         }
+
       },
       {
         name: 'userInfo',
         path: '/user/:id',
         components: {
-          default: User,
-          aside: UserAside
+          aside: UserAside,
+          mainContent: User
         }
       },
     ],
