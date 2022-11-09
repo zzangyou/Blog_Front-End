@@ -35,7 +35,7 @@
 <script setup>
 import { ref } from 'vue';
 import { ArrowDown } from '@element-plus/icons-vue';
-import { router } from '../router/index';
+import  {router}  from '../router/index';
 
 const activeIndex = ref('1');
 const handleSelect = (key, keyPath) => {
