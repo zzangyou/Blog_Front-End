@@ -37,3 +37,4 @@ export const router = createRouter({
   history: createWebHistory(),//使用createWebHistory的history模式，即路由路径不带'#'
   routes,
 });
+

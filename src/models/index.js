@@ -1,9 +1,17 @@
-import { defineStore } from 'pinia';
 import { useUserInfoStore } from './userInfo';
-import { usePublicStore } from './public';
-const store = {
+import { usePublicInfoStore } from './publicinfo';
+import { useBlogInfoStore } from './bloginfo';
+ const store = {
   userInfo: useUserInfoStore,
-  public:usePublicStore
+  publicInfo:usePublicInfoStore,
+  blogInfo:useBlogInfoStore
 };
 
-export const useStore = (moduleName) => store(moduleName)();
+export const useStore = (moduleName) => store[moduleName]();
+
+/* export default{
+  usePublicStore,
+  useUserInfoStore,
+  useBlogInfoStore
+}
+ */
