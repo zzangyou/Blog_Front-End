@@ -42,8 +42,8 @@ const handleSelect = (key, keyPath) => {
   console.log(key, keyPath); //得到被选择项的index，即保存有被选择项相关信息的数组
 };
 function personInfo() {
-  // 路由切换
-  console.log(this);
+  // push模式切换路由
+  console.log(this); //undefined
   router.push({
     name: 'userInfo',
     params: {

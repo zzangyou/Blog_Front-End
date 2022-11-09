@@ -13,11 +13,11 @@
           </el-menu-item>
           <el-menu-item index="2">
             <el-icon><document /></el-icon>
-            <span>已发布微博</span>
+            <span @click="changeToWeiBo">已发布微博</span>
           </el-menu-item>
           <el-menu-item index="3">
             <el-icon><icon-menu /></el-icon>
-            <span>已发布评论</span>
+            <span @click="changeToComment">已发布评论</span>
           </el-menu-item>
         </el-menu>
       </el-col>
@@ -27,12 +27,24 @@
 
 <script setup>
 import { Document, Menu as IconMenu, Location, Setting } from '@element-plus/icons-vue';
+import { router } from '../router/index';
 const handleOpen = (key, keyPath) => {
   console.log(key, keyPath);
 };
 const handleClose = (key, keyPath) => {
   console.log(key, keyPath);
 };
+
+function changeToWeiBo() {
+  router.push({
+    path: '/user/lookweibo',
+  });
+}
+function changeToComment() {
+  router.push({
+    path: '/user/lookcomment',
+  });
+}
 </script>
 
 <style scoped>
