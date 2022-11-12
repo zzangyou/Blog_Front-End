@@ -35,7 +35,7 @@
 <script setup>
 import { ref } from 'vue';
 import { ArrowDown } from '@element-plus/icons-vue';
-import  {router}  from '../router/index';
+import { router } from '../router/index';
 
 const activeIndex = ref('1');
 const handleSelect = (key, keyPath) => {
@@ -43,7 +43,7 @@ const handleSelect = (key, keyPath) => {
 };
 function personInfo() {
   // push模式切换路由
-  console.log(this); //undefined
+  // console.log(this); //undefined
   router.push({
     name: 'userInfo',
     params: {

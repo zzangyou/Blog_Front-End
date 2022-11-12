@@ -31,21 +31,21 @@ const routes = [
           aside: UserAside,
           mainContent: User,//进入个人信息就默认主要内容显示“修改个人信息”了
         },
-        children: [
-          // {
-          //   path: '',
-          //   component: User
-          // },
-          {
-            path: 'lookweibo',
-            component: WeiBo
-          },
-          {
-            path: 'lookcomment',
-            component: Comment
-          }
-        ]
       },
+      {
+        path: 'lookweibo',
+        components: {
+          aside: UserAside,
+          mainContent: WeiBo
+        },
+      },
+      {
+        path: 'lookcomment',
+        components: {
+          aside: UserAside,
+          mainContent: Comment
+        },
+      }
     ],
   },
   { path: '/login', component: Login },
