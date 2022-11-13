@@ -90,7 +90,29 @@ export default {
   sendcaptcha: config => {
 
   },
-
+  /**
+   * 获取个人信息
+   * @param username
+   * @param useraccount//账号
+   * @param password//密码
+   * @param email//邮箱
+   * @param sex
+   * @param region
+   * @param birth
+   * @param star
+   * @param job
+   * @param character
+   * @return {{code:number,message:string,data:object}}
+  */
+  getPersonInfo: useraccount => {
+    if (useraccount == userList[useraccount]) {
+      return {
+        code: 100000,
+        message: '获取成功',
+        data: userList[0]
+      }
+    }
+  },
   /**
    * 修改个人信息
    * @param username
