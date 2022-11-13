@@ -55,7 +55,6 @@ const validatePass = (rule, value, callback) => {
 
 const ruleForm = reactive({
   pass: '',
-  checkPass: '',
   useraccount: '',
 })
 // 表单验证规则
@@ -70,25 +69,27 @@ const resetFields=()=>{
 }
 // 表单提交触发事件
 const submitForm = () => {
-    async() => {    
-      const res= await proxy.$api.login(ruleForm)
-      const {code,data}=res
-      if(code==='000000'){
+   proxy.$api.login(ruleForm).then(res=>{
+     const{code,data}=res.data
+      if(code===100000){
           // 登陆成功后，存储token
          //  存储token 之后每次发送请求都带上token让后台解析
       // window.localStorage.setItem(LS_KEYS.JWT,data.token)
+      console.log(data.token);
       storePublic.setToken(data.token)
       // 存储后跳转路由
       router.push({
-        path: ''
-      })
-      console.log('登陆成功!')
+        path: '/'
+      }).catch(err => {})
+       ElMessage({ message: '登录成功',type: 'success',})
     } else {
       resetFields()
-      console.log('error submit!')
+      ElMessage.error({ message:'登陆失败,请检查登录信息'})
       return false
     }
-  }
+  
+   })
+
 }
 // 清空表单
 const resetForm = () => { 

@@ -6,3 +6,4 @@ import userApi from './mockData/user'
 // 本地获取user数据
 Mock.mock(/user\/login/,'post',userApi.login)
 Mock.mock(/user\/register/,'post',userApi.register)
+Mock.mock(/user\/sendcaptcha/,'post',userApi.sendcaptcha)

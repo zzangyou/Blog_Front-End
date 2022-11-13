@@ -2,7 +2,7 @@ import { createApp } from 'vue';
 // 引入pinia
 import { createPinia } from 'pinia';
 import {router} from './router'
-import api from './api/index'
+import api from './api/api'
 import './api/mock'
 import './style.css';
 import 'reset-css';

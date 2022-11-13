@@ -30,8 +30,9 @@ service.interceptors.request.use((config) => {
   return Promise.reject(error)
 })
 // http response 拦截器
-axios.interceptors.response.use(
+ service.interceptors.response.use(
   response => {
+    console.log(response);
       return response;  //请求成功的时候返回的data
   },
   error => {
@@ -40,7 +41,7 @@ axios.interceptors.response.use(
           switch (error.response.status) {
               case 401://token过期，清除token并跳登录页面
                localStorage.clear();
-                 var baurl = window.location. href;
+                 var baurl = window.location.href;
                     router.replace({
                           path: 'login',
                           query: { backUrl: baurl }

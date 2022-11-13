@@ -14,7 +14,15 @@ function param2Obj (url) {
     '"}'
   )
 }
-let userList =[]
+let userList=[{
+  useraccount:534994484,
+  username:'zzangyou',
+  password:'chenshuying',
+  email:'534994484@qq.com',
+  verificationCode:''
+}]
+
+
 // 模拟接口的格式如下
 export default{
   /**
@@ -27,13 +35,13 @@ export default{
    * @return {{code:number,message:string,data:object}}
    */
   register:config=>{
-    const {useraccount,username,password,email,verificationCode}=JSON.parse(config.body)
+    const {useraccount,username,Pass,email,verificationCode}=JSON.parse(config.body)
     console.log(JSON.parse(config.body));
     userList.unshift({
       id:Mock.Random.guid(),
       useraccount:useraccount,
       username:username,
-      password:password,
+      password:Pass,
       email:email,
       verificationCode:verificationCode
     })
@@ -43,7 +51,7 @@ export default{
        data:{
         useraccount:useraccount,
         username:username,
-        password:password,
+        password:Pass,
         email:email,
         verificationCode:verificationCode
        }
@@ -57,35 +65,38 @@ export default{
    * @return {{code:number,message:string,data:object}}
    *  */
   login:config=>{
-    const{useraccount,password} = JSON.parse(config.body)
-    userList.some(u=>{
-      if(u.useraccount===useraccount&&u.password===password)
-        return{
-        code:100000,
-        message:'登录正常',
-        data:{
-          token: Mock.Random.guid(),
-          useraccount:useraccount,
-          password:password
-        }
-      }
-      else{
-        return{
-          code:100001,
-          message:'登录异常',
+    console.log(config);
+    const{useraccount,pass} = JSON.parse(config.body)
+    console.log(useraccount,pass);
+    const result = userList.some(u=>{
+        return  u.useraccount==useraccount&&u.password==pass
 
-        }
-      }
     })
-
-
+    if(result) return {
+      code:100000,
+      message:'登录正常',
+      data:{
+        token:Mock.Random.guid(),
+        useraccount:useraccount,
+        password:pass
+      }
+    }
+    else{
+      return {
+        code:100001,
+        message:'登陆失败'
+      }
+    }
   },
   /**
    * 发送邮箱验证码
    * @param
    */
  sendcaptcha:config=>{
-
+  console.log(config);
+  return {
+    code:100000,
+    message:'发送成功'
+  }
  }
-
 }
