@@ -1,8 +1,9 @@
-<template>
-  <div>im homemain</div>
-</template>
+
+<template>im查看已发布评论</template>
+
 <script>
 export default {};
 </script>
-<style lang="scss" scoped>
+
+<style>
 </style>
