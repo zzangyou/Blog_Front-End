@@ -235,7 +235,7 @@ const options = Array.from({ length: 10000 }).map((_, idx) => ({
 onMounted(() => {
   console.log(proxy);
   // 发送请求，获得初始数据
-  proxy.$api.changeUserInfo(ruleFrom);
+  proxy.$api.changeUserInfo(ruleForm);
 });
 </script>
 
