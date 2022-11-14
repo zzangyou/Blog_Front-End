@@ -6,6 +6,7 @@ export const usePublicInfoStore = defineStore('publicInfo', {
       token: '',
       // 这里应该是登录态判断
       isLogin: Boolean(localStorage.getItem(LS_KEYS.JWT)),
+      useraccount: '',
     };
   },
   getters: {

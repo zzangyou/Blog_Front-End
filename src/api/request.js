@@ -32,6 +32,7 @@ service.interceptors.request.use((config) => {
   return Promise.reject(error)
 })
 // http response 拦截器
+
 // 响应拦截器：包含两个函数（一个是成功返回的函数，一个是失败的返回的函数）
 axios.interceptors.response.use(
   response => {
@@ -53,9 +54,10 @@ axios.interceptors.response.use(
         }
       }
       return Promise.reject(error.response.data)
+
     }
     catch (e) {
-
+      console.log(e);
 
     }
   });

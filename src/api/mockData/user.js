@@ -1,5 +1,5 @@
 import Mock from 'mockjs'
-// 模拟后端 get请求 从config.url获取参数，post请求则从config.body中获取参数
+// 模拟后端   get请求从config.url获取参数，post请求则从config.body中获取参数
 function param2Obj(url) {
   const search = url.split('?')[1]
   if (!search) {
@@ -14,8 +14,22 @@ function param2Obj(url) {
     '"}'
   )
 }
+let userList = [{
+  useraccount: 534994484,
+  username: 'zzangyou',
+  password: 'chenshuying',
+  email: '534994484@qq.com',
+  verificationCode: '',
+  sex: '',
+  region: '',
+  birth: '',
+  star: '',
+  job: '',
+  character: ''
+}]
+// let userList = []
 
-let userList = []
+
 // 模拟接口的格式如下
 export default {
 
@@ -30,16 +44,23 @@ export default {
    * @return {{code:number,message:string,data:object}}
    */
   register: config => {
-    // 对象解构
-    const { useraccount, username, password, email, verificationCode } = JSON.parse(config.body)
+    const { useraccount, username, Pass, email, verificationCode } = JSON.parse(config.body)
     console.log(JSON.parse(config.body));
-    userList.unshift({//unshift 将一个或多个元素添加到数组开头
+    userList.unshift({
       id: Mock.Random.guid(),
       useraccount: useraccount,
       username: username,
-      password: password,
+      password: Pass,
       email: email,
-      verificationCode: verificationCode
+      verificationCode: verificationCode,
+      // 注册时后端也应有这些数据字段
+      sex: '',
+      region: '',
+      birth: '',
+      star: '',
+      job: '',
+      character: ''
+
     })
     return {
       code: 100000,
@@ -47,9 +68,15 @@ export default {
       data: {
         useraccount: useraccount,
         username: username,
-        password: password,
+        password: Pass,
         email: email,
-        verificationCode: verificationCode
+        verificationCode: verificationCode,
+        sex: '',
+        region: '',
+        birth: '',
+        star: '',
+        job: '',
+        character: ''
       }
     }
   },
@@ -60,39 +87,44 @@ export default {
    *  @param password
    *  @return {{code:number,message:string,data:object}}
    *  */
-  login: config => {//config是截取到的前端所发送的请求 post请求可通过config.body拿到数据对象
-    const { useraccount, password } = JSON.parse(config.body)
-    // Array.some((currentValue,index,arr)=>{})遍历并检测数组中的元素是否满足指定条件
-    userList.some(u => {//u代表当前数组元素
-      if (u.useraccount === useraccount && u.password === password)
-        return {
-          code: 100000,
-          message: '登录正常',
-          data: {
-            token: Mock.Random.guid(),
-            useraccount: useraccount,
-            password: password
-          }
-        }
-      else {
-        return {
-          code: 100001,
-          message: '登录异常',
-
-        }
-      }
+  login: config => {
+    console.log(config);
+    const { useraccount, pass } = JSON.parse(config.body)//JSON.parse json字符串转换成对象
+    console.log(useraccount, pass);
+    const result = userList.some(u => {//u拿到当前数组元素 some方法返回的是布尔值
+      return u.useraccount == useraccount && u.password == pass
     })
+    if (result) return {
+      code: 100000,
+      message: '登录正常',
+      data: {
+        token: Mock.Random.guid(),
+        useraccount: useraccount,
+        password: pass
+      }
+    }
+    else {
+      return {
+        code: 100001,
+        message: '登陆失败'
+      }
+    }
   },
   /**
    * 发送邮箱验证码
    * @param
    */
   sendcaptcha: config => {
-
+    console.log(config);
+    return {
+      code: 100000,
+      message: '发送成功'
+    }
   },
+
   /**
    * 获取个人信息
-   * @param username
+   * @param username//用户名(昵称)
    * @param useraccount//账号
    * @param password//密码
    * @param email//邮箱
@@ -104,18 +136,32 @@ export default {
    * @param character
    * @return {{code:number,message:string,data:object}}
   */
-  getPersonInfo: useraccount => {
-    if (useraccount == userList[useraccount]) {
+  getPersonInfo: config => {
+    console.log('this config is', config);
+    const result = userList.find((currentValue) => {
+      // find方法 遍历【返回】数组中第一个符合条件的【元素】
+      // 找不到符合条件的元素则返回undefind
+      console.log('config.body and currentValue.useraccount is', config.body, currentValue.useraccount);
+      return config.body == currentValue.useraccount
+    })
+    console.log('getPersonInfo result', result);
+    if (typeof result == 'undefined') {
+      return {
+        code: 100001,
+        message: '获取失败',
+      }
+    } else {
       return {
         code: 100000,
         message: '获取成功',
-        data: userList[0]
+        data: result
       }
     }
   },
+
   /**
    * 修改个人信息
-   * @param username
+   * @param username//用户名(昵称)
    * @param useraccount//账号
    * @param password//密码
    * @param email//邮箱
@@ -128,41 +174,30 @@ export default {
    * @return {{code:number,message:string,data:object}}
    */
   changePersonInfo: (config) => {
-    const { username, useraccount, password, email, sex,
-      region, birth, star, job, character } = JSON.parse(config.body)
     // JSON.parse(text,[reviver])将json字符串转换成对象
-    console.log('#####', config);
-    console.log('#####', config.body);
-    userList.unshift({
-      username,
-      useraccount,
-      password,
-      email,
-      sex,
-      region,
-      birth,
-      star,
-      job,
-      character
-    })
-    return {
-      code: 100000,
-      message: '修改成功',
-      data: {
-        username,
-        useraccount,
-        password,
-        email,
-        sex,
-        region,
-        birth,
-        star,
-        job,
-        character
+    console.log('config.body', config.body);
+    const result = userList.find((currentValue, index, arr) => {
+      if (currentValue.useraccount == JSON.parse(config.body).useraccount) {
+        currentValue = JSON.parse(config.body);
+        console.log('the currentValue is', arr[index]);
+      }
+      return currentValue == JSON.parse(config.body).useraccount
+    });
+    console.log('changePersonInfo result', result);
+    if (typeof result == undefined) {
+      return {
+        code: 100001,
+        message: '修改失败',
+      }
+    } else {
+      return {
+        code: 100000,
+        message: '修改成功',
+        data: result
       }
     }
 
-
   }
+
 
 }

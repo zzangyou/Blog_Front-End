@@ -3,6 +3,16 @@ import { RouterView } from 'vue-router';
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
 import TopicReco from '@/components/TopicReco.vue';
+// import { onMounted, ref, watch, nextTick, provide } from 'vue'; //要引入方法
+// 局部组件刷新
+/* const isRouterAlive = ref(true);
+const reload = () => {
+  isRouterAlive.value = false;
+  nextTick(() => {
+    isRouterAlive.value = true;
+  });
+};
+provide('reload', reload); */
 </script>
 <template>
   <div class="common-layout">
@@ -22,6 +32,7 @@ import TopicReco from '@/components/TopicReco.vue';
           <!-- 中间主要内容 -->
           <el-main style="background-color: orange">
             <router-view name="mainContent"></router-view>
+            <!-- <router-view name="mainContent" v-if="isRouterAlive"></router-view> -->
           </el-main>
 
           <!-- 话题推荐 -->
