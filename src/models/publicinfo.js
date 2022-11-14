@@ -17,11 +17,13 @@ export const usePublicInfoStore = defineStore('publicInfo', {
     setToken(token) {
       this.token = token;
       localStorage.setItem(LS_KEYS.JWT, token);
+      this.isLogin=Boolean(localStorage.getItem(LS_KEYS.JWT))
     },
     // 清除token
     clearToken() {
       this.token = ''
       localStorage.removeItem(LS_KEYS.JWT);
+      this.isLogin=Boolean(localStorage.getItem(LS_KEYS.JWT))
     },
     // 获取token
     getToken() {

@@ -14,13 +14,13 @@ function param2Obj(url) {
     '"}'
   )
 }
-let userList=[{
+let userList=[/* {
   useraccount:534994484,
   username:'zzangyou',
   password:'chenshuying',
   email:'534994484@qq.com',
   verificationCode:''
-}]
+} */]
 
 
 
@@ -38,13 +38,13 @@ export default {
    * @return {{code:number,message:string,data:object}}
    */
   register:config=>{
-    const {useraccount,username,Pass,email,verificationCode}=JSON.parse(config.body)
+    const {useraccount,username,pass,email,verificationCode}=JSON.parse(config.body)
     console.log(JSON.parse(config.body));
     userList.unshift({
       id:Mock.Random.guid(),
       useraccount:useraccount,
       username:username,
-      password:Pass,
+      password:pass,
       email:email,
       verificationCode:verificationCode
     })
@@ -54,7 +54,7 @@ export default {
        data:{
         useraccount:useraccount,
         username:username,
-        password:Pass,
+        password:pass,
         email:email,
         verificationCode:verificationCode
        }
