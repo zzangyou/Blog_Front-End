@@ -14,7 +14,7 @@ function param2Obj(url) {
     '"}'
   )
 }
-let userList = [{
+/* let userList = [{
   useraccount: 534994484,
   username: 'zzangyou',
   password: 'chenshuying',
@@ -26,8 +26,8 @@ let userList = [{
   star: '',
   job: '',
   character: ''
-}]
-// let userList = []
+}] */
+let userList = []
 
 
 // 模拟接口的格式如下
@@ -71,12 +71,12 @@ export default {
         password: Pass,
         email: email,
         verificationCode: verificationCode,
-        sex: '',
+        /* sex: '',
         region: '',
         birth: '',
         star: '',
         job: '',
-        character: ''
+        character: '' */
       }
     }
   },
