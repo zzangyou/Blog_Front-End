@@ -42,23 +42,22 @@ axios.interceptors.response.use(
   error => {
     try {
       if (error.response) {
-          switch (error.response.status) {
-              case 401://token过期，清除token并跳登录页面
-               localStorage.clear();
-                 var baurl = window.location.href;
-                    router.replace({
-                          path: 'login',
-                          query: { backUrl: baurl }
-                      });
-                  return;
-              }
-          }
-          return Promise.reject(error.response.data)
-
+        switch (error.response.status) {
+          case 401://token过期，清除token并跳登录页面
+            localStorage.clear();
+            var baurl = window.location.href;
+            router.replace({
+              path: 'login',
+              query: { backUrl: baurl }
+            });
+            return;
+        }
+      }
+      return Promise.reject(error.response.data)
 
     }
     catch (e) {
-
+      console.log(e);
 
     }
   });

@@ -10,9 +10,11 @@ import {
 import { defineComponent, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from '@/models/index';
+import { storeToRefs } from 'pinia';
 import { getCurrentInstance } from '@vue/runtime-core';
 import 'animate.css';
 import { LS_KEYS } from '@/utils/const';
+
 // import { FormInstance } from 'element-plus'
 export default defineComponent({
   components: {},
@@ -55,63 +57,67 @@ export default defineComponent({
       }
     };
 
-
-const ruleForm = reactive({
-  pass: '',
-  useraccount: '',
-})
-// 表单验证规则
-const rules = reactive({
-  pass: [{ validator: validatePass, trigger: 'blur' }],
-  useraccount: [{ validator: checkUseraccount, trigger: 'blur' }],
-})
-// 清空表单数据
-const resetFields=()=>{
-  proxy.ruleForm.pass='',
-  proxy.ruleForm.useraccount=''
-}
-// 表单提交触发事件
-const submitForm = () => {
-   proxy.$api.login(ruleForm).then(res=>{
-     const{code,data}=res.data
-      if(code===100000){
+    const ruleForm = reactive({
+      pass: '',
+      useraccount: '',
+    });
+    // 表单验证规则
+    const rules = reactive({
+      pass: [{ validator: validatePass, trigger: 'blur' }],
+      useraccount: [{ validator: checkUseraccount, trigger: 'blur' }],
+    });
+    // 清空表单数据
+    const resetFields = () => {
+      (proxy.ruleForm.pass = ''), (proxy.ruleForm.useraccount = '');
+    };
+    // 表单提交触发事件
+    const submitForm = () => {
+      proxy.$api.login(ruleForm).then((res) => {
+        const { code, data } = res.data;
+        if (code === 100000) {
           // 登陆成功后，存储token
-         //  存储token 之后每次发送请求都带上token让后台解析
-      // window.localStorage.setItem(LS_KEYS.JWT,data.token)
-      console.log(data.token);
-      storePublic.setToken(data.token)
-      // 存储后跳转路由
-      router.push({
-        path: '/'
-      }).catch(err => {})
-       ElMessage({ message: '登录成功',type: 'success',})
-    } else {
-      resetFields()
-      ElMessage.error({ message:'登陆失败,请检查登录信息'})
-      return false
-    }
-  
-   })
+          //  存储token 之后每次发送请求都带上token让后台解析
+          // window.localStorage.setItem(LS_KEYS.JWT,data.token)
+          console.log(data.token);
+          storePublic.setToken(data.token);
+          // 存储用户账号
+          localStorage.setItem('currentuser', ruleForm.useraccount);
+          // 存储后跳转路由
+          router
+            .push({
+              path: '/',
+            })
+            .catch((err) => {});
+          ElMessage({ message: '登录成功', type: 'success' });
+        } else {
+          resetFields();
+          ElMessage.error({ message: '登陆失败,请检查登录信息' });
+          return false;
+        }
 
-}
-// 清空表单
-const resetForm = () => { 
-  resetFields()
-}
-const labelPosition = ref('top')
-return{
-    checkUseraccount,
-    validatePass,
-    rules,
-    submitForm,
-    resetForm,
-    ruleForm,
-    labelPosition
-
-
-}
-  }
-
+        // 🔺登录成功后，修改pinia中的state数据中的用户名(昵称)
+        /* const publicinfo = useStore('publicInfo'); //所指定pinia模块的proxy对象
+        const { useraccount } = storeToRefs(publicinfo);
+        //利用pinia提供的storeToRefs函数将所指定数据变为响应式的
+        publicinfo.useraccount = ruleForm.useraccount; //将当前的useraccount存进pinia
+        console.log('所登录的用户账号是' + publicinfo.useraccount); */
+      });
+    };
+    // 清空表单
+    const resetForm = () => {
+      resetFields();
+    };
+    const labelPosition = ref('top');
+    return {
+      checkUseraccount,
+      validatePass,
+      rules,
+      submitForm,
+      resetForm,
+      ruleForm,
+      labelPosition,
+    };
+  },
 });
 </script>
 <template>

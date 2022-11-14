@@ -5,7 +5,7 @@
   <div class="usermain">
     <el-form
       ref="ruleFormRef"
-      :model="ruleForm"
+      :model="ruleForm.userData"
       :rules="rules"
       label-width="120px"
       class="demo-ruleForm"
@@ -16,16 +16,16 @@
       <!-- label标签文本 -->
       <!-- propmodel model(数据)的键名。它可以是一个路径数组(例如 ['a', 'b', 0])。
        在定义了 validate、resetFields 的方法时，该属性是必填的 -->
-      <el-form-item label="昵称" prop="username">
-        <el-input v-model="ruleForm.username" />
+      <el-form-item label="账号" prop="useraccount">
+        <el-input v-model="ruleForm.userData.useraccount" disabled />
       </el-form-item>
 
-      <el-form-item label="账号" prop="useraccount">
-        <el-input v-model="ruleForm.useraccount" />
+      <el-form-item label="昵称" prop="username">
+        <el-input v-model="ruleForm.userData.username" />
       </el-form-item>
 
       <el-form-item label="密码" prop="password">
-        <el-input v-model="ruleForm.password" />
+        <el-input v-model="ruleForm.userData.password" />
       </el-form-item>
 
       <el-form-item
@@ -44,18 +44,18 @@
           },
         ]"
       >
-        <el-input v-model="ruleForm.email" />
+        <el-input v-model="ruleForm.userData.email" />
       </el-form-item>
 
       <el-form-item label="性别" prop="sex">
-        <el-radio-group v-model="ruleForm.sex">
+        <el-radio-group v-model="ruleForm.userData.sex">
           <el-radio label="男" />
           <el-radio label="女" />
         </el-radio-group>
       </el-form-item>
 
       <el-form-item label="地区" prop="region">
-        <el-select v-model="ruleForm.region" placeholder="请选择所来自地区">
+        <el-select v-model="ruleForm.userData.region" placeholder="请选择所来自地区">
           <el-option label="北京" value="beijing" />
           <el-option label="上海" value="shanghai" />
           <el-option label="广州" value="guangzhou" />
@@ -67,7 +67,7 @@
         <el-col :span="11">
           <el-form-item prop="birth">
             <el-date-picker
-              v-model="ruleForm.birth"
+              v-model="ruleForm.userData.birth"
               type="date"
               label="Pick a date"
               placeholder="请选择日期"
@@ -78,7 +78,7 @@
       </el-form-item>
 
       <el-form-item label="星座" prop="star">
-        <el-select v-model="ruleForm.star" placeholder="请选择星座">
+        <el-select v-model="ruleForm.userData.star" placeholder="请选择星座">
           <el-option label="狮子" value="shizi" />
           <el-option label="白羊" value="baiyang" />
           <el-option label="射手" value="sheshou" />
@@ -88,18 +88,18 @@
           <el-option label="魔蝎" value="moxie" />
           <el-option label="天蝎" value="tianxie" />
           <el-option label="天秤" value="tianchen" />
-          <el-option label="双鱼" value="sheshou" />
+          <el-option label="双鱼" value="shuangyu" />
           <el-option label="巨蟹" value="juxie" />
           <el-option label="金牛" value="jinniu" />
         </el-select>
       </el-form-item>
 
       <el-form-item label="职业" prop="job">
-        <el-input v-model="ruleForm.job" />
+        <el-input v-model="ruleForm.userData.job" />
       </el-form-item>
 
       <el-form-item label="个性简介" prop="character">
-        <el-input v-model="ruleForm.character" type="textarea" />
+        <el-input v-model="ruleForm.userData.character" type="textarea" />
       </el-form-item>
 
       <div v-show="isShow">
@@ -119,6 +119,9 @@
 
 <script  setup>
 import { reactive, ref, onMounted, getCurrentInstance } from 'vue';
+import { useStore } from '@/models/index';
+// import { inject } from 'vue';
+import { router } from '@/router/index';
 //引入类型
 // import type { FormInstance, FormRules } from 'element-plus';
 
@@ -131,34 +134,34 @@ const ruleFormRef = ref('');
 let isShow = ref(false);
 const { proxy } = getCurrentInstance(); //记得要加{ }
 // 数据
-const ruleForm = reactive({
-  username: '', //昵称
-  useraccount: '', //账号
-  password: '', //密码
-  email: '', //邮箱
-  sex: '', //性别
-  region: '', //地区
-  birth: '', //生日
-  star: '', //星座
-  job: '', //职业
-  character: '', //个性简介
+let ruleForm = reactive({
+  userData: {
+    username: '', //昵称
+    useraccount: '', //账号
+    password: '', //密码
+    email: '', //邮箱
+    sex: '', //性别
+    region: '', //地区
+    birth: '', //生日
+    star: '', //星座
+    job: '', //职业
+    character: '', //个性简介
+  },
 });
 
 // 校验规则
 // const rules = reactive<FormRules>({
 const rules = reactive({
+  useraccount: [{ required: true }],
   username: [
-    { required: false, message: '请输入昵称', trigger: 'change' },
+    { required: true, message: '请输入昵称', trigger: 'change' },
     // trigger	验证逻辑的触发方式	'blur' | 'change'
-    { min: 1, max: 8, message: '昵称长度只允许1-8个', trigger: 'blur' },
+    { min: 1, max: 15, message: '昵称长度只允许1-15个', trigger: 'blur' },
   ],
-  useraccount: [
-    { required: true, message: '请输入账号', trigger: 'change' },
-    { min: 1, max: 8, message: '账号长度只允许1-8个', trigger: 'blur' },
-  ],
+  // 关于密码的校验规则，需要协商
   password: [
     { required: true, message: '请输入密码', trigger: 'change' },
-    { min: 1, max: 8, message: '账号长度只允许1-8个', trigger: 'blur' },
+    { min: 1, max: 20, message: '密码长度只允许1-20个', trigger: 'blur' },
   ],
   sex: [
     {
@@ -204,15 +207,17 @@ const submitForm = async (formEl) => {
     if (valid) {
       console.log('保存修改成功!');
       // 发请求
-      const userInfo = proxy.$api.changeUserInfo(ruleForm);
-      console.log('@@@', userInfo); //返回一个promise对象
-      userInfo.then(
+      const changeuserinfo = proxy.$api.changeUserInfo(ruleForm.userData);
+      console.log('@@@', changeuserinfo); //返回一个promise对象
+      changeuserinfo.then(
         (value) => {
           console.log('@@@', value.data);
-          // ruleForm = value.data.data;
+          ruleForm.userData = value.data.data;
         },
         (reason) => {},
       );
+      //在方法体中的调用方法，刷新路由
+      // refresh();
     } else {
       //校验失败
       console.log('error submit!', fields);
@@ -233,9 +238,24 @@ const options = Array.from({ length: 10000 }).map((_, idx) => ({
 }));
 
 onMounted(() => {
-  console.log(proxy);
+  // console.log(proxy);
+  /* const publicinfo = useStore('publicInfo'); //所指定【pinia】模块的proxy对象
+  console.log('pinia的publicinfo模块下的state中的useraccount是' + publicinfo.useraccount);
   // 发送请求，获得初始数据
-  proxy.$api.changeUserInfo(ruleForm);
+  const getuserinfo = proxy.$api.getUserInfo(publicinfo.useraccount); */
+  const getuserinfo = proxy.$api.getUserInfo(localStorage.getItem('currentuser'));
+  console.log('发送获取个人信息请求所返回的是', getuserinfo); //Promise对象
+  getuserinfo.then(
+    (value) => {
+      //value是该Promise对象的结果值
+      // console.log('拿到的value是',value);
+      // value.data拿到所返回信息 value.data.data拿到具体用户信息
+      // ruleForm = value.data.data;错误，这样就会ruleForm数据就会失去响应式
+      // 🔺正确的做法是将数据作为ruleForm的一个对象属性来修改，这样就不会丢失响应式
+      ruleForm.userData = value.data.data;
+    },
+    (reason) => {},
+  );
 });
 </script>
 
