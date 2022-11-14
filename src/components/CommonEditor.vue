@@ -69,7 +69,8 @@ const toolbarConfig = {
     'justifyLeft',
     'numberedList',
     'justifyRight',
-    'justifyCenter'
+    'justifyCenter',
+    'clearStyle'
     ],
 }
 const editorConfig = {
