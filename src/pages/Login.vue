@@ -80,7 +80,7 @@ export default defineComponent({
           // window.localStorage.setItem(LS_KEYS.JWT,data.token)
           console.log(data.token);
           storePublic.setToken(data.token);
-          // 存储用户账号
+          // 🔺储用户账号
           localStorage.setItem('currentuser', ruleForm.useraccount);
           // 存储后跳转路由
           router

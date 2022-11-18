@@ -42,5 +42,23 @@ export default {
       method: 'post',
       data: params
     })
+  },
+
+  // 获取话题推荐
+  getTopic() {
+    return request({
+      url: 'user/gettopic',
+      method: 'get'
+    })
+  },
+  // axios是基于promise的，利用axios发请求，它的返回值也是一个promise对象
+
+  // 头像传输
+  sendAvatar(params) {
+    return request({
+      url: 'user/avatar',
+      method: 'post',
+      data: params
+    })
   }
 }

@@ -2,7 +2,7 @@
 import { RouterView } from 'vue-router';
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
-import TopicReco from '@/components/TopicReco.vue';
+import TopicIntro from '@/components/TopicIntro.vue';
 // import { onMounted, ref, watch, nextTick, provide } from 'vue'; //要引入方法
 // 局部组件刷新
 /* const isRouterAlive = ref(true);
@@ -24,7 +24,7 @@ provide('reload', reload); */
       <el-container>
         <el-container class="main" style="background-color: purple">
           <!-- 侧边导航栏 -->
-          <el-aside style="background-color: pink">
+          <el-aside style="background-color: pink; flex: 1">
             <!-- 一个视图使用一个组件渲染，因此对于同个路由，多个视图就需要多个组件 -->
             <router-view name="aside"></router-view>
           </el-aside>
@@ -36,8 +36,8 @@ provide('reload', reload); */
           </el-main>
 
           <!-- 话题推荐 -->
-          <el-aside style="background-color: grey">
-            <TopicReco></TopicReco>
+          <el-aside style="background-color: grey; text-align: left">
+            <TopicIntro></TopicIntro>
           </el-aside>
         </el-container>
 
@@ -60,7 +60,7 @@ provide('reload', reload); */
   /*flex-basis属性指定了flex元素在主轴方向上的初始大小,如果设置了flex-basis值，那么元素占用的空间为flex-basis值；
   如果没有设置或者设置为auto，那么元素占据的空间为元素的width/height值*/
 
-  flex: 1;
+  flex: 1.3;
   // flex:1 ==> flex:1 1 auto
 }
 .el-main {

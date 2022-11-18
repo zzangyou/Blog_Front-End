@@ -1,21 +1,20 @@
 import { createApp } from 'vue';
 // 引入pinia
 import { createPinia } from 'pinia';
-import {router} from './router'
+import { router } from './router'
 import api from './api/api'
 
-import './api/mock'
+import './api/mock'//引入mock文件
 import './style.css';
 import 'reset-css';
 import App from './App.vue';
-import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'// 统一导入icon并注册
 import { useStore } from '@/models/index'
 // import './styles/element/index.scss'
 // 改为单独注册app （为了注册icon）
 const app = createApp(App)
 const pinia = createPinia();
-// 统一导入icon并注册
-for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {// 统一导入icon并注册
   app.component(key, component)
 }
 /* 【app.config.globalProperties】,是对Vue2中 Vue.prototype(在Vue3已经不存在) 使用方式的一种替代。
@@ -30,16 +29,16 @@ app.use(pinia).use(router)
 const storePublic = useStore('publicInfo');
 router.beforeEach((to, from, next) => {
   // 获取用户登录态
-const isLogin = storePublic.isLogin
-/*   // 获取token
-  const token = window.localStorage.getItem('token'); */
+  const isLogin = storePublic.isLogin
+  /*   // 获取token
+    const token = window.localStorage.getItem('token'); */
   // 有token
   if (isLogin) {
     // 直接放行
     next();
   } else {  // 否则是没有
     // 如果去的是登录页或注册页
-    if (to.path === '/login'||to.path==='/register') {
+    if (to.path === '/login' || to.path === '/register') {
       // 直接放行
       next();
     } else {
@@ -50,5 +49,6 @@ const isLogin = storePublic.isLogin
     }
   }
 })
+
 app.mount('#app');
 
