@@ -120,7 +120,7 @@ return{
     <div class="App" style="min-height: 754px">
       <div class="Sign flex">
         <div class="imgdiv flex">
-          <h3 class="blog animate__animated animate__bounceIn">Hello! Friend</h3>
+          <h3 class="blog animate__animated animate__bounceIn">Hello! Friends</h3>
           <router-link style="margin-right: 0.5rem" class="css-1uop71e" active-class="active" to="/register">
             <button class="css-qqvxpj toregbtn" style="color: #3f51b5">注册</button></router-link
           >

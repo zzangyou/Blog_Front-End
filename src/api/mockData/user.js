@@ -185,7 +185,7 @@ export default {
         currentValue = JSON.parse(config.body);
         console.log('the currentValue is', arr[index]);
       }
-      return currentValue == JSON.parse(config.body).useraccount
+      return currentValue.useraccount == JSON.parse(config.body).useraccount
     });
     console.log('changePersonInfo result', result);
     if (typeof result == undefined) {

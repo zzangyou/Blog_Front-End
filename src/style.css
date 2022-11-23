@@ -215,5 +215,132 @@ width: 16rem;
   position: relative;
 }
 label + .css-135qv08 {
-  margin-top: 16px;
+  margin-top: 0.8rem;
+}
+.css-1qw96cp {
+  padding: 0.8rem;
+}
+.jss177 {
+  display: flex;
+  align-items: center;
+}
+.css-faujvq {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  padding: 0.8rem;
+}
+.jss178 {
+  padding-top: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+.css-1p83tvv {
+  display: flex;
+  flex: 0 0 auto;
+  margin-right: 0.8rem;
+}
+.css-1hy9t21 {
+  height: 100%;
+  text-align: center;
+  object-fit: cover;
+  color: transparent;
+  width: 3.5rem;
+  border-radius: 0.5rem;
+}
+
+  .css-14tqbo1 {
+    margin: 0px;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 0.875rem;
+    line-height: 1.43;
+    letter-spacing: 0.01071em;
+    display: block;
+
+}
+.css-rf2lqt {
+  margin: 0px;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.43;
+  letter-spacing: 0.01071em;
+  color: rgb(117, 117, 117);
+  display: block;
+}
+.css-t1nuxs {
+  margin: 0px 0px 0.35em;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 1.5rem;
+  line-height: 1.334;
+  letter-spacing: 0em;
+}
+.jss180 {
+  display: inline-block;
+  padding: 0 0.5em;
+  border-bottom: 1px solid #e7e7e7;
+  margin-bottom: 0.5em;
+}
+.css-1tqv6h6 {
+  margin: 0px 0px 0.35em;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
+}
+
+  .jss273 {
+    display: flex;
+    padding:  1rem 3rem 0.6rem 0rem;
+    align-items: center;
+    justify-content: space-between;
+
+}
+.jss275 {
+  display: flex;
+  margin-top: 0.4rem;
+  margin-bottom: 0.6rem;
+}
+.jss276 {
+  display: flex;
+  flex: auto;
+  align-items: center;
+  margin-left: 10px;
+}
+
+ .flex-center {
+   justify-content: center;
+   align-items: center;
+   justify-content: flex-start;
+}
+ .css-1u6z2n7{
+  display: flex;
+  flex-flow: row wrap;
+  flex-direction: row;
+  flex-wrap: wrap;
+  -webkit-box-pack: center;
+  place-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  position: absolute;
+  box-sizing: border-box;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  font-size: 0.75rem;
+  min-width: 20px;
+  line-height: 1;
+  padding: 0px 6px;
+  height: 20px;
+  border-radius: 10px;
+  z-index: 1;
+  transition: transform 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  background-color: rgb(63, 81, 181);
+  color: rgb(255, 255, 255);
+  top: 0px;
+  right: 0.1rem;
+  transform: scale(1) translate(50%, -50%);
+  transform-origin: 100% 0%;
 }

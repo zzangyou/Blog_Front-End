@@ -14,5 +14,6 @@
 .topicreco {
   width: 100%;
   background-color: #fff;
+  //
 }
 </style>

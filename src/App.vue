@@ -7,6 +7,7 @@ import { RouterView } from 'vue-router';
   <RouterView />
 </template>
 <style lang="scss">
+
 #app {
   height: 100%;
   width: 100%;

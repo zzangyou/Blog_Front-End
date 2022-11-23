@@ -191,17 +191,17 @@ return{
               <img src="../assets/images/111122.png" alt="" class="img">
               
          </div>
-         <div class="ka-wrapper  animate__animated animate__backInUp">
-             <div class="ka-content">
-                 <div class="jss2 css-ykq3zm">
-                  <el-form
-                      ref="ruleFormRef"
-                      :model="ruleForm"
-                      status-icon
-                      :rules="rules"
-                      label-width="120px"
-                      class="demo-ruleForm flex flex-column"
-                       :label-position="labelPosition" >
+    <div class="ka-wrapper  animate__animated animate__backInUp">
+    <div class="ka-content">
+        <div class="jss2 css-ykq3zm">
+         <el-form
+             ref="ruleFormRef"
+             :model="ruleForm"
+             status-icon
+             :rules="rules"
+             label-width="120px"
+             class="demo-ruleForm flex flex-column"
+              :label-position="labelPosition" >
     <h4 class="non-select jss3 css-1pyxybg">注册</h4>
            <el-form-item label="账号" prop="useraccount">
       <div class="flex border">

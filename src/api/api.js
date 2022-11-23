@@ -42,5 +42,33 @@ export default {
       method: 'post',
       data: params
     })
+  },
+  addPost(params){
+    return request({
+      url:'blog/addPost',
+      method:'post',
+      data:params
+    })
+  },
+  getAllBlog(params){
+    return request({
+      url:'blog/getAllBlog',
+      method:'get',
+      data:params
+    })
+  },
+  getlike(params){
+    return request({
+      url:'blog/getlike',
+      method:'post',
+      data:params
+    })
+  },
+  cancellike(params){
+    return request({
+      url:'blog/cancellike',
+      method:'post',
+      data:params
+    })
   }
 }

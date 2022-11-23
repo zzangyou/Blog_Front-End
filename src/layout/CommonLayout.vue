@@ -49,6 +49,9 @@ provide('reload', reload); */
 </template>
 
 <style lang="scss">
+.el-header{
+  z-index: 999;
+}
 .el-aside {
   // flex是flex-grow、flex-shrink和flex-basis三个属性的缩写
   /*  flex-grow属性设置的值为扩张因子，指定了flex容器中的子项目如何分配容器的剩余空间。

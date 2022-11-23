@@ -1,7 +1,7 @@
 // 记得npm i 初始化mock包噢
 import Mock from 'mockjs'
 import userApi from './mockData/user'
-
+import blogApi from './mockData/blog'
 // 【拦截请求】 设计拦截请求的地址 及相关的数据
 // 本地获取user数据
 
@@ -16,4 +16,7 @@ Mock.mock(/user\/login/, 'post', userApi.login)
 Mock.mock(/user\/register/, 'post', userApi.register)
 Mock.mock(/user\/getuserinfo/, 'post', userApi.getPersonInfo)
 Mock.mock(/user\/changeuserinfo/, 'post', userApi.changePersonInfo)
-
+Mock.mock(/blog\/addPost/, 'post', blogApi.addPost)
+Mock.mock(/blog\/getAllBlog/, 'get', blogApi.getAllBlog)
+Mock.mock(/blog\/getlike/, 'post', blogApi.getlike)
+Mock.mock(/blog\/cancellike/, 'post', blogApi.cancellike)

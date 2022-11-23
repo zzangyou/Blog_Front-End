@@ -53,7 +53,7 @@ function personInfo() {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 // 导航栏
 .el-menu-demo {
   display: flex;
