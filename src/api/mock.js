@@ -21,4 +21,7 @@ Mock.mock(/user\/changeuserinfo/, 'post', userApi.changePersonInfo)
 
 Mock.mock(/user\/gettopic/, 'get', blogApi.getTopicIntroduce)
 Mock.mock(/user\/avatar/, 'post', userApi.Avatar)
+Mock.mock(/user\/getmyblog/, 'post', blogApi.watchUserBlogs)
+Mock.mock(/blog\/getTagnames/, 'get', blogApi.getTagnames)
+Mock.mock(/blog\/getBlogbyTagname/, 'post', blogApi.getBlogsbyTagname)
 
