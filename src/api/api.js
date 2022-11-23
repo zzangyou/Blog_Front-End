@@ -10,7 +10,7 @@ export default {
       // 由于axios二次封装中配置了基础路径，所以url前面不用加http://.....
       url: '/user/login',
       method: 'post',//发送post请求
-      data: params
+      data: params//发post请求时要传输的数据
     })
   },
   register(params) {
@@ -43,6 +43,7 @@ export default {
       data: params
     })
   },
+
   addPost(params){
     return request({
       url:'blog/addPost',
@@ -69,6 +70,47 @@ export default {
       url:'blog/cancellike',
       method:'post',
       data:params
+    })
+   },
+
+  // 获取话题推荐
+  getTopic() {
+    return request({
+      url: 'user/gettopic',
+      method: 'get'
+    })
+  },
+  // axios是基于promise的，利用axios发请求，它的返回值也是一个promise对象
+
+  // 头像传输
+  sendAvatar(params) {
+    return request({
+      url: 'user/avatar',
+      method: 'post',
+      data: params
+    })
+  },
+  // 获取用户已发布微博
+  getUserBlogs(params) {
+    return request({
+      url: 'user/getmyblog',
+      method: 'post',
+      data: params
+    })
+  },
+  // 获取已有标签
+  getTagnames() {
+    return request({
+      url: 'blog/getTagnames',
+      method: 'get'
+    })
+  },
+  // 根据标签获取微博
+  getBlogsbyTagname(params) {
+    return request({
+      url: 'blog/getBlogbyTagname',
+      method: 'post',
+      data: params
     })
   }
 }

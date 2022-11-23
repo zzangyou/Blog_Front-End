@@ -1,7 +1,9 @@
+// 该文件用于统一管理mock相关数据文件
 // 记得npm i 初始化mock包噢
 import Mock from 'mockjs'
 import userApi from './mockData/user'
 import blogApi from './mockData/blog'
+
 // 【拦截请求】 设计拦截请求的地址 及相关的数据
 // 本地获取user数据
 
@@ -20,3 +22,12 @@ Mock.mock(/blog\/addPost/, 'post', blogApi.addPost)
 Mock.mock(/blog\/getAllBlog/, 'get', blogApi.getAllBlog)
 Mock.mock(/blog\/getlike/, 'post', blogApi.getlike)
 Mock.mock(/blog\/cancellike/, 'post', blogApi.cancellike)
+
+
+Mock.mock(/user\/gettopic/, 'get', blogApi.getTopicIntroduce)
+Mock.mock(/user\/avatar/, 'post', userApi.Avatar)
+Mock.mock(/user\/getmyblog/, 'post', blogApi.watchUserBlogs)
+Mock.mock(/blog\/getTagnames/, 'get', blogApi.getTagnames)
+Mock.mock(/blog\/getBlogbyTagname/, 'post', blogApi.getBlogsbyTagname)
+
+

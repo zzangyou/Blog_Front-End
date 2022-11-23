@@ -1,3 +1,4 @@
+import { Avatar } from '@element-plus/icons-vue'
 import Mock from 'mockjs'
 // 模拟后端   get请求从config.url获取参数，post请求则从config.body中获取参数
 function param2Obj(url) {
@@ -14,7 +15,6 @@ function param2Obj(url) {
     '"}'
   )
 }
-
 let userList = [{
   useraccount: 534994484,
   username: 'zzangyou',
@@ -28,14 +28,15 @@ let userList = [{
   job: '',
   character: ''
 }]
-// let userList = []
 
+// let userList = []
 
 
 // 模拟接口的格式如下
 export default {
-
-  // @占位符
+  // /** */说明注释
+  // @return	说明返回值类型
+  // @param	说明一个方法的参数
   /**
    * 用户注册
    * @param useraccount
@@ -45,15 +46,14 @@ export default {
    * @param verificationCode//验证码
    * @return {{code:number,message:string,data:object}}
    */
-
   register: config => {
-    const { useraccount, username, Pass, email, verificationCode } = JSON.parse(config.body)
+    const { useraccount, username, pass, email, verificationCode } = JSON.parse(config.body)
     console.log(JSON.parse(config.body));
     userList.unshift({
       id: Mock.Random.guid(),
       useraccount: useraccount,
       username: username,
-      password: Pass,
+      password: pass,
       email: email,
       verificationCode: verificationCode,
       // 注册时后端也应有这些数据字段
@@ -64,7 +64,6 @@ export default {
       job: '',
       character: ''
 
-
     })
     return {
       code: 100000,
@@ -72,7 +71,7 @@ export default {
       data: {
         useraccount: useraccount,
         username: username,
-        password: Pass,
+        password: pass,
         email: email,
         verificationCode: verificationCode,
         sex: '',
@@ -181,14 +180,17 @@ export default {
     // JSON.parse(text,[reviver])将json字符串转换成对象
     console.log('config.body', config.body);
     const result = userList.find((currentValue, index, arr) => {
+      console.log('currentValue', currentValue);
       if (currentValue.useraccount == JSON.parse(config.body).useraccount) {
-        currentValue = JSON.parse(config.body);
-        console.log('the currentValue is', arr[index]);
+        arr[index] = JSON.parse(config.body);
+        console.log('the currentValue is', currentValue);
       }
-      return currentValue.useraccount == JSON.parse(config.body).useraccount
+
+      return currentValue.useraccount == JSON.parse(config.body).useraccount;
+
     });
     console.log('changePersonInfo result', result);
-    if (typeof result == undefined) {
+    if (typeof result == 'undefined') {
       return {
         code: 100001,
         message: '修改失败',
@@ -200,7 +202,24 @@ export default {
         data: result
       }
     }
+  },
 
+  /**
+   * 传输头像
+   * @return {{code:number,message:String}}
+  */
+  Avatar: config => {
+    if (typeof config.body == String) {
+      return {
+        code: 100000,
+        message: '传输头像成功'
+      }
+    } else {
+      return {
+        code: 100001,
+        message: '传输头像失败'
+      }
+    }
   }
 
 

@@ -206,7 +206,7 @@ const submitForm = async (formEl) => {
     //校验成功
     if (valid) {
       console.log('保存修改成功!');
-      // 发请求
+      // 发请求，获得修改后的表单数据
       const changeuserinfo = proxy.$api.changeUserInfo(ruleForm.userData);
       console.log('@@@', changeuserinfo); //返回一个promise对象
       changeuserinfo.then(
@@ -218,6 +218,14 @@ const submitForm = async (formEl) => {
       );
       //在方法体中的调用方法，刷新路由
       // refresh();
+      /* router.replace({
+        name: 'userInfo',
+        params: {
+          id: 1,
+        },
+      }); */
+      // 刷新页面
+      location.reload(); //这种方法有空白页闪一下的问题出现，后续再解决
     } else {
       //校验失败
       console.log('error submit!', fields);
@@ -230,7 +238,10 @@ const resetForm = (formEl) => {
   formEl.resetFields();
 };
 
-const cancelSubmit = () => {};
+const cancelSubmit = () => {
+  // 刷新页面
+  location.reload();
+};
 
 const options = Array.from({ length: 10000 }).map((_, idx) => ({
   value: `${idx + 1}`,

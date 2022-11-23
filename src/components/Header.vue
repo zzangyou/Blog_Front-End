@@ -1,12 +1,21 @@
 <template>
   <div class="header">
     <!-- 导航栏 -->
+    <!-- default-active	指定页面加载时默认激活菜单的 index -->
     <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
       <!-- logo -->
       <div class="logo">logo</div>
 
       <!-- 首页选项 -->
-      <el-menu-item index="1">首页</el-menu-item>
+      <el-menu-item index="1" @click="backToHome">首页</el-menu-item>
+
+      <div class="search">
+        <!-- 搜索框 -->
+        <input type="text" v-model="searchkeyword" placeholder="请输入搜索关键字" />
+        <span style="vertical-align: middle; margin-left: 3px">
+          <el-icon size="18px"><Search /></el-icon>
+        </span>
+      </div>
 
       <!-- 关于换头像？？？ -->
       <!-- 下拉菜单 -->
@@ -22,7 +31,7 @@
           <el-dropdown-menu>
             <!-- 点击个人信息，切换路由（利用编程式路由导航） -->
             <el-dropdown-item @click="personInfo">个人信息</el-dropdown-item>
-            <!-- <el-dropdown-item>Action 2</el-dropdown-item> -->
+            <!-- <el-dropdown-item>退出登录</el-dropdown-item> -->
             <!-- <el-dropdown-item disabled>Action 4</el-dropdown-item> -->
             <!-- <el-dropdown-item divided>Action 5</el-dropdown-item> -->
           </el-dropdown-menu>
@@ -38,18 +47,31 @@ import { ArrowDown } from '@element-plus/icons-vue';
 import { router } from '../router/index';
 
 const activeIndex = ref('1');
+const searchkeyword = ref('');
 const handleSelect = (key, keyPath) => {
-  console.log(key, keyPath); //得到被选择项的index，即保存有被选择项相关信息的数组
+  console.log(key, keyPath); //得到被选择项的index，及保存有被选择项相关信息的数组
 };
+// 跳去个人信息页
 function personInfo() {
-  // push模式切换路由
   // console.log(this); //undefined
   router.push({
+    // push模式切换路由
     name: 'userInfo',
     params: {
       id: 1,
     },
   });
+  //取消选中“首页”
+  activeIndex.value = '';
+}
+// 跳回首页
+function backToHome() {
+  router.replace({
+    //replace模式
+    path: '/',
+  });
+  //选中“首页”
+  activeIndex.value = '1';
 }
 </script>
 
@@ -89,6 +111,7 @@ function personInfo() {
 
 .header {
   position: fixed;
+  z-index: 999;
   top: 0;
   left: 0;
   width: 100%;
@@ -96,5 +119,16 @@ function personInfo() {
   box-sizing: border-box;
   // padding: 20px 40px;
   // background-color: skyblue;
+}
+.search {
+  margin-left: 950px;
+  line-height: 60px;
+  input {
+    width: 200px;
+    height: 20px;
+    border-radius: 15px;
+    border: 1px solid #999;
+    outline: none;
+  }
 }
 </style>
