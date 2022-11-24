@@ -53,43 +53,46 @@ for (let i = 0; i < count; i++) {
   )
 }
  */
-export default{
-/**
- * 发布微博
- * @param useraccount
- * @param content
- * @param title
- * @param tagname
- * @param blogpicture
- * @return {{code:number,message:string,data:object}}
- */
-addPost:config=>{
-  const {useraccount,content,title,tagname}=JSON.parse(config.body)
-  console.log(JSON.parse(config.body));
-  let blogpicture=''
-  if(config.body.blogpicture){
-    blogpicture=JSON.parse(config.body.blogpicture)
-  }
-  const bid=Mock.Random.id()
-  blogList.unshift({
-     bid: bid,
-     content:content,
-     useraccount:useraccount,
-     title:title,
-     tagname:tagname,
-     blogpicture:blogpicture
-  })
-  return{
-    code:100000,
-    message:'正常',
-    data:{
-      bid: bid,
-      useraccount:useraccount,
-      avater:Mock.mock('@Image(\'100x40\',\'#c33\', \'#ffffff\')'),
-      publishtime :Mock.Random.date()
+export default {
+  /**
+   * 发布微博
+   * @param useraccount
+   * @param content
+   * @param title
+   * @param tagname
+   * @param blogpicture
+   * @return {{code:number,message:string,data:object}}
+   */
+  addPost: config => {
+    const { useraccount, content, title, tagname } = JSON.parse(config.body)
+    console.log(JSON.parse(config.body));
+    let blogpicture = ''
+    if (config.body.blogpicture) {
+      blogpicture = JSON.parse(config.body.blogpicture)
     }
-  }
-},
+    const bid = Mock.Random.id()
+    blogList.unshift({
+      bid: bid,
+      content: content,
+      useraccount: useraccount,
+      title: title,
+      tagname: tagname,
+      blogpicture: blogpicture
+    })
+    return {
+      code: 100000,
+      message: '正常',
+      data: {
+        bid: bid,
+        useraccount: useraccount,
+        avater: Mock.mock('@Image(\'100x40\',\'#c33\', \'#ffffff\')'),
+        publishtime: Mock.Random.date()
+      }
+    }
+  },
+
+
+
 /**
  * 获取所有微博
  * @param pageNumber
@@ -135,7 +138,48 @@ deleteblog:config=>{
   }
 },
 
-// 后端 get请求 通过config.url获取传来参数
+
+  /**
+   * 获取所有微博
+   * @param pageNumber
+   * @param pageSize
+   * @return {{code:number,message:string,data:object}}
+   */
+  getAllBlog: config => {
+    const { pageNumber, pageSize } = JSON.parse(config.body)
+    console.log('getAllBlog:' + JSON.parse(config.body));
+    return {
+      code: 100000,
+      message: '正常',
+      data: blogList
+    }
+  },
+  /**
+   * 微博点赞
+   * @param bid
+   * @return {{code:number,message:string}}
+   */
+  getlike: config => {
+    //  const{bid}=JSON.parse(config.body)
+    return {
+      code: 100000,
+      message: '正常'
+    }
+  },
+  /**
+  * 微博取消点赞
+  * @param bid
+  * @return {{code:number,message:string}}
+  */
+  deletelike: config => {
+    return {
+      code: 100000,
+      message: '正常'
+    }
+  },
+
+
+  // 后端 get请求 通过config.url获取传来参数
   /**
    * 获取话题推荐
    * @return {{code:number,message:String,data:Array}}
@@ -242,7 +286,7 @@ deleteblog:config=>{
     return {
       code: 100000,
       message: '获取已有标签成功',
-      data: ['日常', '美食', 'ootd', '摄影', '随手拍', '记录此刻']
+      data: ['日常', '美食', 'ootd', '旅行', '随手拍', '记录此刻']
     }
   },
   /**
@@ -251,9 +295,9 @@ deleteblog:config=>{
    * @return {{code:100000,message:Strinng,data:Array}}
   */
   getBlogsbyTagname: config => {
-    // console.log("getBlogsbyTagname", config.body);
-    console.log('getBlogsbyTagname', JSON.parse(config.body)._value);
-    let tagname = JSON.parse(config.body)._value;
+    console.log('getBlogsbyTagname', config.body);
+    // console.log('getBlogsbyTagname', JSON.parse(config.body));
+    let tagname = config.body;
     switch (tagname) {
       case '日常':
         return {
@@ -286,7 +330,7 @@ deleteblog:config=>{
           ]
         };
 
-      case '摄影':
+      case '旅行':
         return {
           code: 100000,
           message: '获取成功',
@@ -325,5 +369,3 @@ deleteblog:config=>{
   }
 
 }
-
-

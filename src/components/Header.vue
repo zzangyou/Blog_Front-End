@@ -77,6 +77,21 @@ function backToHome() {
 
 <style lang="scss" scoped>
 // 导航栏
+.header {
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  // box-sizing盒子模型，即border和padding不会撑大盒子(在border和padding不超过width和height的情况下)
+  box-sizing: border-box;
+  // padding: 20px 40px;
+  // background-color: skyblue;
+}
+.el-menu--horizontal {
+  height: 100%;
+}
 .el-menu-demo {
   display: flex;
   // padding-left: 20px;
@@ -109,17 +124,6 @@ function backToHome() {
   text-align: center;
 } */
 
-.header {
-  position: fixed;
-  z-index: 999;
-  top: 0;
-  left: 0;
-  width: 100%;
-  // box-sizing盒子模型，即border和padding不会撑大盒子(在border和padding不超过width和height的情况下)
-  box-sizing: border-box;
-  // padding: 20px 40px;
-  // background-color: skyblue;
-}
 .search {
   margin-left: 950px;
   // line-height: 60px;
