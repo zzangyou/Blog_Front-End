@@ -18,7 +18,7 @@ function param2Obj(url) {
 let blogList =  [{
   bid:1,
   username:'zzangyou',
-  useraccount:53499484,
+  useraccount:534994484,
   avater:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fblog%2F202106%2F28%2F20210628204020_17863.thumb.1000_0.jpg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1671672581&t=0e258b119be378c012a5d4eb3d7dcc94',
   publishtime:'2022/12/23 20:30',
   tagname:['日常','其他','心情'],
@@ -128,7 +128,12 @@ deletelike:config=>{
     message:'正常'
   }
 },
-
+deleteblog:config=>{
+  return{
+    code:100000,
+    message:'正常'
+  }
+},
 
 // 后端 get请求 通过config.url获取传来参数
   /**

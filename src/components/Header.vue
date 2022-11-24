@@ -122,7 +122,7 @@ function backToHome() {
 }
 .search {
   margin-left: 950px;
-  line-height: 60px;
+  // line-height: 60px;
   input {
     width: 200px;
     height: 20px;

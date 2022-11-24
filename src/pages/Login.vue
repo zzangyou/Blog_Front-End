@@ -81,7 +81,7 @@ export default defineComponent({
           console.log(data.token);
           storePublic.setToken(data.token);
           // 🔺储用户账号
-          localStorage.setItem('currentuser', ruleForm.useraccount);
+          storePublic.setUseraccount(ruleForm.useraccount);
           // 存储后跳转路由
           router
             .push({
@@ -124,57 +124,56 @@ export default defineComponent({
   <div id="root">
     <div class="App" style="min-height: 754px">
       <div class="Sign flex">
-        <div class="imgdiv flex">
-          <h3 class="blog animate__animated animate__bounceIn">Hello! Friends</h3>
-          <router-link style="margin-right: 0.5rem" class="css-1uop71e" active-class="active" to="/register">
-            <button class="css-qqvxpj toregbtn" style="color: #3f51b5">注册</button></router-link
-          >
-          <img src="../assets/images/111122.png" alt="" class="img" />
-        </div>
-        <div class="ka-wrapper animate__animated animate__backInDown">
-          <div class="ka-content">
-            <div class="jss2 css-ykq3zm">
-              <el-form
-                ref="ruleFormRef"
-                :model="ruleForm"
-                status-icon
-                :rules="rules"
-                label-width="120px"
-                class="demo-ruleForm flex flex-column"
-                :label-position="labelPosition"
-              >
-                <h4 class="non-select jss3 css-1pyxybg">登录</h4>
-                <el-form-item label="账号" prop="useraccount">
-                  <div class="flex border">
-                    <span style="margin-right: 5px; text-align: center">
-                      <el-icon :size="20" :color="color">
-                        <Avatar />
-                      </el-icon>
-                    </span>
-                    <el-input v-model.number="ruleForm.useraccount" class="inputDeep" size="large"> </el-input>
-                  </div>
-                </el-form-item>
-                <el-form-item label="密码" prop="pass">
-                  <div class="flex border">
-                    <span style="margin-right: 5px; text-align: center">
-                      <el-icon :size="20" :color="color">
-                        <Lock />
-                      </el-icon>
-                    </span>
-                    <el-input v-model="ruleForm.pass" type="password" autocomplete="off" class="inputDeep" />
-                  </div>
-                </el-form-item>
-                <el-form-item style="margin-top: 10px">
-                  <el-button type="primary" @click="submitForm()">提交</el-button>
-                  <el-button @click="resetForm()">Reset</el-button>
-                </el-form-item>
-              </el-form>
-              <pre
-                >{{ JSON.stringify(model, null, 2) }}
-</pre
-              >
-            </div>
-          </div>
+    <div class="imgdiv flex">
+      <h3 class="blog animate__animated animate__bounceIn">Hello! Friends</h3>
+      <router-link style="margin-right: 0.5rem" class="css-1uop71e" active-class="active" to="/register">
+        <button class="css-qqvxpj toregbtn" style="color: #3f51b5">注册</button></router-link
+      >
+      <img src="../assets/images/111122.png" alt="" class="img" />
+    </div>
+   <div class="ka-wrapper animate__animated animate__backInDown">
+     <div class="ka-content">
+       <div class="jss2 css-ykq3zm">
+         <el-form
+       ref="ruleFormRef"
+       :model="ruleForm"
+       status-icon
+       :rules="rules"
+       label-width="120px"
+       class="demo-ruleForm flex flex-column"
+       :label-position="labelPosition"
+     >
+       <h4 class="non-select jss3 css-1pyxybg">登录</h4>
+       <el-form-item label="账号" prop="useraccount">
+         <div class="flex border">
+           <span style="margin-right: 5px; text-align: center">
+             <el-icon :size="20" :color="color">
+               <Avatar />
+             </el-icon>
+           </span>
+           <el-input v-model.number="ruleForm.useraccount" class="inputDeep" size="large"> </el-input>
+         </div>
+       </el-form-item>
+       <el-form-item label="密码" prop="pass">
+         <div class="flex border">
+           <span style="margin-right: 5px; text-align: center">
+             <el-icon :size="20" :color="color">
+               <Lock />
+             </el-icon>
+           </span>
+           <el-input v-model="ruleForm.pass" type="password" autocomplete="off" class="inputDeep" />
+         </div>
+       </el-form-item>
+       <el-form-item style="margin-top: 10px">
+         <el-button type="primary" @click="submitForm()">提交</el-button>
+         <el-button @click="resetForm()">Reset</el-button>
+       </el-form-item>
+     </el-form>
+     <pre
+       >{{ JSON.stringify(model, null, 2) }}
+       </pre>
+       </div>
+     </div>
         </div>
       </div>
     </div>

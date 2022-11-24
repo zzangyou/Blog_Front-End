@@ -22,7 +22,7 @@ Mock.mock(/blog\/addPost/, 'post', blogApi.addPost)
 Mock.mock(/blog\/getAllBlog/, 'get', blogApi.getAllBlog)
 Mock.mock(/blog\/getlike/, 'post', blogApi.getlike)
 Mock.mock(/blog\/cancellike/, 'post', blogApi.cancellike)
-
+Mock.mock(/blog\/deleteblog/, 'post', blogApi.deleteblog)
 
 Mock.mock(/user\/gettopic/, 'get', blogApi.getTopicIntroduce)
 Mock.mock(/user\/avatar/, 'post', userApi.Avatar)
