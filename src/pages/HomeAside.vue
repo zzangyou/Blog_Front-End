@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { getCurrentInstance, ref, onMounted, reactive, toRefs } from 'vue';
+import { getCurrentInstance, ref, onMounted, reactive, toRefs, watch } from 'vue';
 import { router } from '@/router/index';
 import HomeTagBlogs from './HomeTagblogs.vue';
 export default {
@@ -28,7 +28,9 @@ export default {
     const data = reactive({
       tagnamesArr: [], //标签名数组
     });
+
     onMounted(() => {
+      // 获取已有标签名
       const tagnames = proxy.$api.getTagnames();
       console.log(tagnames);
       tagnames.then(
@@ -48,6 +50,7 @@ export default {
         },
       });
     };
+
     const handleOpen = (key, keyPath) => {
       // console.log(key, keyPath);
     };

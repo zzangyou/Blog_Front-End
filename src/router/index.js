@@ -33,7 +33,7 @@ const routes = [
         },
         // 【路由的】props配置，可让路由组件更方便的接收到参数
         /* 值为布尔值 true，那么就会把该路由接收到的所有【params参数】，
-        以props形式传给HomeTagBlogs组件 */
+        【以props形式】传给HomeTagBlogs组件 */
         props: { aside: false, mainContent: true }
         // 对于包含命名视图的路由，你必须分别为每个命名视图添加 `props` 选项：
       },
