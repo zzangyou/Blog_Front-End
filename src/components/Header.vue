@@ -125,7 +125,7 @@ function backToHome() {
 } */
 
 .search {
-  margin-left: 950px;
+  margin-left: 900px;
   line-height: 60px;
   input {
     width: 200px;
