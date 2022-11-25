@@ -82,11 +82,11 @@ const sendVerificationCode =()=>{
       console.log(proxyCode);
       //将拼接好的字符串赋值给展示的code
       proxy.proxyCode = proxyCode;
-    //  调用发送邮箱验证码接口
+     // 调用发送邮箱验证码接口
         proxy.$api.sendcaptcha(ruleForm.email,proxy.proxyCode).then(res=>{
           console.log(res);
       if(res.data.code===100000){
-        //  发送验证码后进入倒计时 使用了节流的方法
+       // 发送验证码后进入倒计时 使用了节流的方法
        const timer=null;
        const TIME_COUNT = 60;
        if (!proxy.timer) {

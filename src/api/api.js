@@ -72,7 +72,13 @@ export default {
       data:params
     })
    },
-
+  deleteblog(params){
+    return request({
+      url:'blog/deleteblog',
+      method:'post',
+      data:params
+    })
+  },
   // 获取话题推荐
   getTopic() {
     return request({

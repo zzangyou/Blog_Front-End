@@ -30,11 +30,27 @@ export const usePublicInfoStore = defineStore('publicInfo', {
     // 获取token
     getToken() {
       this.token = this.token || localStorage.getItem(LS_KEYS.JWT)
+      return this.token
     },
     /*  // 存储头像地址
      setAvatarurl(url) {
- 
+
      } */
+    //  存储当前登录账号
+    setUseraccount(useraccount){
+      this.useraccount=useraccount
+      localStorage.setItem(LS_KEYS.useraccount,useraccount)
+    },
+    // 清除当前登录账号
+    clearUseraccount(){
+      this.useraccount=''
+      localStorage.removeItem(LS_KEYS.useraccount)
+    },
+    //  获取当前登录账号
+     getUseraccount(){
+       this.useraccount=this.useraccount||localStorage.getItem(LS_KEYS.useraccount)
+        return this.useraccount
+     }
   }
 
 });

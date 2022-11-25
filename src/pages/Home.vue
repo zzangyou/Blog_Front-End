@@ -41,22 +41,22 @@
     </div>
       </el-form-item>
   <!-- 图片上传 -->
-      <el-form-item v-show="isShowUpload" class="upload-container" style="justify-content:flex-start">
-          <el-upload
-          v-model:file-list="fileList"
-          ref="upload"
-          name="blogpicture"
-          :action="uploadUrl"
-          list-type="picture-card"
-          :before-upload="beforeUpload"
-          :on-preview="handlePictureCardPreview"
-          :on-remove="handleRemove"
-          :on-exceed="handleExceedCover"
-          :on-success="handleSuccess"
-          :auto-upload="false"
-          :data="ruleForm"
-          limit=9
-    >
+   <el-form-item v-show="isShowUpload" class="upload-container" style="justify-content:flex-start">
+       <el-upload
+       v-model:file-list="fileList"
+       ref="upload"
+       name="blogpicture"
+       :action="uploadUrl"
+       list-type="picture-card"
+       :before-upload="beforeUpload"
+       :on-preview="handlePictureCardPreview"
+       :on-remove="handleRemove"
+       :on-exceed="handleExceedCover"
+       :on-success="handleSuccess"
+       :auto-upload="false"
+       :data="ruleForm"
+       limit=9
+ >
       <el-icon><Plus /></el-icon>
     </el-upload> 
     <el-dialog v-model="dialogVisible">
@@ -70,7 +70,7 @@
   </div>
   <!-- 微博显示页 -->
   <div class="blog-container">
-   <BlogCard :blogList="blogList" @getlike="getlike" @cancellike="cancellike"></BlogCard>
+   <BlogCard :blogList="blogList" @getlike="getlike" @cancellike="cancellike" @deleteblog="deleteblog"></BlogCard>
   </div>
   </div>
 </template>
@@ -82,7 +82,7 @@ import { nextTick, ref,reactive,toRefs} from 'vue'
 import { getCurrentInstance, onBeforeMount, onMounted, watch } from '@vue/runtime-core';
 import BlogCard from '../components/blogCard.vue'
 import config from '../config'
-
+import { useStore } from '@/models/index';
 export default defineComponent(
   {
   components:{
@@ -91,6 +91,7 @@ export default defineComponent(
     BlogCard
   },
   setup(){
+     const storePublic = useStore('publicInfo');
      const { proxy } = getCurrentInstance();
      const inputValue = ref('')
      const types=reactive(['','danger','warning','info','','danger','warning','info','','danger','warning','info',])
@@ -98,12 +99,14 @@ export default defineComponent(
      const InputRef = ref('')
     //  是否清空富文本编辑器
      const isresetText=ref(false)
+    //  获取当前账号
+    const useraccount= storePublic.getUseraccount()
      const ruleForm=reactive({
        title:'',
        tagname:['日常', '心情', '其他'],
        innerText:'',
       //  👀后期修改获取账号
-       useraccount:534994484
+       useraccount:useraccount
      })
     //  关闭标签
      const handleClose = (tag) => {
@@ -150,13 +153,13 @@ export default defineComponent(
             proxy.isShowTag=false
             proxy.isresetText=true
             ElMessage({ message: '发送成功',type: 'success',})
+            // 发布成功后重新获取bloglist
          }else{
           ElMessage({ message: '发送失败，请稍后再试',type: 'warning',})
          }
        }
      )
    }
-
     }
     /* 图片上传模块 */
     // 图片上传显示
@@ -206,13 +209,13 @@ const pageSize=20
 const data=reactive({
    blogList:[]
 })
+// 获取微博数据
 const getBlogData=()=>{
     proxy.$api.getAllBlog(pageNumber,pageSize).then(res=>{
     console.log(res);
     const newres=reactive(res.data.data)
     data.blogList=newres
-    console.log(data.blogList);
-   
+    console.log(data.blogList);   
   }
   )
 }
@@ -244,6 +247,15 @@ const cancellike=(obj)=>{
     }
   )
 }
+// 删除微博
+const deleteblog=(obj)=>{
+  proxy.$api.deleteblog(obj.bid,index).then(
+    res=>{
+      console.log(res);
+      proxy.getBlogData()
+    }
+  )
+}  
      return{
        inputValue,
        inputVisible,
@@ -274,7 +286,8 @@ const cancellike=(obj)=>{
        pageNumber,
        pageSize,
        getlike,
-       cancellike
+       cancellike,
+       deleteblog
      }
   }
 }
