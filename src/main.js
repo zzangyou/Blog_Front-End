@@ -10,6 +10,8 @@ import 'reset-css';
 import App from './App.vue';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'// 统一导入icon并注册
 import { useStore } from '@/models/index'
+// 使rem适配不同屏幕
+//  import 'amfe-flexible'
 // import './styles/element/index.scss'
 // 改为单独注册app （为了注册icon）
 const app = createApp(App)

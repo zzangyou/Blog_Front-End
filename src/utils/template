@@ -1,0 +1,132 @@
+<div id="root">
+   <div class="App" style="min-height: 754px;">
+       <div class="Sign flex" style="padding-top:1.5rem">
+         <div class="imgdiv flex">
+           <h3 class="blog animate__animated animate__bounceIn">Welcome Home</h3>
+                <router-link style="margin-right: 0.5rem;" class="css-1uop71e" active-class="active" to="/login">
+            <button  class="css-qqvxpj tologinbtn" style="color:#3F51B5">登录</button></router-link>
+              <img src="../assets/images/111122.png" alt="" class="img">
+              
+         </div>
+    <div class="ka-wrapper  animate__animated animate__backInUp">
+    <div class="ka-content">
+        <div class="jss2 css-ykq3zm">
+         <el-form
+             ref="ruleFormRef"
+             :model="ruleForm"
+             status-icon
+             :rules="rules"
+             label-width="120px"
+             class="demo-ruleForm flex flex-column"
+              :label-position="labelPosition" >
+    <h4 class="non-select jss3 css-1pyxybg">注册</h4>
+           <el-form-item label="账号" prop="useraccount">
+      <div class="flex border">
+            <span style="margin-right:5px;text-align:center">
+         <el-icon :size="20" :color="color" >
+         <Avatar />
+       </el-icon>
+          </span>
+         <el-input v-model.number="ruleForm.useraccount"   class="inputDeep" size="large" >
+         </el-input>
+      </div>
+       </el-form-item>
+        <el-form-item label="用户名" prop="username" :rules="[
+        { required: true, message: '请输入用户名', trigger: 'blur' },
+        { min: 3, max: 10, message: '用户名长度应为3-10个字符', trigger: 'blur' } ]">
+      <div class="flex border">
+            <span style="margin-right:5px;text-align:center">
+         <el-icon :size="20" :color="color" >
+         <User/>
+       </el-icon>
+          </span>
+         <el-input v-model="ruleForm.username"  class="inputDeep" size="large" >
+         </el-input>
+      </div>
+       </el-form-item>
+       <el-form-item label="密码" prop="pass">
+               <div class="flex border">
+            <span style="margin-right:5px;text-align:center">
+         <el-icon :size="20" :color="color" >
+         <Lock />
+       </el-icon>
+          </span>
+         <el-input v-model="ruleForm.pass" type="password" autocomplete="off" class="inputDeep" />
+      </div>
+
+       </el-form-item>
+        <el-form-item label="确认密码" prop="checkPass">
+                   <div class="flex border">
+            <span style="margin-right:5px;text-align:center">
+         <el-icon :size="20" :color="color" >
+         <Unlock />
+       </el-icon>
+          </span>
+           <el-input
+        v-model="ruleForm.checkPass"
+        type="password"
+        autocomplete="off" class="inputDeep"
+      />
+      </div>
+    </el-form-item>
+        <el-form-item
+      prop="email"
+      label="Email"
+      :rules="[
+        {
+          required: true,
+          message: '请输入邮箱',
+          trigger: 'blur',
+        },
+        {
+          type: 'email',
+          message: '请输入正确的邮箱',
+          trigger: ['blur', 'change'],
+        },
+      ]"
+    >
+             <div class="flex border">
+            <span style="margin-right:5px;text-align:center">
+         <el-icon :size="20" :color="color" >
+          <Promotion />
+       </el-icon>
+          </span>
+       <el-input v-model="ruleForm.email" class="inputDeep" />
+       
+      </div>
+     
+    </el-form-item>
+            <el-form-item label="验证码" prop="checkVerificationCode">
+                   <div class="flex border">
+            <span style="margin-right:5px;text-align:center">
+         <el-icon :size="20" :color="color" >
+         <ChatDotSquare />
+       </el-icon>
+          </span>
+           <el-input
+        v-model="ruleForm.checkVerificationCode"
+        type="text"
+        autocomplete="off" class="inputDeep VertificationCode" 
+      />     
+       <el-button text type="primary" @click="sendVerificationCode">
+       <span v-show="isActive">发送验证码</span>
+       <span v-show="!isActive">{{count}}s</span>
+       </el-button>
+      </div>
+    </el-form-item>
+     <el-form-item style="margin-top:10px">
+      <el-button type="primary" @click="submitForm(ruleFormRef)"
+        >提交</el-button
+      >
+      <el-button @click="resetForm(ruleFormRef)">Reset</el-button>
+    </el-form-item>
+      </el-form>
+      <pre>{{ JSON.stringify(model, null, 2) }}
+          </pre>
+                  </div>
+                
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

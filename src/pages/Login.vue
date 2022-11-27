@@ -14,7 +14,7 @@ import { storeToRefs } from 'pinia';
 import { getCurrentInstance } from '@vue/runtime-core';
 import 'animate.css';
 import { LS_KEYS } from '@/utils/const';
-
+import 'element-plus/theme-chalk/display.css'
 // import { FormInstance } from 'element-plus'
 export default defineComponent({
   components: {},
@@ -122,15 +122,21 @@ export default defineComponent({
 </script>
 <template>
   <div id="root">
-    <div class="App" style="min-height: 754px">
-      <div class="Sign flex">
+    <div class="App container" style="min-height: 754px">
+      
+        <el-row class="row-bg" justify="center">
+      <el-col :xs="{span: 0, offset:0}" :sm="12" :md="12" :lg="12" :xl="12" class="hidden-xs-only">
+      <!-- 图片栏 -->
     <div class="imgdiv flex">
       <h3 class="blog animate__animated animate__bounceIn">Hello! Friends</h3>
-      <router-link style="margin-right: 0.5rem" class="css-1uop71e" active-class="active" to="/register">
+      <router-link class="css-1uop71e" active-class="active" to="/register">
         <button class="css-qqvxpj toregbtn" style="color: #3f51b5">注册</button></router-link
       >
       <img src="../assets/images/111122.png" alt="" class="img" />
     </div>
+      </el-col>
+      <!-- 表单栏 -->
+      <el-col :xs="{span: 24, offset:0}" :sm="12" :md="12" :lg="12" :xl="12">
    <div class="ka-wrapper animate__animated animate__backInDown">
      <div class="ka-content">
        <div class="jss2 css-ykq3zm">
@@ -166,6 +172,8 @@ export default defineComponent({
        </el-form-item>
        <el-form-item style="margin-top: 10px">
          <el-button type="primary" @click="submitForm()">提交</el-button>
+        <router-link class="hidden isShow" active-class="active" to="/register">
+        <button class="css-qqvxpj" style="color: #3f51b5">注册</button></router-link>
          <el-button @click="resetForm()">Reset</el-button>
        </el-form-item>
      </el-form>
@@ -175,22 +183,19 @@ export default defineComponent({
        </div>
      </div>
         </div>
+      </el-col>
+  </el-row>
+
       </div>
-    </div>
+
   </div>
 </template>
 <style lang="scss" scoped>
+.container{
+  align-items: center;
+}
 .logo-box {
   padding: 2px 0 0 0;
-}
-.Sign {
-  position: absolute;
-  left: 20rem;
-  /* height: 100%; */
-  /* width: 100%; */
-  padding-top: 7rem;
-  align-items: center;
-  justify-content: center;
 }
 .logo {
   margin: 0 4px;
@@ -205,10 +210,7 @@ button:hover {
   width: 15rem;
 }
 .imgdiv {
-  /* height: 100%; */
-  left: 480px;
-  top: 247px;
-  /* width: 405px; */
+  position: relative;
   opacity: 1;
   border-radius: 10px;
   box-shadow: 0px 10px 30px 0px rgba(135, 186, 210, 0.4);
@@ -216,12 +218,13 @@ button:hover {
 .img {
   height: 486px;
   opacity: 0.95;
-  margin-left: -10px;
+  width: 100%;
+  // margin-left: -10px;
 }
 .blog {
   position: absolute;
-  top: 16rem;
-  left: 5.3rem;
+  top: 8rem;
+  left: 3rem;
   color: #fff;
   font-size: 2.7rem;
   z-index: 1;
@@ -230,8 +233,8 @@ button:hover {
 .toregbtn {
   position: absolute;
   z-index: 1;
-  top: 22rem;
-  left: 9.8rem;
+  top: 16rem;
+  left: 8.5rem;
   font-weight: bold;
 }
 .inputDeep {
@@ -253,4 +256,13 @@ button:hover {
   border: transparent;
   border-bottom: 2.5px solid #212f80;
 }
+.row-bg{
+  margin-top: 5rem;
+}
+ @media screen and (max-width:768px) {
+  .isShow{
+    display: block;
+    font-weight: bold;
+  }
+     }
 </style>

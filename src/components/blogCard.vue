@@ -2,17 +2,17 @@
 <div class="css-1qw96cp">
   <el-card shadow="hover" v-for="(item,index) in blogList" :key="item.bid"> 
     <section class="jss177">
-      <div class=" jss178 css-faujvq">
-        <div class="css-1p83tvv">
-          <div class="css-3i9vrz">
-            <img :src="item.avater" alt="" class="css-1hy9t21">
-          </div>
-        </div>
-        <div class="userinfo">
-          <span class="css-14tqbo1">{{item.username}}</span>
-          <span class="css-rf2lqt">{{item.publishtime}}</span>
-        </div>
-      </div>
+     <div class=" jss178 css-faujvq">
+       <div class="css-1p83tvv">
+         <div class="css-3i9vrz">
+           <img :src="item.avater" alt="" class="css-1hy9t21">
+         </div>
+       </div>
+       <div class="userinfo">
+         <span class="css-14tqbo1">{{item.username}}</span>
+         <span class="css-rf2lqt">{{item.publishtime}}</span>
+       </div>
+     </div>
     </section>
     <div class="text-box">
   <h2 class="jss180 css-t1nuxs">{{item.title}}</h2>
@@ -20,8 +20,25 @@
     <div class="css-1tqv6h6">
       <div  v-html="item.content"></div>
     </div>
+ <el-row  justify="center">
+   <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+     <div class="imgcontainer flex">
+   <div class="imgbox">
+     <el-image v-for="(image,index) in item.blogpicture"
+      :key=index
+      class="blogimg"
+      :src="image"
+      :preview-src-list="item.blogpicture"
+      :initial-index="4"
+      fit="cover"
+    />
+  </div>
+    </div>
+   </el-col>
+
+ </el-row>
     <div class="jss273">
-      <section>
+      <section class="tag-container">
         <el-button v-for="(tag,index) in item.tagname" :key="index" :color="tagcolor[index]">
         {{tag}}
         </el-button>
@@ -33,7 +50,7 @@
         <el-button @click="changelike(item.bid,index)" class="likebtn" circle text><i class="iconfont icon-dianzan"></i>
         <span class="css-1u6z2n7">{{item.like}}</span>
         </el-button>
-        <el-button circle text><el-icon size="1.5rem"><ChatLineSquare /></el-icon></el-button>
+        <el-button circle text @click="changeShowComment(item.bid)"><el-icon size="1.5rem"><ChatLineSquare /></el-icon></el-button>
         <el-button v-show="isShowDelete(item.useraccount)" @click="deleteBlog(item.bid,index)" circle text ><el-icon size="1.5rem"><Delete /></el-icon></el-button>
       </div>
       <div>
@@ -43,43 +60,35 @@
         <div class="publishtime css-rf2lqt"><p>{{item.publishtime}}</p></div>
       </div>
     </section>
-    <div class="imgcontainer flex">
-  <div class="imgbox">
-     <el-image v-for="(image,index) in item.blogpicture"
-      :key=index
-      class="blogimg"
-      :src="image"
-      :preview-src-list="item.blogpicture"
-      :initial-index="4"
-      fit="cover"
-    />
-  </div>
-    </div>
+     <!-- 评论模块 -->
+     <div v-show="isShowComment">
+       <BlogComment></BlogComment>
+     </div>
      </el-card>
 </div>
 </template>
 <script>
 import {defineComponent, onMounted,reactive,watchEffect,toRefs,ref,getCurrentInstance,} from 'vue'
 import { useStore } from '@/models/index';
+import BlogComment from '../components/blogComment.vue'
 export default defineComponent(
   {
   components:{
-//  
+   BlogComment
     },
  // 父组件需要传递的参数
  props:{
    blogList:{
      type:Array
    },
-
   },
    setup(props,context){
      // 传入需要获取的pinia数据的模块
       const storePublic = useStore('publicInfo');
       const { proxy } = getCurrentInstance();
     //  解决父传子的prop值不是响应式
-        const state = reactive({
-        blogList:''
+       const state = reactive({
+       blogList:''
     })
     watchEffect(()=>{
        state.blogList = props.blogList
@@ -97,14 +106,14 @@ export default defineComponent(
       return false
        }
      }
- //删除当前微博
+    //删除当前微博
     const deleteBlog = (bid,index)=>{
     const obj={
       bid,index
     }
     context.emit('deleteblog',obj)
 }
- //判断当前是否处于点赞状态
+  //判断当前是否处于点赞状态
     let islike=ref(false)
     //  点赞or取消点赞微博
     const changelike =(bid,index)=>{
@@ -123,14 +132,25 @@ export default defineComponent(
       
         }
     } 
+    // 是否显示评论组件
+    const isShowComment=ref(false)
+    const changeShowComment=(bid)=>{
+      isShowComment.value=!isShowComment.value
+      // 此时还需触发父级事件获取评论内容
+      if(isShowComment.value){
+         context.emit('getcomment',bid)
+      }
+    }
     // 标签颜色
     const tagcolor=['#3F51B5','#ead0d1','#b5c4b1','#faead3','#c9c0d3','#8696a7']
       return{
-        deleteBlog,
-        isShowDelete,
-        tagcolor,
-        ...toRefs(state),
-        changelike,
+       deleteBlog,
+       isShowDelete,
+       tagcolor,
+       ...toRefs(state),
+       changelike,
+       changeShowComment,
+       isShowComment
       }
     }
   }
@@ -165,14 +185,13 @@ export default defineComponent(
   .imgcontainer{
     justify-content: center;
     flex-wrap: wrap;
+    margin: 1rem 0;
     .imgbox{
-      width: 60%;
       height: 100%;
     }
     .blogimg{
-      // width: 8rem;
-      width: 29.33%;
-      height: 8.5rem;
+      width: 25.33%;
+      height: 5rem;
       margin: 0.2rem;
       border-radius: 0.5rem;
     }
@@ -187,5 +206,8 @@ export default defineComponent(
   :deep .likebtn{
     position: relative;
     margin-right: 0.5rem;
+  }
+  .tag-container{
+    display: flex;
   }
 </style>

@@ -11,7 +11,9 @@
     "@element-plus/icons-vue": "^2.0.10",
     "@wangeditor/editor": "^5.1.22",
     "@wangeditor/editor-for-vue": "^5.1.12",
+    "amfe-flexible": "^2.2.1",
     "animate.css": "^4.1.1",
+    "autoprefixer": "^10.4.13",
     "axios": "^0.27.2",
     "element-plus": "^2.2.19",
     "mock": "^0.1.1",
@@ -20,6 +22,7 @@
     "reset-css": "^5.0.1",
     "vue": "^3.2.37",
     "vue-router": "^4.1.2"
+
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.17.0",
@@ -30,6 +33,7 @@
     "eslint-plugin-vue": "^8.7.1",
     "husky": "^4.3.8",
     "lint-staged": "^12.4.1",
+    "postcss-pxtorem": "^6.0.0",
     "sass": "^1.53.0",
     "unplugin-auto-import": "^0.11.4",
     "unplugin-vue-components": "^0.21.2",

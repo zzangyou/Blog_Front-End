@@ -17,7 +17,7 @@
       <el-tag  v-for="(tag,index) in ruleForm.tagname"
       :key="tag"
       :type="types[index]"
-      class="mx-1"
+      class="mx-1 tags"
       closable
       :disable-transitions="false"
       @close="handleClose(tag)"
@@ -70,15 +70,14 @@
   </div>
   <!-- 微博显示页 -->
   <div class="blog-container">
-   <BlogCard :blogList="blogList" @getlike="getlike" @cancellike="cancellike" @deleteblog="deleteblog"></BlogCard>
+   <BlogCard :blogList="blogList" @getlike="getlike" @cancellike="cancellike" @deleteblog="deleteblog" @getcomment="getcomment"></BlogCard>
   </div>
   </div>
 </template>
 <script>
 import WEditor from '../components/blogEditor.vue'
 import Carousel from '../components/HomeCarousel.vue'
-import {defineComponent} from 'vue'
-import { nextTick, ref,reactive,toRefs} from 'vue'
+import {defineComponent,provide,nextTick, ref,reactive,toRefs} from 'vue'
 import { getCurrentInstance, onBeforeMount, onMounted, watch } from '@vue/runtime-core';
 import BlogCard from '../components/blogCard.vue'
 import config from '../config'
@@ -207,7 +206,8 @@ const pageNumber=1
 const pageSize=20 
 //页面初始化 获取微博数据 
 const data=reactive({
-   blogList:[]
+   blogList:[],
+   commentList:[]
 })
 // 获取微博数据
 const getBlogData=()=>{
@@ -215,7 +215,6 @@ const getBlogData=()=>{
     console.log(res);
     const newres=reactive(res.data.data)
     data.blogList=newres
-    console.log(data.blogList);   
   }
   )
 }
@@ -241,7 +240,6 @@ const getlike=(obj)=>{
 const cancellike=(obj)=>{
   proxy.$api.cancellike(obj.bid).then(
     res=>{
-      console.log(res);
       const index=obj.index
        data.blogList[index].like--
     }
@@ -256,6 +254,19 @@ const deleteblog=(obj)=>{
     }
   )
 }  
+let {commentList} = toRefs(data)
+// 获取评论内容 
+provide('commentList',commentList)
+const getcomment=(bid)=>{
+  proxy.$api.getAllComment(bid).then(
+    res=>{
+    const newres=reactive(res.data.data)
+    data.commentList=newres
+    console.log(data.commentList);
+    }
+  )
+}
+
      return{
        inputValue,
        inputVisible,
@@ -287,7 +298,8 @@ const deleteblog=(obj)=>{
        pageSize,
        getlike,
        cancellike,
-       deleteblog
+       deleteblog,
+       getcomment
      }
   }
 }
@@ -329,6 +341,9 @@ const deleteblog=(obj)=>{
     flex-wrap: wrap-reverse;
     display: flex;
     justify-content: flex-end; 
+    .tags{
+      display: flex;
+    }
 }
 :deep .w-e-bar  {
   padding: 0 1rem;

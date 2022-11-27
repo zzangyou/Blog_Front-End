@@ -79,6 +79,21 @@ export default {
       data:params
     })
   },
+  getAllComment(params){
+    return request({
+      url:'blog/getAllComment',
+      method:'get',
+      data:params
+    })
+  },
+  getChildrenComment(params){
+    return request({
+      url:'blog/getChildrenComment',
+      method:'get',
+      data:params
+    })
+  },
+
   // 获取话题推荐
   getTopic() {
     return request({

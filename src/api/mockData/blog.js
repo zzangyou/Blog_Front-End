@@ -53,6 +53,38 @@ for (let i = 0; i < count; i++) {
   )
 }
  */
+let commentList=[
+  {
+    bid:1,
+    cid:1,
+    parentid:'',
+    username:'hyeyibb',
+    head:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F201901%2F19%2F20190119123111_YTdiz.thumb.700_0.jpeg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1671950497&t=7c64c5b03b7790918b0c70e902f016e8',
+    ctime:'2022-11-09 20:30',
+    comment:'im comment',
+    parentusername:''
+  },
+  {
+    bid:1,
+    cid:2,
+    parentid:1,
+    username:'Karrott',
+    head:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F201901%2F19%2F20190119123111_YTdiz.thumb.700_0.jpeg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1671950497&t=7c64c5b03b7790918b0c70e902f016e8',
+    ctime:'2022-11-09 20:30',
+    comment:'im comment',
+    parentusername:'hyeyibb'
+  },
+  {
+    bid:1,
+    cid:3,
+    parentid:2,
+    username:'Double琪',
+    head:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F201901%2F19%2F20190119123111_YTdiz.thumb.700_0.jpeg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1671950497&t=7c64c5b03b7790918b0c70e902f016e8',
+    ctime:'2022-11-09 20:30',
+    comment:'im comment',
+    parentusername:'Karrott'
+  }
+]
 export default {
   /**
    * 发布微博
@@ -177,6 +209,42 @@ deleteblog:config=>{
       message: '正常'
     }
   },
+  /**
+   * 获取所有评论
+   * @param bid
+   * @return {{code:number,message:string,data:object}}
+   */
+  getAllComment:config=>{
+    const bid=JSON.parse(config.body)
+    let res=commentList.filter(function(item, index){
+      return item.bid==bid&&item.parentid==''
+});
+    return{
+      code: 100000,
+      message: '正常',
+      data:res
+    }
+  },
+  /**
+   * 获取当前评论下所有子评论
+   * @param  cid
+   * @returns {{code:number,message:string,data:object}}
+   */
+   getChildrenComment:config=>{
+     const cid =JSON.parse(config.body)
+     console.log(cid);
+     let res=commentList.filter(function(item){
+     return item.parentid==cid
+     })
+     let newres=commentList.filter(function(item){
+       return item.parentid==cid||item.parentid==res.cid
+     })
+        return{
+          code: 100000,
+          message: '正常',
+          data:newres
+        }
+   },
 
 
   // 后端 get请求 通过config.url获取传来参数

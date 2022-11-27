@@ -180,18 +180,23 @@ return{
 });
 </script>
 <template>
-
-<div id="root">
-   <div class="App" style="min-height: 754px;">
-       <div class="Sign flex" style="padding-top:1.5rem">
+  <div id="root">
+    <div class="App container" style="min-height: 754px">
+      
+        <el-row class="row-bg" justify="center">
+      <el-col :xs="{span: 0, offset:0}" :sm="12" :md="12" :lg="12" :xl="12" class="hidden-xs-only">
+      <!-- 图片栏 -->
          <div class="imgdiv flex">
            <h3 class="blog animate__animated animate__bounceIn">Welcome Home</h3>
-                <router-link style="margin-right: 0.5rem;" class="css-1uop71e" active-class="active" to="/login">
+                <router-link class="css-1uop71e" active-class="active" to="/login">
             <button  class="css-qqvxpj tologinbtn" style="color:#3F51B5">登录</button></router-link>
               <img src="../assets/images/111122.png" alt="" class="img">
               
          </div>
-    <div class="ka-wrapper  animate__animated animate__backInUp">
+      </el-col>
+      <!-- 表单栏 -->
+      <el-col :xs="{span: 24, offset:0}" :sm="12" :md="12" :lg="12" :xl="12">
+      <div class="ka-wrapper  animate__animated animate__backInUp">
     <div class="ka-content">
         <div class="jss2 css-ykq3zm">
          <el-form
@@ -268,8 +273,8 @@ return{
         },
       ]"
     >
-             <div class="flex border">
-            <span style="margin-right:5px;text-align:center">
+        <div class="flex border">
+        <span style="margin-right:5px;text-align:center">
          <el-icon :size="20" :color="color" >
           <Promotion />
        </el-icon>
@@ -280,7 +285,7 @@ return{
      
     </el-form-item>
             <el-form-item label="验证码" prop="checkVerificationCode">
-                   <div class="flex border">
+            <div class="flex border">
             <span style="margin-right:5px;text-align:center">
          <el-icon :size="20" :color="color" >
          <ChatDotSquare />
@@ -301,28 +306,26 @@ return{
       <el-button type="primary" @click="submitForm(ruleFormRef)"
         >提交</el-button
       >
+       <router-link class="hidden isShow" active-class="active" to="/login">
+      <button  class="css-qqvxpj" style="color:#3F51B5">登录</button></router-link>
       <el-button @click="resetForm(ruleFormRef)">Reset</el-button>
     </el-form-item>
       </el-form>
       <pre>{{ JSON.stringify(model, null, 2) }}
           </pre>
-                  </div>
-                
+          </div>
           </div>
         </div>
+      </el-col>
+  </el-row>
+
       </div>
-    </div>
+
   </div>
 </template>
 <style lang="scss" scoped>
-.Sign {
-  position: absolute;
-  left: 20rem;
-  /* height: 100%; */
-  /* width: 100%; */
-  padding-top: 7rem;
+.container{
   align-items: center;
-  justify-content: center;
 }
 .logo-box {
   padding: 2px 0 0 0;
@@ -340,10 +343,8 @@ button:hover {
   width: 15rem;
 }
 .imgdiv {
-  /* height: 100%; */
-  left: 480px;
-  top: 247px;
-  /* width: 405px; */
+  position: relative;
+  margin-top: 5rem;
   opacity: 1;
   border-radius: 10px;
   box-shadow: 0px 10px 30px 0px rgba(135, 186, 210, 0.4);
@@ -351,12 +352,12 @@ button:hover {
 .img {
   height: 486px;
   opacity: 0.95;
-  margin-left: -10px;
+  width: 100%;
 }
 .blog {
   position: absolute;
-  top: 16rem;
-  left: 3.2rem;
+  top: 8rem;
+  left: 3rem;
   color: #fff;
   z-index: 1;
   font-size: 2.7rem;
@@ -365,8 +366,8 @@ button:hover {
 .tologinbtn {
   position: absolute;
   z-index: 1;
-  top: 22rem;
-  left: 9.8rem;
+  top: 16rem;
+  left: 8.5rem;
   font-weight: bold;
 }
 .inputDeep {
@@ -388,4 +389,13 @@ button:hover {
   border: transparent;
   border-bottom: 2.5px solid #212f80;
 }
+.row-bg{
+  margin-top: 5rem;
+}
+ @media screen and (max-width:768px) {
+  .isShow{
+    display: block;
+    font-weight: bold;
+  }
+     }
 </style>

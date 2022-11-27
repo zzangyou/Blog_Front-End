@@ -34,28 +34,24 @@ export default {
   <div class="topicreco">
     <!-- im topicintroduce -->
     <h1 style="margin: 15px 0; text-align: center; font-weight: 700">
-      <el-icon color="brown" size="20px" style="vertical-align: bottom"><Comment /></el-icon>
+      <el-icon color="brown" size="20px" style="vertical-align: bottom"><Comment/></el-icon>
       今日热门话题
     </h1>
     <p v-for="(t, index) in data.topicarr" :key="t.id" class="topiccontent">
-      <el-icon color="brown"><StarFilled /></el-icon>
+      <el-icon color="brown"><StarFilled/></el-icon>
       <span style="font-weight: 700">{{ index + 1 }}</span
       >&nbsp;&nbsp;{{ t.topicname }}
     </p>
-    <!-- <p>xxx</p>
-    <p>xxx</p> -->
   </div>
 </template>
 
 <style lang="scss">
 .topicreco {
   width: 100%;
-  height: 550px;
-  padding-left: 10px;
+  padding: 2rem 0;
   background-color: #fff;
   box-sizing: border-box;
   overflow: hidden; // 超出部分隐藏
-  overflow-y: scroll; // 设置y轴方向的滚动条
 }
 .topicreco .topiccontent {
   width: 250px;

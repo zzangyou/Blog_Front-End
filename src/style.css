@@ -257,6 +257,8 @@ label + .css-135qv08 {
     line-height: 1.43;
     letter-spacing: 0.01071em;
     display: block;
+    color: #3F51b5;
+    cursor: pointer;
 
 }
 .css-rf2lqt {
@@ -343,4 +345,7 @@ label + .css-135qv08 {
   right: 0.1rem;
   transform: scale(1) translate(50%, -50%);
   transform-origin: 100% 0%;
+}
+.hidden{
+  display: none;
 }
