@@ -12,8 +12,8 @@
       <div class="search">
         <!-- 搜索框 -->
         <input type="text" v-model="searchkeyword" placeholder="请输入搜索关键字" />
-        <span style="vertical-align: middle; margin-left: 3px">
-          <el-icon size="18px"><Search /></el-icon>
+        <span>
+          <el-icon size="18"><Search /></el-icon>
         </span>
       </div>
 
@@ -83,7 +83,7 @@ function backToHome() {
   top: 0;
   left: 0;
   width: 100%;
-  height: 60px;
+  height: 3.8rem;
   // box-sizing盒子模型，即border和padding不会撑大盒子(在border和padding不超过width和height的情况下)
   box-sizing: border-box;
   // padding: 20px 40px;
@@ -98,16 +98,16 @@ function backToHome() {
 }
 // logo
 .logo {
-  width: 150px;
-  height: 60px;
-  line-height: 60px;
+  width: 7rem;
+  height: 100%;
+  line-height: 3.8rem;
   background-color: skyblue;
-  margin-right: 50px;
+  margin-right: 3rem;
 }
 // 下拉菜单
 .el-dropdown {
   margin-left: auto; //设置盒子靠右(其父级要有display: flex;) 或使用text-align: right
-  margin-right: 80px;
+  margin-right: 5rem;
   align-items: center; //子项目垂直居中
 }
 .example-showcase .el-dropdown-link {
@@ -125,14 +125,18 @@ function backToHome() {
 } */
 
 .search {
-  margin-left: 900px;
-  line-height: 60px;
+  margin-left: 50rem;
+  line-height: 3.8rem;
   input {
-    width: 200px;
-    height: 20px;
+    width: 15rem;
+    height: 1.5rem;
     border-radius: 15px;
     border: 1px solid #999;
     outline: none;
+  }
+  span {
+    vertical-align: middle;
+    margin-left: 0.5rem;
   }
 }
 </style>

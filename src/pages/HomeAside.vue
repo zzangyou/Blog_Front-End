@@ -80,7 +80,7 @@ export default {
 }
 
 .homeaside {
-  height: 550px;
+  height: 38rem;
   text-align: center;
   background-color: #fff;
   box-sizing: border-box;
