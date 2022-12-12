@@ -3,7 +3,7 @@ import { RouterView } from 'vue-router';
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
 import TopicIntro from '@/components/TopicIntro.vue';
-import 'element-plus/theme-chalk/display.css'
+import 'element-plus/theme-chalk/display.css';
 // import { onMounted, ref, watch, nextTick, provide } from 'vue'; //要引入方法
 // 局部组件刷新
 /* const isRouterAlive = ref(true);
@@ -18,35 +18,35 @@ provide('reload', reload); */
 <template>
   <div class="common-layout">
     <el-container>
-            <el-header>
+      <el-header>
         <Header />
       </el-header>
       <el-container>
         <el-container class="main" style="background-color: purple">
-        <el-row justify="center">
-          <el-col :span="4">
-            <!-- 侧边导航栏 -->
-          <el-aside style="background-color: pink; flex: 1" class="hidden-xs-only">
-            <!-- 一个视图使用一个组件渲染，因此对于同个路由，多个视图就需要多个组件 -->
-            <router-view name="aside"></router-view>
-          </el-aside>
-          </el-col>
-          <el-col :xs="24" :sm="14" :md="14" :lg="14" :xl="16">
-           <!-- 中间主要内容 -->
-          <el-main style="background-color: orange">
-            <router-view name="mainContent"></router-view>
-            <!-- <router-view name="mainContent" v-if="isRouterAlive"></router-view> -->
-          </el-main>
-          </el-col>
-          <el-col :span="4">
-                <!-- 话题推荐 -->
-          <el-aside style="background-color: grey; text-align: left" class="hidden-xs-only">
-            <TopicIntro></TopicIntro>
-          </el-aside>
-          </el-col>
-        </el-row>
+          <el-row justify="center">
+            <el-col :span="4">
+              <!-- 侧边导航栏 -->
+              <el-aside style="background-color: pink; flex: 1" class="hidden-xs-only">
+                <!-- 一个视图使用一个组件渲染，因此对于同个路由，多个视图就需要多个组件 -->
+                <router-view name="aside"></router-view>
+              </el-aside>
+            </el-col>
+            <el-col :xs="24" :sm="14" :md="14" :lg="14" :xl="16">
+              <!-- 中间主要内容 -->
+              <el-main style="background-color: orange">
+                <router-view name="mainContent"></router-view>
+                <!-- <router-view name="mainContent" v-if="isRouterAlive"></router-view> -->
+              </el-main>
+            </el-col>
+            <el-col :span="4">
+              <!-- 话题推荐 -->
+              <el-aside style="background-color: grey; text-align: left" class="hidden-xs-only">
+                <TopicIntro></TopicIntro>
+              </el-aside>
+            </el-col>
+          </el-row>
         </el-container>
-            <!-- 页脚 -->
+        <!-- 页脚 -->
         <el-footer style="background-color: skyblue">im Footer</el-footer>
       </el-container>
     </el-container>
@@ -54,10 +54,10 @@ provide('reload', reload); */
 </template>
 
 <style lang="scss">
-.el-container{
+.el-container {
   display: block;
 }
-.el-header{
+.el-header {
   z-index: 999;
 }
 .el-aside {

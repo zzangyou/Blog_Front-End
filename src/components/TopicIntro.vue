@@ -34,11 +34,11 @@ export default {
   <div class="topicreco">
     <!-- im topicintroduce -->
     <h1 style="margin: 15px 0; text-align: center; font-weight: 700">
-      <el-icon color="brown" size="20px" style="vertical-align: bottom"><Comment/></el-icon>
+      <el-icon color="brown" size="20px" style="vertical-align: bottom"><Comment /></el-icon>
       今日热门话题
     </h1>
     <p v-for="(t, index) in data.topicarr" :key="t.id" class="topiccontent">
-      <el-icon color="brown"><StarFilled/></el-icon>
+      <el-icon color="brown"><StarFilled /></el-icon>
       <span style="font-weight: 700">{{ index + 1 }}</span
       >&nbsp;&nbsp;{{ t.topicname }}
     </p>
@@ -54,8 +54,8 @@ export default {
   overflow: hidden; // 超出部分隐藏
 }
 .topicreco .topiccontent {
-  width: 250px;
-  margin-top: 10px;
+  width: 15rem;
+  margin-top: 0.6rem;
   font-style: italic;
   white-space: nowrap; //设置文本不换行
   overflow: hidden; //溢出部分隐藏

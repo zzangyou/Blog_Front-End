@@ -1,9 +1,10 @@
 <template>
   im查看已发布微博
   <div class="showmyweibo">
-    <div style="background-color: #fff">
-      {{ totalnumber }}
-      <div v-for="b in blogs" :key="b.bid" class="myblog">博客标题：{{ b.title }}。。。。。。</div>
+    <div>
+      <!-- {{ totalnumber }}
+      <div v-for="b in blogs" :key="b.bid" class="myblog">博客标题：{{ b.title }}。。。。。。</div> -->
+      <BlogCard :blogList="blogs"></BlogCard>
     </div>
 
     <div class="example-pagination-block">
@@ -31,8 +32,12 @@
 
 <script>
 import { reactive, toRef, toRefs, getCurrentInstance, onMounted } from 'vue';
+import BlogCard from '@/components/blogCard.vue';
 
 export default {
+  components: {
+    BlogCard,
+  },
   setup() {
     const { proxy } = getCurrentInstance();
     const data = reactive({
@@ -87,11 +92,13 @@ export default {
       data.pageSize = size;
       setBlogs();
     };
+
     return {
       // 扩展运算符... 可将数组或对象转换成 以逗号分隔的参数序列
       ...toRefs(data),
       handleCurrentChange,
       handleSizeChange,
+      BlogCard,
     };
   },
 };

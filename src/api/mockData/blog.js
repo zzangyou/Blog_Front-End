@@ -15,6 +15,7 @@ function param2Obj(url) {
     '"}'
   )
 }
+
 let blogList =  [{
   bid:1,
   username:'zzangyou',
@@ -48,6 +49,7 @@ let blogList =  [{
   content:'<strong>im content too<strong/>',
   like:18,
   blogpicture:[]
+
 }]
 /* const count = 200
 
@@ -65,8 +67,9 @@ for (let i = 0; i < count; i++) {
   )
 }
  */
-let commentList=[
+let commentList = [
   {
+
     bid:1,
     cid:1,
     parentid:'',
@@ -136,6 +139,7 @@ let commentList=[
     comment:'im zzangyou childcomment',
     parentusername:''
   },
+
 ]
 export default {
   /**
@@ -178,6 +182,7 @@ export default {
       }
     }
   },
+
 
 
 
@@ -307,44 +312,6 @@ deleteblog:config=>{
     }
    },
   /**
-   * 获取所有微博
-   * @param pageNumber
-   * @param pageSize
-   * @return {{code:number,message:string,data:object}}
-   */
-  getAllBlog: config => {
-    const { pageNumber, pageSize } = JSON.parse(config.body)
-    console.log('getAllBlog:' + JSON.parse(config.body));
-    return {
-      code: 100000,
-      message: '正常',
-      data: blogList
-    }
-  },
-  /**
-   * 微博点赞
-   * @param bid
-   * @return {{code:number,message:string}}
-   */
-  getlike: config => {
-    //  const{bid}=JSON.parse(config.body)
-    return {
-      code: 100000,
-      message: '正常'
-    }
-  },
-  /**
-  * 微博取消点赞
-  * @param bid
-  * @return {{code:number,message:string}}
-  */
-  deletelike: config => {
-    return {
-      code: 100000,
-      message: '正常'
-    }
-  },
-  /**
    * 获取所有评论
    * @param bid
    * @return {{code:number,message:string,data:object}}
@@ -369,9 +336,10 @@ deleteblog:config=>{
     return{
       code: 100000,
       message: '正常',
-      data:res
+      data: res
     }
   },
+
   // /**
   //  * 获取当前评论下所有子评论
   //  * @param  cid
@@ -392,6 +360,7 @@ deleteblog:config=>{
   //         data:newres
   //       }
   //  },
+
 
 
   // 后端 get请求 通过config.url获取传来参数
@@ -445,7 +414,7 @@ deleteblog:config=>{
    *  @return {{code:number,message:String,blogsnumber:number,data:Array}}
   */
   watchUserBlogs: config => {
-    // 该条件其实不应这么判断，而应是从众多用户名这查询比较，但这么写只是为了先获取假数据
+    // 该条件其实不应这么判断，而应是从众多用户名中查询比较，但这么写只是为了先获取假数据
     if (config.body == localStorage.getItem('currentuser')) {
       return {
         code: 100000,
@@ -453,36 +422,41 @@ deleteblog:config=>{
         // blogsnumber: data.length,为啥不行？？？
         blogsnumber: 30,
         data: [
-          { bid: 1, publishtime: '', title: 'title1', content: '', like: 0, comment: 'comment1' },
-          { bid: 2, publishtime: '', title: 'title2', content: '', like: 0, comment: 'comment2' },
-          { bid: 3, publishtime: '', title: 'title3', content: '', like: 0, comment: 'comment3' },
-          { bid: 4, publishtime: '', title: 'title4', content: '', like: 0, comment: 'comment4' },
-          { bid: 5, publishtime: '', title: 'title5', content: '', like: 0, comment: 'comment5' },
-          { bid: 6, publishtime: '', title: 'title6', content: '', like: 0, comment: 'comment6' },
-          { bid: 7, publishtime: '', title: 'title7', content: '', like: 0, comment: 'comment7' },
-          { bid: 8, publishtime: '', title: 'title8', content: '', like: 0, comment: 'comment8' },
-          { bid: 9, publishtime: '', title: 'title9', content: '', like: 0, comment: 'comment9' },
-          { bid: 10, publishtime: '', title: 'title10', content: '', like: 0, comment: 'comment10' },
-          { bid: 11, publishtime: '', title: 'title11', content: '', like: 0, comment: 'comment11' },
-          { bid: 12, publishtime: '', title: 'title12', content: '', like: 0, comment: 'comment12' },
-          { bid: 13, publishtime: '', title: 'title13', content: '', like: 0, comment: 'comment13' },
-          { bid: 14, publishtime: '', title: 'title14', content: '', like: 0, comment: 'comment14' },
-          { bid: 15, publishtime: '', title: 'title15', content: '', like: 0, comment: 'comment15' },
-          { bid: 16, publishtime: '', title: 'title16', content: '', like: 0, comment: 'comment16' },
-          { bid: 17, publishtime: '', title: 'title17', content: '', like: 0, comment: 'comment17' },
-          { bid: 18, publishtime: '', title: 'title18', content: '', like: 0, comment: 'comment18' },
-          { bid: 19, publishtime: '', title: 'title19', content: '', like: 0, comment: 'comment19' },
-          { bid: 20, publishtime: '', title: 'title20', content: '', like: 0, comment: 'comment20' },
-          { bid: 21, publishtime: '', title: 'title21', content: '', like: 0, comment: 'comment21' },
-          { bid: 22, publishtime: '', title: 'title22', content: '', like: 0, comment: 'comment22' },
-          { bid: 23, publishtime: '', title: 'title23', content: '', like: 0, comment: 'comment23' },
-          { bid: 24, publishtime: '', title: 'title24', content: '', like: 0, comment: 'comment24' },
-          { bid: 25, publishtime: '', title: 'title25', content: '', like: 0, comment: 'comment25' },
-          { bid: 26, publishtime: '', title: 'title26', content: '', like: 0, comment: 'comment26' },
-          { bid: 27, publishtime: '', title: 'title27', content: '', like: 0, comment: 'comment27' },
-          { bid: 28, publishtime: '', title: 'title28', content: '', like: 0, comment: 'comment28' },
-          { bid: 29, publishtime: '', title: 'title29', content: '', like: 0, comment: 'comment29' },
-          { bid: 30, publishtime: '', title: 'title30', content: '', like: 0, comment: 'comment30' },
+          blogList[0], blogList[1], blogList[0], blogList[1], blogList[0], blogList[1],
+          blogList[0], blogList[1], blogList[0], blogList[1], blogList[0], blogList[1],
+          blogList[0], blogList[1], blogList[0], blogList[1], blogList[0], blogList[1],
+          blogList[0], blogList[1], blogList[0], blogList[1], blogList[0], blogList[1],
+          blogList[0], blogList[1], blogList[0], blogList[1], blogList[0], blogList[1],
+          // { bid: 1, publishtime: '', title: 'title1', content: '', like: 0, comment: 'comment1' },
+          // { bid: 2, publishtime: '', title: 'title2', content: '', like: 0, comment: 'comment2' },
+          // { bid: 3, publishtime: '', title: 'title3', content: '', like: 0, comment: 'comment3' },
+          // { bid: 4, publishtime: '', title: 'title4', content: '', like: 0, comment: 'comment4' },
+          // { bid: 5, publishtime: '', title: 'title5', content: '', like: 0, comment: 'comment5' },
+          // { bid: 6, publishtime: '', title: 'title6', content: '', like: 0, comment: 'comment6' },
+          // { bid: 7, publishtime: '', title: 'title7', content: '', like: 0, comment: 'comment7' },
+          // { bid: 8, publishtime: '', title: 'title8', content: '', like: 0, comment: 'comment8' },
+          // { bid: 9, publishtime: '', title: 'title9', content: '', like: 0, comment: 'comment9' },
+          // { bid: 10, publishtime: '', title: 'title10', content: '', like: 0, comment: 'comment10' },
+          // { bid: 11, publishtime: '', title: 'title11', content: '', like: 0, comment: 'comment11' },
+          // { bid: 12, publishtime: '', title: 'title12', content: '', like: 0, comment: 'comment12' },
+          // { bid: 13, publishtime: '', title: 'title13', content: '', like: 0, comment: 'comment13' },
+          // { bid: 14, publishtime: '', title: 'title14', content: '', like: 0, comment: 'comment14' },
+          // { bid: 15, publishtime: '', title: 'title15', content: '', like: 0, comment: 'comment15' },
+          // { bid: 16, publishtime: '', title: 'title16', content: '', like: 0, comment: 'comment16' },
+          // { bid: 17, publishtime: '', title: 'title17', content: '', like: 0, comment: 'comment17' },
+          // { bid: 18, publishtime: '', title: 'title18', content: '', like: 0, comment: 'comment18' },
+          // { bid: 19, publishtime: '', title: 'title19', content: '', like: 0, comment: 'comment19' },
+          // { bid: 20, publishtime: '', title: 'title20', content: '', like: 0, comment: 'comment20' },
+          // { bid: 21, publishtime: '', title: 'title21', content: '', like: 0, comment: 'comment21' },
+          // { bid: 22, publishtime: '', title: 'title22', content: '', like: 0, comment: 'comment22' },
+          // { bid: 23, publishtime: '', title: 'title23', content: '', like: 0, comment: 'comment23' },
+          // { bid: 24, publishtime: '', title: 'title24', content: '', like: 0, comment: 'comment24' },
+          // { bid: 25, publishtime: '', title: 'title25', content: '', like: 0, comment: 'comment25' },
+          // { bid: 26, publishtime: '', title: 'title26', content: '', like: 0, comment: 'comment26' },
+          // { bid: 27, publishtime: '', title: 'title27', content: '', like: 0, comment: 'comment27' },
+          // { bid: 28, publishtime: '', title: 'title28', content: '', like: 0, comment: 'comment28' },
+          // { bid: 29, publishtime: '', title: 'title29', content: '', like: 0, comment: 'comment29' },
+          // { bid: 30, publishtime: '', title: 'title30', content: '', like: 0, comment: 'comment30' },
         ]
       }
     } else {

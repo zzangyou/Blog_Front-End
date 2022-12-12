@@ -56,9 +56,10 @@
       <div>
         <div class="flex flex-center">
           <p class="time">发布时间</p>
+
         </div>
-        <div class="publishtime css-rf2lqt"><p>{{item.publishtime}}</p></div>
       </div>
+
     </section>
      <!-- 评论模块 -->
      <div v-show="index==i&&isShowComment">
@@ -66,46 +67,44 @@
      </div>
      </el-card>
 </div>
+
 </template>
 <script>
-import {defineComponent, onMounted,reactive,watchEffect,toRefs,ref,getCurrentInstance,} from 'vue'
+import { defineComponent, onMounted, reactive, watchEffect, toRefs, ref, getCurrentInstance } from 'vue';
 import { useStore } from '@/models/index';
-import BlogComment from '../components/blogComment.vue'
-export default defineComponent(
-  {
-  components:{
-   BlogComment
-    },
- // 父组件需要传递的参数
- props:{
-   blogList:{
-     type:Array
-   },
+import BlogComment from '../components/blogComment.vue';
+export default defineComponent({
+  components: {
+    BlogComment,
   },
-   setup(props,context){
-     // 传入需要获取的pinia数据的模块
-      const storePublic = useStore('publicInfo');
-      const { proxy } = getCurrentInstance();
+  // 父组件需要传递的参数
+  props: {
+    blogList: {
+      type: Array,
+    },
+  },
+  setup(props, context) {
+    // 传入需要获取的pinia数据的模块
+    const storePublic = useStore('publicInfo');
+    const { proxy } = getCurrentInstance();
     //  解决父传子的prop值不是响应式
-       const state = reactive({
-       blogList:''
-    })
-    watchEffect(()=>{
-       state.blogList = props.blogList
-       console.log('blogList变化了');
-
-    })
-    //  判断博客发布者与当前登录用户是否为同一人 
+    const state = reactive({
+      blogList: '',
+    });
+    watchEffect(() => {
+      state.blogList = props.blogList;
+      console.log('blogList变化了');
+    });
+    //  判断博客发布者与当前登录用户是否为同一人
     //  是的话显示 不是的话隐藏
-      const isShowDelete=(blogUseraccount)=>{
-      const currentUseraccount= storePublic.getUseraccount()
-      if(currentUseraccount==blogUseraccount){
-      return true
+    const isShowDelete = (blogUseraccount) => {
+      const currentUseraccount = storePublic.getUseraccount();
+      if (currentUseraccount == blogUseraccount) {
+        return true;
+      } else {
+        return false;
       }
-      else {
-      return false
-       }
-     }
+    };
     //删除当前微博
     const deleteBlog = (bid)=>{
     context.emit('deleteblog',bid)
@@ -137,9 +136,10 @@ export default defineComponent(
     const changeShowComment=(bid,index)=>{
       isShowComment.value=!isShowComment.value
       proxy.i=index
+
       // 此时还需触发父级事件获取评论内容
-      if(isShowComment.value){
-         context.emit('getcomment',bid)
+      if (isShowComment.value) {
+        context.emit('getcomment', bid);
       }
     }
     
@@ -158,59 +158,59 @@ export default defineComponent(
     }
   }
 )
+
 </script>
 <style lang="scss" scoped>
 @import 'http://at.alicdn.com/t/c/font_3274443_xjbb5lzlw7n.css';
-  		.iconfont {
-		  font-family: "iconfont" !important;
-		  font-size: 1.55rem;
-		  font-style: normal;
-		  -webkit-font-smoothing: antialiased;
-		  -moz-osx-font-smoothing: grayscale;
-		}
-  .userinfo{
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;
+.iconfont {
+  font-family: 'iconfont' !important;
+  font-size: 1.55rem;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.userinfo {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+}
+.text-box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0.3rem;
+}
+.time {
+  font-size: 0.8rem;
+}
+.publishtime {
+  margin: 0.3rem 0;
+}
+.imgcontainer {
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+  .imgbox {
+    height: 100%;
   }
-  .text-box{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0.3rem
+  .blogimg {
+    width: 25.33%;
+    height: 5rem;
+    margin: 0.2rem;
+    border-radius: 0.5rem;
   }
-  .time{
-    font-size: 0.8rem;
-  }
-  .publishtime{
-    margin: 0.3rem 0;
-  }
-  .imgcontainer{
-    justify-content: center;
-    flex-wrap: wrap;
-    margin: 1rem 0;
-    .imgbox{
-      height: 100%;
-    }
-    .blogimg{
-      width: 25.33%;
-      height: 5rem;
-      margin: 0.2rem;
-      border-radius: 0.5rem;
-    }
-  }
-  :deep .el-card{
-    margin-bottom: 2rem;
-
-  }
-  :deep .el-card:hover{
-    background-color: rgba(254, 251, 251, 0.984);
-  }
-  :deep .likebtn{
-    position: relative;
-    margin-right: 0.5rem;
-  }
-  .tag-container{
-    display: flex;
-  }
+}
+:deep .el-card {
+  margin-bottom: 2rem;
+}
+:deep .el-card:hover {
+  background-color: rgba(254, 251, 251, 0.984);
+}
+:deep .likebtn {
+  position: relative;
+  margin-right: 0.5rem;
+}
+.tag-container {
+  display: flex;
+}
 </style>

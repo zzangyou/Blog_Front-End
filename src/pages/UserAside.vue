@@ -2,7 +2,7 @@
   <div class="useraside">
     <!-- im useraside -->
     <!-- 头像昵称 -->
-    <div style="margin-top: 50px">
+    <div style="margin-top: 3rem">
       <!-- action 请求url -->
       <!-- 上传头像这块有一个mock拦截问题，可能需要后端接口完成后才能配合解决完善 -->
       <el-upload
@@ -115,7 +115,8 @@ const beforeAvatarUpload = (rawFile) => {
 }
 
 .useraside {
-  height: 550px;
+  box-sizing: border-box;
+  height: 35rem;
   text-align: center;
 }
 </style>
