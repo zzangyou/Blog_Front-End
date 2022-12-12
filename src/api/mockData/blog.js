@@ -36,6 +36,18 @@ let blogList =  [{
 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F201908%2F10%2F20190810165809_zLKYF.jpeg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1671671052&t=142f96a09120823ced7e25e7651b537e',
 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F202005%2F14%2F20200514180341_nzRjn.thumb.1000_0.jpeg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1671671052&t=7b28b389f4657316a6f8e4c85254f7d3',
 ]
+},
+{
+  bid:2,
+  username:'hyeyibb',
+  useraccount:13714136008,
+  avater:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F201901%2F19%2F20190119123111_YTdiz.thumb.700_0.jpeg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1671950497&t=7c64c5b03b7790918b0c70e902f016e8',
+  publishtime:'2022/12/23 20:30',
+  tagname:['ootd','其他','记录此刻'],
+  title:'im title too',
+  content:'<strong>im content too<strong/>',
+  like:18,
+  blogpicture:[]
 }]
 /* const count = 200
 
@@ -59,7 +71,7 @@ let commentList=[
     cid:1,
     parentid:'',
     username:'hyeyibb',
-    head:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F201901%2F19%2F20190119123111_YTdiz.thumb.700_0.jpeg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1671950497&t=7c64c5b03b7790918b0c70e902f016e8',
+    avater:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F201901%2F19%2F20190119123111_YTdiz.thumb.700_0.jpeg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1671950497&t=7c64c5b03b7790918b0c70e902f016e8',
     ctime:'2022-11-09 20:30',
     comment:'im comment',
     parentusername:''
@@ -69,7 +81,7 @@ let commentList=[
     cid:2,
     parentid:1,
     username:'Karrott',
-    head:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F201901%2F19%2F20190119123111_YTdiz.thumb.700_0.jpeg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1671950497&t=7c64c5b03b7790918b0c70e902f016e8',
+    avater:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F201901%2F19%2F20190119123111_YTdiz.thumb.700_0.jpeg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1671950497&t=7c64c5b03b7790918b0c70e902f016e8',
     ctime:'2022-11-09 20:30',
     comment:'im comment',
     parentusername:'hyeyibb'
@@ -79,11 +91,51 @@ let commentList=[
     cid:3,
     parentid:2,
     username:'Double琪',
-    head:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F201901%2F19%2F20190119123111_YTdiz.thumb.700_0.jpeg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1671950497&t=7c64c5b03b7790918b0c70e902f016e8',
+    avater:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F201901%2F19%2F20190119123111_YTdiz.thumb.700_0.jpeg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1671950497&t=7c64c5b03b7790918b0c70e902f016e8',
     ctime:'2022-11-09 20:30',
     comment:'im comment',
     parentusername:'Karrott'
-  }
+  },
+  {
+    bid:1,
+    cid:4,
+    parentid:1,
+    username:'wsunnyc',
+    avater:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fblog%2F202105%2F08%2F20210508150218_16e3d.thumb.1000_0.png&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1672202649&t=b42fa3b9822992ac434f2e3acf307a8d',
+    ctime:'2022-11-09 20:30',
+    comment:'这是一条比较长的用来测试的子评论~~ 再来凑一点点字数,再试试换个行~~',
+    parentusername:'hyeyibb'
+  },
+  {
+    bid:1,
+    cid:5,
+    parentid:'',
+    username:'blossom',
+    avater:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg2.woyaogexing.com%2F2021%2F04%2F17%2F2a8a0ad329db4332879f20d183fa21db%21400x400.jpeg&refer=http%3A%2F%2Fimg2.woyaogexing.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1672202649&t=c01e13d74cc5915cf56c6955f18fab48',
+    ctime:'2022-9-29 07:30',
+    comment:'im comment',
+    parentusername:''
+  },
+  {
+    bid:1,
+    cid:6,
+    parentid:'',
+    username:'zzangyou',
+    avater:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fblog%2F202106%2F28%2F20210628204020_17863.thumb.1000_0.jpg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1671672581&t=0e258b119be378c012a5d4eb3d7dcc94',
+    ctime:'2022-9-29 07:30',
+    comment:'im zzangyou comment',
+    parentusername:''
+  },
+  {
+    bid:1,
+    cid:7,
+    parentid:5,
+    username:'zzangyou',
+    avater:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fblog%2F202106%2F28%2F20210628204020_17863.thumb.1000_0.jpg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1671672581&t=0e258b119be378c012a5d4eb3d7dcc94',
+    ctime:'2022-9-29 07:30',
+    comment:'im zzangyou childcomment',
+    parentusername:''
+  },
 ]
 export default {
   /**
@@ -109,7 +161,11 @@ export default {
       useraccount: useraccount,
       title: title,
       tagname: tagname,
-      blogpicture: blogpicture
+      username:'testname',
+      blogpicture: blogpicture,
+      publishtime:'2022/12/23 20:30',
+      avater:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fm.imeitou.com%2Fuploads%2Fallimg%2F2020121411%2Fsuyy4qo0qu3.jpg&refer=http%3A%2F%2Fm.imeitou.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1672400771&t=142f011968462fd043bd6d3287db32cf',
+      like:12
     })
     return {
       code: 100000,
@@ -133,7 +189,6 @@ export default {
  */
 getAllBlog:config=>{
   const{pageNumber,pageSize}=JSON.parse(config.body)
-  console.log('getAllBlog:'+JSON.parse(config.body));
   return{
     code:100000,
     message:'正常',
@@ -163,14 +218,94 @@ deletelike:config=>{
     message:'正常'
   }
 },
+/**
+ * 删除微博
+ * @param bid
+ * @param useraccount
+ * @return {{code:number,message}}
+ */
 deleteblog:config=>{
+  const{bid,useraccount}=JSON.parse(config.body)
+  // 筛选bloglist 过滤掉删除的微博
+ blogList= blogList.filter(item =>item.bid!=bid)
   return{
     code:100000,
     message:'正常'
   }
 },
+/**
+ * 删除评论
+ * @param cid
+ * @return {{code:number,message}}
+ */
+ deletecomment:config=>{
+   console.log(config.body);
+  const{cid}=JSON.parse(config.body)
+    // 筛选commentlist 过滤掉删除的评论
+ commentList= commentList.filter(item =>item.cid!=cid)
+  return{
+    code:100000,
+    message:'正常'
+  }
+},
+/**
+ * 发布评论
+ * @param bid
+ * @param useraccount
+ * @param comment
+ */
+ addcomment:config=>{
+  const { useraccount, comment, bid } = JSON.parse(config.body)
+  console.log(JSON.parse(config.body));
+  const cid = Mock.Random.id()
+  commentList.unshift({
+    cid: cid,
+    bid:bid,
+    comment: comment,
+    useraccount: useraccount,
+    ctime:'2022/12/23 20:30',
+    username:'chunlc',
+    avater:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F202004%2F11%2F20200411215907_hisoq.thumb.1000_0.jpg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1672754943&t=870ddc09ddc16307b615e3fb3137798e',
+    parentid:'',
+    parentusername:''
+  })
+  return {
+    code: 100000,
+    message: '正常'
+  }
+ },
+ /**
+ * 发布二级评论
+ * @param bid
+ * @param useraccount
+ * @param comment
+ * @param parentid
+ */
+  addchildrencomment:config=>{
+    const { useraccount, comment, bid,parentid } = JSON.parse(config.body)
+    console.log(JSON.parse(config.body));
+    const cid = Mock.Random.id()
+    const childuser =commentList.filter(item=>{
+      return parentid==item.cid
+    })
+    const parentusername=childuser.parentusername
+    commentList.unshift({
+      cid: cid,
+      bid:bid,
+      username:'grraty',
+      comment: comment,
+      useraccount: useraccount,
+      ctime:'2022/12/23 20:30',
+      avater:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fm.imeitou.com%2Fuploads%2Fallimg%2F2020121411%2Fsuyy4qo0qu3.jpg&refer=http%3A%2F%2Fm.imeitou.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1672400771&t=142f011968462fd043bd6d3287db32cf',
+      parentid:parentid,
+      parentusername:parentusername
 
-
+    })
+    return {
+      code: 100000,
+      message: '正常'
+    }
+   },
   /**
    * 获取所有微博
    * @param pageNumber
@@ -219,32 +354,44 @@ deleteblog:config=>{
     let res=commentList.filter(function(item, index){
       return item.bid==bid&&item.parentid==''
 });
+   res.forEach(item=>{
+     let childres=commentList.filter(citem=>{
+     return citem.parentid==item.cid
+     })
+     console.log(childres);
+     let childnewres=commentList.filter(citem=>{
+       return citem.parentid==item.cid||citem.parentid==childres.cid
+     })
+     console.log(childnewres);
+    //  将得到的子评论数据添加到父评论上
+     item['childList']=childnewres
+   })
     return{
       code: 100000,
       message: '正常',
       data:res
     }
   },
-  /**
-   * 获取当前评论下所有子评论
-   * @param  cid
-   * @returns {{code:number,message:string,data:object}}
-   */
-   getChildrenComment:config=>{
-     const cid =JSON.parse(config.body)
-     console.log(cid);
-     let res=commentList.filter(function(item){
-     return item.parentid==cid
-     })
-     let newres=commentList.filter(function(item){
-       return item.parentid==cid||item.parentid==res.cid
-     })
-        return{
-          code: 100000,
-          message: '正常',
-          data:newres
-        }
-   },
+  // /**
+  //  * 获取当前评论下所有子评论
+  //  * @param  cid
+  //  * @returns {{code:number,message:string,data:object}}
+  //  */
+  //  getChildrenComment:config=>{
+  //    const cid =JSON.parse(config.body)
+  //    console.log(cid);
+  //    let res=commentList.filter(function(item){
+  //    return item.parentid==cid
+  //    })
+  //    let newres=commentList.filter(function(item){
+  //      return item.parentid==cid||item.parentid==res.cid
+  //    })
+  //       return{
+  //         code: 100000,
+  //         message: '正常',
+  //         data:newres
+  //       }
+  //  },
 
 
   // 后端 get请求 通过config.url获取传来参数

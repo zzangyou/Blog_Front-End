@@ -8,14 +8,14 @@
 const env =import.meta.env.MODE || 'prod'
 const EnvConfig ={
     development:{
-        baseApi:'http://localhost:8000/public'
+        baseApi:'/public/'
     },
     test:{
         //  未来环境
         baseApi:'/test.future.com/public'
     },
      prod:{
-        baseApi:'http://localhost:8000/public'
+        baseApi:'/public/'
     },
 }
 export default {

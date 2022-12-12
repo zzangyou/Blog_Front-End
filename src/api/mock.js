@@ -32,4 +32,6 @@ Mock.mock(/user\/getmyblog/, 'post', blogApi.watchUserBlogs)
 Mock.mock(/blog\/getTagnames/, 'get', blogApi.getTagnames)
 Mock.mock(/blog\/getBlogbyTagname/, 'post', blogApi.getBlogsbyTagname)
 
-
+Mock.mock(/comment\/deletecomment/, 'post', blogApi.deletecomment)
+Mock.mock(/comment\/addcomment/, 'post', blogApi.addcomment)
+Mock.mock(/comment\/addchildrencomment/, 'post', blogApi.addchildrencomment)

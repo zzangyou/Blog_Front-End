@@ -50,8 +50,8 @@
         <el-button @click="changelike(item.bid,index)" class="likebtn" circle text><i class="iconfont icon-dianzan"></i>
         <span class="css-1u6z2n7">{{item.like}}</span>
         </el-button>
-        <el-button circle text @click="changeShowComment(item.bid)"><el-icon size="1.5rem"><ChatLineSquare /></el-icon></el-button>
-        <el-button v-show="isShowDelete(item.useraccount)" @click="deleteBlog(item.bid,index)" circle text ><el-icon size="1.5rem"><Delete /></el-icon></el-button>
+        <el-button circle text @click="changeShowComment(item.bid,index)"><el-icon size="1.5rem"><ChatLineSquare /></el-icon></el-button>
+        <el-button v-show="isShowDelete(item.useraccount)" @click="deleteBlog(item.bid)" circle text ><el-icon size="1.5rem"><Delete /></el-icon></el-button>
       </div>
       <div>
         <div class="flex flex-center">
@@ -61,8 +61,8 @@
       </div>
     </section>
      <!-- 评论模块 -->
-     <div v-show="isShowComment">
-       <BlogComment></BlogComment>
+     <div v-show="index==i&&isShowComment">
+       <BlogComment :bid="item.bid"></BlogComment>
      </div>
      </el-card>
 </div>
@@ -107,11 +107,9 @@ export default defineComponent(
        }
      }
     //删除当前微博
-    const deleteBlog = (bid,index)=>{
-    const obj={
-      bid,index
-    }
-    context.emit('deleteblog',obj)
+    const deleteBlog = (bid)=>{
+    context.emit('deleteblog',bid)
+
 }
   //判断当前是否处于点赞状态
     let islike=ref(false)
@@ -129,21 +127,26 @@ export default defineComponent(
         else{
        context.emit('cancellike',obj)
         islike.value=false
-      
         }
     } 
+    // ❗ 后期修复闪屏现象
+    // 用于判断显示评论的index值
+    let i=ref(-1)
     // 是否显示评论组件
     const isShowComment=ref(false)
-    const changeShowComment=(bid)=>{
+    const changeShowComment=(bid,index)=>{
       isShowComment.value=!isShowComment.value
+      proxy.i=index
       // 此时还需触发父级事件获取评论内容
       if(isShowComment.value){
          context.emit('getcomment',bid)
       }
     }
+    
     // 标签颜色
     const tagcolor=['#3F51B5','#ead0d1','#b5c4b1','#faead3','#c9c0d3','#8696a7']
       return{
+       i,
        deleteBlog,
        isShowDelete,
        tagcolor,
