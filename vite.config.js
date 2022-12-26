@@ -39,4 +39,15 @@ export default defineConfig({
   server: {
     port: 8000,
   },
+  devServer: {
+    // host: '127.0.0.1',
+    // port: 8000,
+    proxy: {
+      '/public': {
+        target: 'http://43.139.169.47:8080/',
+        pathRewrite: { '^/public': '' },
+        changeOrigin: true
+      }
+    }
+  }
 });

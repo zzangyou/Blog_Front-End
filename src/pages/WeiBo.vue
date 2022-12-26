@@ -4,7 +4,7 @@
     <div>
       <!-- {{ totalnumber }}
       <div v-for="b in blogs" :key="b.bid" class="myblog">博客标题：{{ b.title }}。。。。。。</div> -->
-      <BlogCard :blogList="blogs"></BlogCard>
+      <BlogCard :blogList="blogs" @getcomment="getcomment"></BlogCard>
     </div>
 
     <div class="example-pagination-block">
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { reactive, toRef, toRefs, getCurrentInstance, onMounted } from 'vue';
+import { reactive, toRef, toRefs, getCurrentInstance, onMounted, provide } from 'vue';
 import BlogCard from '@/components/blogCard.vue';
 
 export default {
@@ -46,6 +46,7 @@ export default {
       pageSize: 5, //一页显示多少条
       allBlogs: [], //未经过滤的所有数据
       blogs: [], //用于放经过过滤处理的数据
+      commentList: [],
     });
     // 将数组过滤处理进行封装
     const setBlogs = () => {
@@ -82,8 +83,11 @@ export default {
         if (data.allBlogs[i]) {
           tempBlogs.push(data.allBlogs[i]); //push()向数组追加一个元素
         }
-        data.blogs = tempBlogs;
       }
+      data.blogs = tempBlogs;
+
+      // 回到顶部
+      document.documentElement.scrollTop = 0;
     };
     // 每页显示数据条数(page-size)改变时的回调
     const handleSizeChange = (size) => {
@@ -93,12 +97,24 @@ export default {
       setBlogs();
     };
 
+    // 🔺provide
+    provide('commentList', data.commentList);
+    // 自定义事件的回调 获取评论内容
+    const getcomment = (bid) => {
+      //接收传来的博客id
+      proxy.$api.getAllComment(bid).then((res) => {
+        const newres = reactive(res.data.data);
+        data.commentList = newres;
+        console.log(data.commentList);
+      });
+    };
     return {
       // 扩展运算符... 可将数组或对象转换成 以逗号分隔的参数序列
       ...toRefs(data),
       handleCurrentChange,
       handleSizeChange,
       BlogCard,
+      getcomment,
     };
   },
 };

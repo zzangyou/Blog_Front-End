@@ -77,9 +77,9 @@ for (let i = 0; i < count; i++) {
  */
 let commentList = [
   {
-    bid: 1,
-    cid: 1,
-    parentid: '',
+    bid: 1,//博客id
+    cid: 1,//评论id
+    parentid: '',//父评论id
     username: 'hyeyibb',
     head: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F201901%2F19%2F20190119123111_YTdiz.thumb.700_0.jpeg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1671950497&t=7c64c5b03b7790918b0c70e902f016e8',
     ctime: '2022-11-09 20:30',

@@ -9,6 +9,7 @@ export default {
     return request({
       // 由于axios二次封装中配置了基础路径，所以url前面不用加http://.....
       url: '/user/login',
+      // url: 'http://43.139.169.47:8080/public/user/login',
       method: 'post',//发送post请求
       data: params//发post请求时要传输的数据
     })
@@ -44,53 +45,53 @@ export default {
     })
   },
 
-  addPost(params){
+  addPost(params) {
     return request({
-      url:'blog/addPost',
-      method:'post',
-      data:params
+      url: 'blog/addPost',
+      method: 'post',
+      data: params
     })
   },
-  getAllBlog(params){
+  getAllBlog(params) {
     return request({
-      url:'blog/getAllBlog',
-      method:'get',
-      data:params
+      url: 'blog/getAllBlog',
+      method: 'get',
+      data: params
     })
   },
-  getlike(params){
+  getlike(params) {
     return request({
-      url:'blog/getlike',
-      method:'post',
-      data:params
+      url: 'blog/getlike',
+      method: 'post',
+      data: params
     })
   },
-  cancellike(params){
+  cancellike(params) {
     return request({
-      url:'blog/cancellike',
-      method:'post',
-      data:params
-    })
-   },
-  deleteblog(params){
-    return request({
-      url:'blog/deleteblog',
-      method:'post',
-      data:params
+      url: 'blog/cancellike',
+      method: 'post',
+      data: params
     })
   },
-  getAllComment(params){
+  deleteblog(params) {
     return request({
-      url:'blog/getAllComment',
-      method:'get',
-      data:params
+      url: 'blog/deleteblog',
+      method: 'post',
+      data: params
     })
   },
-  getChildrenComment(params){
+  getAllComment(params) {
     return request({
-      url:'blog/getChildrenComment',
-      method:'get',
-      data:params
+      url: 'blog/getAllComment',
+      method: 'get',
+      data: params
+    })
+  },
+  getChildrenComment(params) {
+    return request({
+      url: 'blog/getChildrenComment',
+      method: 'get',
+      data: params
     })
   },
 

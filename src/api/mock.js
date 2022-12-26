@@ -8,7 +8,7 @@ import blogApi from './mockData/blog'
 // 本地获取user数据
 
 Mock.mock(/user\/sendcaptcha/, 'post', userApi.sendcaptcha)
-Mock.mock(/user\/login/, 'post', userApi.login)
+// Mock.mock(/user\/login/, 'post', userApi.login)
 // Mock.mock(rurl?, rtype?, template|function(options))
 /* 三个参数。第一个：可选 表示需要拦截的 URL，可以是 URL 字符串或 URL正则，
 第二个：可选表示需要 拦截的AJAx请求类型，如 get/post/put/delete等，

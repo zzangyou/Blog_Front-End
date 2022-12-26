@@ -267,6 +267,7 @@ export default defineComponent({
     // 获取评论内容
     provide('commentList', commentList);
     const getcomment = (bid) => {
+      //接收传来的博客id
       proxy.$api.getAllComment(bid).then((res) => {
         const newres = reactive(res.data.data);
         data.commentList = newres;

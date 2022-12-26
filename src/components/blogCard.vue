@@ -68,9 +68,9 @@
         </div>
       </section>
       <!-- 评论模块 -->
-      <!-- <div v-show="isShowComment">
+      <div v-show="isShowComment">
         <BlogComment></BlogComment>
-      </div> -->
+      </div>
     </el-card>
   </div>
 </template>
@@ -137,10 +137,12 @@ export default defineComponent({
     };
     // 是否显示评论组件
     const isShowComment = ref(false);
+    //点击按钮，显示评论 传入博客id
     const changeShowComment = (bid) => {
       isShowComment.value = !isShowComment.value;
-      // 此时还需触发父级事件获取评论内容
+      // 此时还需【触发】父级组件的自定义getcomment事件来 【获取评论内容】
       if (isShowComment.value) {
+        //触发自定义事件
         context.emit('getcomment', bid);
       }
     };

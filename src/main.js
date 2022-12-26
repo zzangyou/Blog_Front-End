@@ -24,7 +24,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {// 统一�
 // 全局挂载api到自定义全局属性$api身上 这样通过$api就可以拿到api的方法
 app.config.globalProperties.$api = api
 
-// 此时注册pinia与router 解决外部js调用pinia时报错的问题，
+// 此时注册pinia 与router 解决外部js调用pinia时报错的问题，
 app.use(pinia).use(router)
 
 // 全局路由守卫 拦截所有路由

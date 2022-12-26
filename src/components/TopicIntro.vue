@@ -11,6 +11,7 @@ export default {
     onMounted(() => {
       // 发请求获取话题推荐
       const topic = proxy.$api.getTopic();
+
       console.log(topic); //利用axios，请求成功返回的是一个promise对象
       topic.then(
         (value) => {
