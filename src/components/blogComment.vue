@@ -33,9 +33,15 @@
     <div class="css-1tqv6h6 flex">
       <div>{{item.comment}}</div>
     </div>
-    <!-- 删除评论按钮 -->
-    <div class="delcombtn" v-show="isShowDelete(item.username)" @click="ondeleteComment(item.cid)">
-         <el-button round >删除</el-button>   
+
+    <!-- 评论按钮 -->
+    <div class="combtn" >
+            <!-- 发送评论按钮 （属于二级评论） -->
+       <el-button  class="btn" type="primary" plain  @click="toAddChildrenComment(item.cid)">
+      评论
+       </el-button>
+       <!-- 删除评论  -->
+         <el-button  class="btn" type="danger" plain  @click="ondeleteComment(item.cid)" v-show="isShowDelete(item.username)" >删除</el-button>   
     </div>
     </div>
     <!-- 子评论模块 -->
@@ -45,14 +51,14 @@
        <li class="child-content">
       <div style="text-align:left">
         <span class="child-username">{{citem.username}}:  </span>
-        <span v-show="citem.parentid==item.cid?false:true">回复 <span class="child-username">@{{citem.parentusername}} :</span></span>
+        <span v-show="citem.parentid==item.cid?false:true">回复 <span class="child-username">@{{citem.parentname}} :</span></span>
         <span>{{citem.comment}}</span>
       </div>
       <div class="time-content">
      <div>
        <span class="css-rf2lqt time">{{citem.ctime}}</span>
      </div>
-     <el-button circle text class="btn" @click="dialogVisible=!dialogVisible">
+     <el-button circle text class="btn" @click="toAddChildrenComment(citem.cid)">
        <el-icon size="1.2rem"><ChatLineSquare /></el-icon>
        </el-button>
            <!-- v-show="isShowDelete(item.useraccount)" @click="deleteChildComment(item.bid,index)" -->
@@ -110,11 +116,14 @@ export default defineComponent(
   const commenttext=ref('')
   const childcomment=ref('')
  // 发布子评论模态框
- const dialogVisible = ref(false) 
+ let dialogVisible = ref(false) 
  // 爷组件需要传递的数据 
   const List=inject('commentList')
   const addcomment=inject('addcomment')
   const deletecomment=inject('deletecomment')
+  const addchildrencomment=inject('addchildrencomment')
+  // 父级评论值 点击评论时动态传递id
+  let parentid=ref('')
   const state = reactive({
      commentList:'',
      childList:''
@@ -161,26 +170,37 @@ export default defineComponent(
       useraccount:currentUseraccount
     }
     addcomment(config)
+    proxy.commenttext=''
   }
-   onMounted(()=>{
-  // getChildrenComment()
-})
-
+// 触发发布二级评论
+const toAddChildrenComment=(parentid)=>{
+  dialogVisible.value=!dialogVisible.value
+  proxy.parentid=parentid
+}
 // 发布二级评论
-const onAddChildrenComment=(parentid)=>{
+const onAddChildrenComment=()=>{
   const bid=props.bid
   const config={
-  
+   bid:bid,
+   useraccount:currentUseraccount,
+   comment:childcomment.value,
+   parentid:parentid.value
   }
+ addchildrencomment(config)
+ proxy.childcomment=''
 }
   return{
    commenttext,
+   childcomment,
+   parentid,
    ...toRefs(state),
    dialogVisible,
   //  getChildrenComment,
+  toAddChildrenComment,
    isShowDelete,
    onAddComment,
-   ondeleteComment
+   ondeleteComment,
+   onAddChildrenComment
   }
     }
   }
@@ -214,11 +234,18 @@ const onAddChildrenComment=(parentid)=>{
     height: 1.5rem;
     }
   }
+  .combtn{
+    .btn{
+    width: 3rem;
+    font-size: 0.7rem;
+    height: 1.5rem;
+    }
+  }
   .showcomment{
    margin-top: 1rem;
    padding: 0.5rem 0;
    border-bottom: 2px solid #f2f2f2ce;
-   .delcombtn{
+   .combtn{
      display: flex;
     justify-content: flex-end;
    }

@@ -53,12 +53,6 @@
         <el-button circle text @click="changeShowComment(item.bid,index)"><el-icon size="1.5rem"><ChatLineSquare /></el-icon></el-button>
         <el-button v-show="isShowDelete(item.useraccount)" @click="deleteBlog(item.bid)" circle text ><el-icon size="1.5rem"><Delete /></el-icon></el-button>
       </div>
-      <div>
-        <div class="flex flex-center">
-          <p class="time">发布时间</p>
-
-        </div>
-      </div>
 
     </section>
      <!-- 评论模块 -->

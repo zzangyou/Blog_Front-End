@@ -18,7 +18,7 @@ function param2Obj(url) {
 let userList = [{
   useraccount: 534994484,
   username: 'zzangyou',
-  password: 'chenshuying',
+  password: '123456',
   email: '534994484@qq.com',
   verificationCode: '',
   sex: '',
@@ -92,11 +92,11 @@ export default {
    *  */
   login: config => {
     console.log(config);
-    const { useraccount, pass } = JSON.parse(config.body)//JSON.parse json字符串转换成对象
-    console.log(useraccount, pass);
+    const { useraccount, password } = JSON.parse(config.body)//JSON.parse json字符串转换成对象
+    console.log(useraccount, password);
     const result = userList.filter(u => {
       //u拿到当前数组元素 some方法返回的是布尔值
-      return u.useraccount == useraccount && u.password == pass
+      return u.useraccount == useraccount && u.password == password
     })
     console.log(result);
     if (result) return {
@@ -105,7 +105,7 @@ export default {
       data: {
         token: Mock.Random.guid(),
         useraccount: useraccount,
-        password: pass,
+        password: password,
         username:result[0].username
       }
     }

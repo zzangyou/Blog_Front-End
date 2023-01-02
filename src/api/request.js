@@ -13,11 +13,6 @@ const service = axios.create({//利用axios.create,创建一个新的axios实例
   baseURL: config.baseApi,
   // 超时
   timeout: 10000,
-  headers: {
-    post: {
-      'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
-    }
-  },
 })
 // 请求拦截器 - 所有的请求开始之前先到此处
 // 这个 参数config 是个配置对象，对象里面有一个属性很重要，headers请求头

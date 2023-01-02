@@ -1,6 +1,7 @@
 // 该文件用于对api进行统一管理(请求的接口比较多，需要统一管理)
 import request from './request';// 引入对axios进行二次封装的文件
 // 将请求封装在api里，需要发请求时调用相应api即可。
+import qs from 'qs';
 export default {
   //  示例：如用户登录
   login(params) {
@@ -9,7 +10,9 @@ export default {
       // 由于axios二次封装中配置了基础路径，所以url前面不用加http://.....
       url: '/user/login',
       method: 'post',//发送post请求
-      data: params,//发post请求时要传输的数据
+      // data: params
+      data: qs.stringify(params),//发post请求时要传输的数据
+      // 发送post请求时需要修改请求头
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
         },
@@ -50,7 +53,11 @@ export default {
     return request({
       url:'blog/addPost',
       method:'post',
-      data:params
+      data:params,//发post请求时要传输的数据
+      // 发送post请求时需要修改请求头
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+        },
     })
   },
   getAllBlog(params){
@@ -97,7 +104,7 @@ export default {
   },
   addchildrencomment(params){
     return request({
-      url:'comment/addcomment',
+      url:'comment/addchildrencomment',
       method:'post',
       data:params
     })
