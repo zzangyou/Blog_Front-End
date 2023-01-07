@@ -4,10 +4,10 @@
     <!-- 头像昵称 -->
     <div style="margin-top: 3rem">
       <!-- action 请求url -->
-      <!-- 上传头像这块有一个mock拦截问题，可能需要后端接口完成后才能配合解决完善 -->
       <el-upload
         class="avatar-uploader"
-        action="http://localhost:8000/public/user/avatar"
+        action="http://43.139.169.47:8080/public/blog/uploadAvater"
+        :data="{ avatar: imageUrl, useraccount: 123456 }"
         :show-file-list="false"
         :on-success="handleAvatarSuccess"
         :before-upload="beforeAvatarUpload"
@@ -17,9 +17,9 @@
             若返回false或者返回 Promise 且被 reject，则停止上传。 -->
         <el-avatar title="点击更换头像" class="head" v-if="imageUrl" :src="imageUrl" />
       </el-upload>
-      <p style="margin-top: 5px">username</p>
+      <p style="margin-top: 5px">{{ username }}</p>
     </div>
-    <p style="margin: 20px 0">个性签名</p>
+    <p style="margin: 20px 0">{{ character }}</p>
     <!-- 导航区 -->
     <el-row class="tac">
       <el-col :span="12">
@@ -48,6 +48,15 @@ import { router } from '../router/index';
 import { getCurrentInstance, ref, onMounted } from 'vue';
 import { ElMessage } from 'element-plus';
 import UploadProps from 'element-plus';
+//🔷这里用到piana
+import { useStore } from '../models/index.js';
+import { storeToRefs } from 'pinia';
+// 传入需要获取的pinia数据的模块
+const store = useStore('publicInfo');
+console.log('In UserAside store is ', store);
+//利用pinia的storeToRefs函数，将state中的数据变为了响应式的
+const { username, character } = storeToRefs(store); //对象解构赋值
+
 const proxy = getCurrentInstance();
 const handleOpen = (key, keyPath) => {
   // console.log(key, keyPath);

@@ -7,7 +7,9 @@ export const usePublicInfoStore = defineStore('publicInfo', {
       // 这里应该是登录态判断
       isLogin: Boolean(localStorage.getItem(LS_KEYS.JWT)),
       useraccount: '',
+      username: '',//用户名(昵称)
       // avatar: ''
+      character: ''//个性签名
     };
   },
   getters: {
@@ -29,7 +31,7 @@ export const usePublicInfoStore = defineStore('publicInfo', {
     },
     // 获取token
     getToken() {
-      this.token = this.token || localStorage.getItem(LS_KEYS.JWT)
+      this.token = localStorage.getItem(LS_KEYS.JWT)
       return this.token
     },
     /*  // 存储头像地址
@@ -37,20 +39,35 @@ export const usePublicInfoStore = defineStore('publicInfo', {
 
      } */
     //  存储当前登录账号
-    setUseraccount(useraccount){
-      this.useraccount=useraccount
-      localStorage.setItem(LS_KEYS.useraccount,useraccount)
+    setUseraccount(useraccount) {
+      this.useraccount = useraccount
+      localStorage.setItem(LS_KEYS.useraccount, useraccount)
     },
     // 清除当前登录账号
-    clearUseraccount(){
-      this.useraccount=''
+    clearUseraccount() {
+      this.useraccount = ''
       localStorage.removeItem(LS_KEYS.useraccount)
     },
     //  获取当前登录账号
-     getUseraccount(){
-       this.useraccount=this.useraccount||localStorage.getItem(LS_KEYS.useraccount)
-        return this.useraccount
-     }
+    getUseraccount() {
+      this.useraccount = localStorage.getItem(LS_KEYS.useraccount)
+      return this.useraccount
+    },
+    //  存储当前用户名(昵称)
+    setUsername(username) {
+      this.username = username
+      localStorage.setItem(LS_KEYS.username, username)
+    },
+    // 清除当前用户名(昵称)
+    clearUsername() {
+      this.username = ''
+      localStorage.removeItem(LS_KEYS.username)
+    },
+    //  获取当前用户名(昵称)
+    getUsername() {
+      this.username = localStorage.getItem(LS_KEYS.username)
+      return this.username
+    },
   }
 
 });

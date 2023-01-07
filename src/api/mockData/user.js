@@ -94,16 +94,19 @@ export default {
     console.log(config);
     const { useraccount, pass } = JSON.parse(config.body)//JSON.parse json字符串转换成对象
     console.log(useraccount, pass);
-    const result = userList.some(u => {//u拿到当前数组元素 some方法返回的是布尔值
+    const result = userList.filter(u => {
+      //u拿到当前数组元素 some方法返回的是布尔值
       return u.useraccount == useraccount && u.password == pass
     })
+    console.log(result);
     if (result) return {
       code: 100000,
       message: '登录正常',
       data: {
         token: Mock.Random.guid(),
         useraccount: useraccount,
-        password: pass
+        password: pass,
+        username:result[0].username
       }
     }
     else {

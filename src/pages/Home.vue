@@ -126,7 +126,7 @@ export default defineComponent({
     const ruleForm = reactive({
       title: '',
       tagname: ['日常', '心情', '其他'],
-      innerText: '',
+      content: '',
       //  👀后期修改获取账号
       useraccount: useraccount,
     });
@@ -156,7 +156,8 @@ export default defineComponent({
     //  获取编辑器文本
     const getText = (text) => {
       console.log(text);
-      proxy.ruleForm.innerText = text;
+
+      proxy.ruleForm.content = text;
     };
     const submitForm = () => {
       console.log(fileList.value.length);
@@ -164,16 +165,20 @@ export default defineComponent({
       if (fileList.value.length !== 0) {
         // 提交表单实际上是上传图片，表单数据做附带参数
         proxy.$refs.upload.submit();
+        ElMessage({ message: '发送成功', type: 'success' });
+        // 发布成功后重新获取bloglist
+        proxy.getBlogData();
       } else {
         proxy.$api.addPost(ruleForm).then((res) => {
           console.log(res);
           if (res.data.code === 100000) {
             proxy.ruleForm.title = '';
-            proxy.ruleForm.innerText = '';
+            proxy.ruleForm.content = '';
             proxy.isShowTag = false;
             proxy.isresetText = true;
             ElMessage({ message: '发送成功', type: 'success' });
             // 发布成功后重新获取bloglist
+            proxy.getBlogData();
           } else {
             ElMessage({ message: '发送失败，请稍后再试', type: 'warning' });
           }
@@ -241,9 +246,11 @@ export default defineComponent({
     });
     // 点赞
     const getlike = (obj) => {
-      console.log(obj);
-      proxy.$api.getlike(obj.bid).then((res) => {
-        console.log(res);
+      const config = {
+        bid: obj.bid,
+      };
+      proxy.$api.getlike(config).then((res) => {
+        console.log('点赞了');
         const index = obj.index;
         console.log(data.blogList);
         data.blogList[index].like++;
@@ -251,30 +258,84 @@ export default defineComponent({
     };
     // 取消点赞
     const cancellike = (obj) => {
-      proxy.$api.cancellike(obj.bid).then((res) => {
+      const config = {
+        bid: obj.bid,
+      };
+      proxy.$api.cancellike(config).then((res) => {
         const index = obj.index;
         data.blogList[index].like--;
       });
     };
     // 删除微博
-    const deleteblog = (obj) => {
-      proxy.$api.deleteblog(obj.bid, index).then((res) => {
+    const deleteblog = (bid) => {
+      const useraccount = storePublic.getUseraccount();
+      const config = {
+        useraccount,
+        bid,
+      };
+      proxy.$api.deleteblog(config).then((res) => {
         console.log(res);
         proxy.getBlogData();
+        const { code } = res.data;
+        if (code == 100000) {
+          ElMessage({ message: '删除成功', type: 'success' });
+        }
       });
     };
+
+    // 💬 评论模块
     let { commentList } = toRefs(data);
     // 获取评论内容
     provide('commentList', commentList);
     const getcomment = (bid) => {
-      //接收传来的博客id
       proxy.$api.getAllComment(bid).then((res) => {
         const newres = reactive(res.data.data);
-        data.commentList = newres;
+        /*     newres.forEach(item=>{
+    proxy.$api.getChildrenComment(item.cid).then(
+    res=>{
+      console.log(res);
+      const newres=reactive(res.data.data)
+      item['childList']=newres
+    }
+  ) 
+    }) */
+        nextTick(() => {
+          data.commentList = newres;
+        });
         console.log(data.commentList);
       });
     };
+    // 发布一级评论
+    const addcomment = (config) => {
+      proxy.$api.addcomment(config).then((res) => {
+        console.log(res);
+        const { code } = res.data;
+        if (code == 100000) {
+          ElMessage({ message: '发布成功', type: 'success' });
+        }
+      });
+      // 孙组件发生变化 重新获取评论
+      proxy.getcomment(config.bid);
+    };
+    provide('addcomment', addcomment);
+    // 发布二级评论
+    const addchildrencomment = (config) => {
+      proxy.$api.addchildrencomment(config).then((res) => {});
+    };
 
+    // 删除评论
+    const deletecomment = (config) => {
+      proxy.$api.deletecomment(config).then((res) => {
+        console.log(res);
+        const { code } = res.data;
+        if (code == 100000) {
+          ElMessage({ message: '删除成功', type: 'success' });
+        }
+      });
+      // 孙组件发生变化 重新获取评论
+      proxy.getcomment(config.bid);
+    };
+    provide('deletecomment', deletecomment);
     return {
       inputValue,
       inputVisible,
@@ -308,6 +369,7 @@ export default defineComponent({
       cancellike,
       deleteblog,
       getcomment,
+      deletecomment,
     };
   },
 });

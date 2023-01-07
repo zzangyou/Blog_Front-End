@@ -98,7 +98,7 @@
         <el-input v-model="ruleForm.userData.job" />
       </el-form-item>
 
-      <el-form-item label="个性简介" prop="character">
+      <el-form-item label="个性签名" prop="character">
         <el-input v-model="ruleForm.userData.character" type="textarea" />
       </el-form-item>
 
@@ -118,12 +118,17 @@
 </template>
 
 <script  setup>
-import { reactive, ref, onMounted, getCurrentInstance } from 'vue';
-import { useStore } from '@/models/index';
+import { reactive, ref, onMounted, getCurrentInstance, toRaw } from 'vue';
 // import { inject } from 'vue';
 import { router } from '@/router/index';
 //引入类型
 // import type { FormInstance, FormRules } from 'element-plus';
+// 🔷用到piana完成组件间通信
+import { useStore } from '@/models/index';
+import { storeToRefs } from 'pinia';
+const store = useStore('publicInfo');
+// 利用pinia的storeToRefs函数，将state中的数据变为了响应式的
+storeToRefs(store); //对象解构赋值
 
 const formSize = ref('default');
 
@@ -136,8 +141,8 @@ const { proxy } = getCurrentInstance(); //记得要加{ }
 // 数据
 let ruleForm = reactive({
   userData: {
-    username: '', //昵称
     useraccount: '', //账号
+    username: '', //昵称
     password: '', //密码
     email: '', //邮箱
     sex: '', //性别
@@ -145,7 +150,7 @@ let ruleForm = reactive({
     birth: '', //生日
     star: '', //星座
     job: '', //职业
-    character: '', //个性简介
+    character: '', //个性签名
   },
 });
 
@@ -206,9 +211,12 @@ const submitForm = async (formEl) => {
     //校验成功
     if (valid) {
       console.log('保存修改成功!');
+      // 将proxy对象转换为普通对象
+      let obj = toRaw(ruleForm.userData);
+      console.log('111', obj);
       // 发请求，获得修改后的表单数据
-      const changeuserinfo = proxy.$api.changeUserInfo(ruleForm.userData);
-      console.log('@@@', changeuserinfo); //返回一个promise对象
+      const changeuserinfo = proxy.$api.changeUserInfo(obj);
+      console.log('@@@changeuserinfo', changeuserinfo); //返回一个promise对象
       changeuserinfo.then(
         (value) => {
           console.log('@@@', value.data);
@@ -225,7 +233,7 @@ const submitForm = async (formEl) => {
         },
       }); */
       // 刷新页面
-      location.reload(); //这种方法有空白页闪一下的问题出现，后续再解决
+      // location.reload(); //这种方法有空白页闪一下的问题出现，后续再解决
     } else {
       //校验失败
       console.log('error submit!', fields);
@@ -254,7 +262,7 @@ onMounted(() => {
   console.log('pinia的publicinfo模块下的state中的useraccount是' + publicinfo.useraccount);
   // 发送请求，获得初始数据
   const getuserinfo = proxy.$api.getUserInfo(publicinfo.useraccount); */
-  const getuserinfo = proxy.$api.getUserInfo(localStorage.getItem('currentuser'));
+  const getuserinfo = proxy.$api.getUserInfo({ useraccount: localStorage.getItem('currentuser') });
   console.log('发送获取个人信息请求所返回的是', getuserinfo); //Promise对象
   getuserinfo.then(
     (value) => {
@@ -264,6 +272,9 @@ onMounted(() => {
       // ruleForm = value.data.data;错误，这样就会ruleForm数据就会失去响应式
       // 🔺正确的做法是将数据作为ruleForm的一个对象属性来修改，这样就不会丢失响应式
       ruleForm.userData = value.data.data;
+      // 🔷修改pinia中的username(昵称)和character(个性签名)
+      store.username = value.data.data.username;
+      store.character = value.data.data.character;
     },
     (reason) => {},
   );

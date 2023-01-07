@@ -117,7 +117,7 @@ const sendVerificationCode =()=>{
 }
 
 const ruleForm = reactive({
-  pass: '',
+  password: '',
   checkPass: '',
   useraccount: '',
   email:'',
@@ -126,7 +126,7 @@ const ruleForm = reactive({
 })
 
 const rules = reactive({
-  pass: [{ validator: validatePass, trigger: 'blur',required: true}],
+  password: [{ validator: validatePass, trigger: 'blur',required: true}],
   checkPass: [{ validator: validatePass2, trigger: 'blur',required: true, }],
   useraccount: [{ validator: checkUseraccount, trigger: 'blur',required: true }]
 })
@@ -232,14 +232,14 @@ return{
          </el-input>
       </div>
        </el-form-item>
-       <el-form-item label="密码" prop="pass">
+       <el-form-item label="密码" prop="password">
                <div class="flex border">
             <span style="margin-right:5px;text-align:center">
          <el-icon :size="20" :color="color" >
          <Lock />
        </el-icon>
           </span>
-         <el-input v-model="ruleForm.pass" type="password" autocomplete="off" class="inputDeep" />
+         <el-input v-model="ruleForm.password" type="password" autocomplete="off" class="inputDeep" />
       </div>
 
        </el-form-item>

@@ -1,6 +1,6 @@
 // 该文件用于对api进行统一管理(请求的接口比较多，需要统一管理)
 import request from './request';// 引入对axios进行二次封装的文件
-
+import qs from 'qs';
 // 将请求封装在api里，需要发请求时调用相应api即可。
 export default {
   //  示例：如用户登录
@@ -11,7 +11,10 @@ export default {
       url: '/user/login',
       // url: 'http://43.139.169.47:8080/public/user/login',
       method: 'post',//发送post请求
-      data: params//发post请求时要传输的数据
+      data: params,//发post请求时要传输的数据
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
     })
   },
   register(params) {
@@ -31,9 +34,14 @@ export default {
   // 获取个人信息
   getUserInfo(params) {
     return request({//发请求
-      url: 'user/getuserinfo',
-      method: 'post',
-      data: params
+      // url: 'user/getuserinfo',
+      url: 'user/getpersoninfo',
+      method: 'get',
+      data: params,
+      // data: qs.stringify(params),
+      // Headers: {
+      //   'content-type': 'application/x-www-form-urlencoded'
+      // },
     })
   },
   // 修改个人信息
@@ -41,7 +49,9 @@ export default {
     return request({
       url: 'user/changeuserinfo',
       method: 'post',
-      data: params
+      // data: params,
+      data: qs.stringify(params),
+
     })
   },
 
@@ -80,6 +90,27 @@ export default {
       data: params
     })
   },
+  deletecomment(params) {
+    return request({
+      url: 'comment/deletecomment',
+      method: 'post',
+      data: params
+    })
+  },
+  addcomment(params) {
+    return request({
+      url: 'comment/addcomment',
+      method: 'post',
+      data: params
+    })
+  },
+  addchildrencomment(params) {
+    return request({
+      url: 'comment/addcomment',
+      method: 'post',
+      data: params
+    })
+  },
   getAllComment(params) {
     return request({
       url: 'blog/getAllComment',
@@ -98,8 +129,9 @@ export default {
   // 获取话题推荐
   getTopic() {
     return request({
-      url: 'user/gettopic',
-      method: 'get'
+      url: 'gettopic',
+      method: 'get',
+
     })
   },
   // axios是基于promise的，利用axios发请求，它的返回值也是一个promise对象
@@ -116,7 +148,15 @@ export default {
   getUserBlogs(params) {
     return request({
       url: 'user/getmyblog',
-      method: 'post',
+      method: 'get',
+      data: params
+    })
+  },
+  // 获取用户已发布评论
+  getUserComment(params) {
+    return request({
+      url: 'user/getmycomment',
+      method: 'get',
       data: params
     })
   },
@@ -131,7 +171,7 @@ export default {
   getBlogsbyTagname(params) {
     return request({
       url: 'blog/getBlogbyTagname',
-      method: 'post',
+      method: 'get',
       data: params
     })
   }

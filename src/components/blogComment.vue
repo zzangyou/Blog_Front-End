@@ -5,7 +5,7 @@
       <div class="flex flex-column">
         <el-input v-model="commenttext" :rows="1" type="textarea" placeholder="发布你的评论" />
         <div class="commentbtn">
-          <el-button class="btn" type="primary" plain>评论</el-button>
+          <el-button class="btn" type="primary" plain @click="onAddComment">评论</el-button>
         </div>
       </div>
       <!-- 评论展示模块 -->
@@ -16,7 +16,7 @@
             <div class="jss178 css-faujvq">
               <div class="css-1p83tvv">
                 <div class="css-3i9vrz">
-                  <img :src="item.head" alt="" class="css-1hy9t21 avater" />
+                  <img :src="item.avater" alt="" class="css-1hy9t21 avater" />
                 </div>
               </div>
               <div class="userinfo">
@@ -26,7 +26,11 @@
             </div>
           </section>
           <div class="css-1tqv6h6 flex">
-            <div>im comment</div>
+            <div>{{ item.comment }}</div>
+          </div>
+          <!-- 删除评论按钮 -->
+          <div class="delcombtn" v-show="isShowDelete(item.username)" @click="ondeleteComment(item.cid)">
+            <el-button round>删除</el-button>
           </div>
         </div>
         <!-- 子评论模块 -->
@@ -34,32 +38,34 @@
           <section class="child-comment" v-for="citem in item.childList" :key="citem.cid">
             <ul>
               <li class="child-content">
-                <div>
+                <div style="text-align: left">
                   <span class="child-username">{{ citem.username }}: </span>
-                  <span v-show="true"
+                  <span v-show="citem.parentid == item.cid ? false : true"
                     >回复 <span class="child-username">@{{ citem.parentusername }} :</span></span
                   >
                   <span>{{ citem.comment }}</span>
                 </div>
                 <div class="time-content">
                   <div>
-                    <span class="css-rf2lqt time">{{ citem.ctiem }}</span>
+                    <span class="css-rf2lqt time">{{ citem.ctime }}</span>
                   </div>
                   <el-button circle text class="btn" @click="dialogVisible = !dialogVisible">
                     <el-icon size="1.2rem"><ChatLineSquare /></el-icon>
                   </el-button>
                   <!-- v-show="isShowDelete(item.useraccount)" @click="deleteChildComment(item.bid,index)" -->
-                  <el-button circle text
+                  <el-button circle text v-show="isShowDelete(citem.username)" @click="ondeleteComment(citem.cid)"
                     ><el-icon size="1.2rem"><Delete /></el-icon
                   ></el-button>
                 </div>
                 <!-- 发送子评论弹出框 -->
                 <el-dialog v-model="dialogVisible" title="回复评论" width="30%" align-center>
-                  <el-input v-model="textarea" :rows="2" type="textarea" placeholder="Please input" />
+                  <el-input v-model="childcomment" :rows="2" type="textarea" placeholder="Please input" />
                   <template #footer>
                     <span class="dialog-footer">
                       <el-button @click="dialogVisible = false">取消</el-button>
-                      <el-button type="primary" @click="dialogVisible = false"> 发送 </el-button>
+                      <el-button type="primary" @click="(dialogVisible = false), onAddChildrenComment(citem.cid)">
+                        发送
+                      </el-button>
                     </span>
                   </template>
                 </el-dialog>
@@ -73,54 +79,92 @@
 </template>
 <script>
 import { ref, inject, onMounted, toRefs, reactive, watchEffect, defineComponent, getCurrentInstance } from 'vue';
+import { useStore } from '@/models/index';
 export default defineComponent({
-  setup() {
+  // 父组件需要传递的参数
+  props: {
+    bid: {
+      type: Number,
+    },
+  },
+  setup(props) {
     const { proxy } = getCurrentInstance();
+
+    // 传入需要获取的pinia数据的模块
+    const storePublic = useStore('publicInfo');
+    // 获取当前用户名
+    const currentUsername = storePublic.getUsername();
+    const currentUseraccount = storePublic.getUseraccount();
     const commenttext = ref('');
-    //inject
+    const childcomment = ref('');
+    // 发布子评论模态框
+    const dialogVisible = ref(false);
+    // 爷组件需要传递的数据
     const List = inject('commentList');
+    const addcomment = inject('addcomment');
+    const deletecomment = inject('deletecomment');
     const state = reactive({
       commentList: '',
       childList: '',
     });
-    //显示子评论模块并获取当前评论的子评论
-    const getChildrenComment = () => {
-      state.commentList.forEach((item) => {
-        console.log(item.cid);
-        proxy.$api.getChildrenComment(item.cid).then((res) => {
-          console.log(res);
-          const newres = reactive(res.data.data);
-          item['childList'] = newres;
-        });
-      });
-    };
     watchEffect(() => {
       state.commentList = List;
-      getChildrenComment();
+      //  getChildrenComment()
       console.log('commentList变化了');
     });
     //
+    //  判断是否显示删除评论按钮
+    //  是的话显示 不是的话隐藏
+    const isShowDelete = (commentusername) => {
+      if (currentUsername == commentusername) {
+        return true;
+      } else {
+        return false;
+      }
+    };
 
+    //  删除评论
+    const ondeleteComment = (cid) => {
+      // 爷组件重新获取评论 需要获取props的bid
+      const bid = props.bid;
+      //  孙传爷组件
+      const config = {
+        cid: cid,
+        bid: bid,
+      };
+      // 调用爷组件传递过来的函数 并将config作为参数
+      deletecomment(config);
+    };
+
+    // 发布一级评论
+    // 孙传爷组件 爷组件通过provide传递函数 孙组件接收并调用时传递config参数
+    const onAddComment = () => {
+      const bid = props.bid;
+      console.log(bid);
+      const config = {
+        bid: bid,
+        comment: commenttext.value,
+        useraccount: currentUseraccount,
+      };
+      addcomment(config);
+    };
     onMounted(() => {
-      getChildrenComment();
+      // getChildrenComment()
     });
-    /* const showChildrenComment=(cid)=>{
-  proxy.$api.getChildrenComment(cid).then(
-    res=>{
-      console.log(res);
-      const newres=reactive(res.data.data)
-      state.childList=newres
-    }
-  )
-  return true
-} */
-    // 发布子评论模态框
-    const dialogVisible = ref(false);
+
+    // 发布二级评论
+    const onAddChildrenComment = (parentid) => {
+      const bid = props.bid;
+      const config = {};
+    };
     return {
       commenttext,
       ...toRefs(state),
       dialogVisible,
-      getChildrenComment,
+      //  getChildrenComment,
+      isShowDelete,
+      onAddComment,
+      ondeleteComment,
     };
   },
 });
@@ -188,3 +232,5 @@ export default defineComponent({
   }
 }
 </style>
+
+

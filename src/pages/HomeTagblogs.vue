@@ -1,14 +1,15 @@
 <template>
   imHomeTagblogs
-  <div v-for="(b, index) in blogsArr" :key="index" class="tag">
+  <!-- <div v-for="(b, index) in blogsArr" :key="index" class="tag">
     <h2>{{ b.title }}</h2>
     <p>{{ b.content }}</p>
-  </div>
+  </div> -->
+  <BlogCard :blogList="blogsArr" @getcomment="getcomment"></BlogCard>
   {{ props.tagname }}
 </template>
 
 <script>
-import { getCurrentInstance, toRef, ref, reactive, onMounted, watch } from 'vue';
+import { getCurrentInstance, toRef, ref, reactive, onMounted, watch, provide } from 'vue';
 import { useRoute } from 'vue-router';
 export default {
   //组件的props配置接收，这个tagname是路由的props配置设置传来的
@@ -19,9 +20,10 @@ export default {
     const { proxy } = getCurrentInstance();
     const data = reactive({
       blogsArr: [],
+      commentList: [],
     });
     const route = useRoute(); //返回一个包含路由参数等信息的Proxy对象
-    console.log('the route is', route);
+    // console.log('the route is', route);
     /* route.params. 可获取params参数，route.query. 可获得query参数 */
     onMounted(() => {
       blogsbyTagname(props.tagname); /* 1.页面挂载时执行一次 */
@@ -39,8 +41,9 @@ export default {
     );
     // 封装发送请求
     const blogsbyTagname = (value) => {
+      console.log('传入的标签是', value);
       // 发送请求，传入 传来的标签名，根据标签获取微博
-      const blogs = proxy.$api.getBlogsbyTagname(value);
+      const blogs = proxy.$api.getBlogsbyTagname({ tagname: value });
       console.log(blogs);
       blogs.then(
         (value) => {
@@ -52,9 +55,21 @@ export default {
         },
       );
     };
+    // 🔺provide
+    provide('commentList', data.commentList);
+    // 自定义事件的回调 获取评论内容
+    const getcomment = (bid) => {
+      //接收传来的博客id
+      proxy.$api.getAllComment(bid).then((res) => {
+        const newres = reactive(res.data.data);
+        data.commentList = newres;
+        console.log(data.commentList);
+      });
+    };
     return {
       blogsArr: toRef(data, 'blogsArr'),
       props, //
+      getcomment,
     };
   },
 };

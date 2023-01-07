@@ -45,6 +45,7 @@
           </section>
         </div>
       </div>
+
       <section class="jss275">
         <div class="jss276">
           <el-button @click="changelike(item.bid, index)" class="likebtn" circle text
@@ -75,7 +76,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, onMounted, reactive, watchEffect, toRefs, ref, getCurrentInstance } from 'vue';
+import { defineComponent, onMounted, reactive, watchEffect, toRefs, toRef, ref, getCurrentInstance } from 'vue';
 import { useStore } from '@/models/index';
 import BlogComment from '../components/blogComment.vue';
 export default defineComponent({
@@ -99,6 +100,7 @@ export default defineComponent({
     watchEffect(() => {
       state.blogList = props.blogList;
       console.log('blogList变化了');
+      console.log(props.blogList);
     });
     //  判断博客发布者与当前登录用户是否为同一人
     //  是的话显示 不是的话隐藏
@@ -111,12 +113,8 @@ export default defineComponent({
       }
     };
     //删除当前微博
-    const deleteBlog = (bid, index) => {
-      const obj = {
-        bid,
-        index,
-      };
-      context.emit('deleteblog', obj);
+    const deleteBlog = (bid) => {
+      context.emit('deleteblog', bid);
     };
     //判断当前是否处于点赞状态
     let islike = ref(false);
@@ -135,20 +133,26 @@ export default defineComponent({
         islike.value = false;
       }
     };
+    // ❗ 后期修复闪屏现象
+    // 用于判断显示评论的index值
+    let i = ref(-1);
     // 是否显示评论组件
+
     const isShowComment = ref(false);
-    //点击按钮，显示评论 传入博客id
-    const changeShowComment = (bid) => {
+    const changeShowComment = (bid, index) => {
       isShowComment.value = !isShowComment.value;
-      // 此时还需【触发】父级组件的自定义getcomment事件来 【获取评论内容】
+      proxy.i = index;
+      // 此时还需触发父级事件获取评论内容
       if (isShowComment.value) {
         //触发自定义事件
         context.emit('getcomment', bid);
       }
     };
+
     // 标签颜色
     const tagcolor = ['#3F51B5', '#ead0d1', '#b5c4b1', '#faead3', '#c9c0d3', '#8696a7'];
     return {
+      i,
       deleteBlog,
       isShowDelete,
       tagcolor,

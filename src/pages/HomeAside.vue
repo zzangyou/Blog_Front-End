@@ -35,7 +35,7 @@ export default {
       console.log(tagnames);
       tagnames.then(
         (value) => {
-          console.log(value.data.data);
+          console.log('getTagName', value.data.data);
           data.tagnamesArr = value.data.data;
         },
         (reason) => {},

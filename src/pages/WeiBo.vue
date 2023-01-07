@@ -58,12 +58,12 @@ export default {
       });
     };
     onMounted(() => {
-      const userBlogs = proxy.$api.getUserBlogs(localStorage.getItem('currentuser'));
-      console.log('userBlogs', userBlogs);
+      const userBlogs = proxy.$api.getUserBlogs({ useraccount: localStorage.getItem('currentuser') });
+      console.log('查看已发布微博', userBlogs);
       userBlogs.then(
         (value) => {
           // console.log(value);
-          data.totalnumber = value.data.blogsnumber;
+          data.totalnumber = value.data.data.length;
           data.allBlogs = value.data.data;
           setBlogs();
         },

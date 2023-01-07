@@ -72,14 +72,22 @@ export default defineComponent({
     };
     // 表单提交触发事件
     const submitForm = () => {
-      proxy.$api.login(ruleForm).then((res) => {
+      const {useraccount,pass}=ruleForm
+      const config={
+        useraccount,
+        password:pass
+      }
+      proxy.$api.login(config).then((res) => {
+        console.log(res);
         const { code, data } = res.data;
-        if (code === 100000) {
+        if (code ===100000) {
           // 登陆成功后，存储token
           //  存储token 之后每次发送请求都带上token让后台解析
           // window.localStorage.setItem(LS_KEYS.JWT,data.token)
-          console.log(data.token);
+          console.log(data);
           storePublic.setToken(data.token);
+          // 存储用户名
+          storePublic.setUsername(data.username);
           // 🔺储用户账号
           storePublic.setUseraccount(ruleForm.useraccount);
           // 存储后跳转路由
