@@ -53,7 +53,7 @@ export default {
     return request({
       url:'blog/addPost',
       method:'post',
-      data:params,//发post请求时要传输的数据
+      data:qs.stringify(params),//发post请求时要传输的数据
       // 发送post请求时需要修改请求头
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
@@ -71,42 +71,42 @@ export default {
     return request({
       url:'blog/getlike',
       method:'post',
-      data:params
+      data:qs.stringify(params)
     })
   },
   cancellike(params){
     return request({
       url:'blog/cancellike',
       method:'post',
-      data:params
+      data:qs.stringify(params)
     })
    },
   deleteblog(params){
     return request({
       url:'blog/deleteblog',
       method:'post',
-      data:params
+      data:qs.stringify(params)
     })
   },
   deletecomment(params){
     return request({
       url:'comment/deletecomment',
       method:'post',
-      data:params
+      data:qs.stringify(params)
     })
   },
   addcomment(params){
     return request({
       url:'comment/addcomment',
       method:'post',
-      data:params
+      data:qs.stringify(params)
     })
   },
   addchildrencomment(params){
     return request({
       url:'comment/addchildrencomment',
       method:'post',
-      data:params
+      data:qs.stringify(params)
     })
   },
   getAllComment(params){

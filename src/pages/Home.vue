@@ -149,7 +149,7 @@ export default defineComponent({
     const useraccount= storePublic.getUseraccount()
      const ruleForm=reactive({
        title:'',
-       tagname:'日常',
+       tagname:['日常','ootd','其他'],
        content:'',
       //  👀后期修改获取账号
       useraccount: useraccount,
@@ -333,8 +333,13 @@ let {commentList} = toRefs(data)
 // 获取评论内容 
 provide('commentList',commentList)
 const getcomment=(bid)=>{
-  proxy.$api.getAllComment(bid).then(
+  console.log(bid);
+    const config={
+    bid:bid
+  }
+  proxy.$api.getAllComment(config).then(
     res=>{
+      console.log(res);
     const newres=reactive(res.data.data)
 /*     newres.forEach(item=>{
     proxy.$api.getChildrenComment(item.cid).then(
@@ -360,6 +365,7 @@ const addcomment=(config)=>
       const { code } = res.data;
       if(code==100000){
         ElMessage({ message: '发布成功', type: 'success' });
+        console.log(res.data);
       }
     })
   }
