@@ -1,7 +1,7 @@
 // 该文件用于对api进行统一管理(请求的接口比较多，需要统一管理)
 import request from './request';// 引入对axios进行二次封装的文件
-import qs from 'qs';
 // 将请求封装在api里，需要发请求时调用相应api即可。
+import qs from 'qs';
 export default {
   //  示例：如用户登录
   login(params) {
@@ -11,7 +11,9 @@ export default {
       url: '/user/login',
       // url: 'http://43.139.169.47:8080/public/user/login',
       method: 'post',//发送post请求
-      data: params,//发post请求时要传输的数据
+      // data: params
+      data: qs.stringify(params),//发post请求时要传输的数据
+      // 发送post请求时需要修改请求头
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       },
@@ -59,7 +61,11 @@ export default {
     return request({
       url: 'blog/addPost',
       method: 'post',
-      data: params
+      data: qs.stringify(params),//发post请求时要传输的数据
+      // 发送post请求时需要修改请求头
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+      },
     })
   },
   getAllBlog(params) {
@@ -73,35 +79,42 @@ export default {
     return request({
       url: 'blog/getlike',
       method: 'post',
-      data: params
+      data: qs.stringify(params)
     })
   },
   cancellike(params) {
     return request({
       url: 'blog/cancellike',
       method: 'post',
-      data: params
+      data: qs.stringify(params)
     })
   },
   deleteblog(params) {
     return request({
       url: 'blog/deleteblog',
       method: 'post',
-      data: params
+      data: qs.stringify(params)
+    })
+  },
+  deleteblog(params) {
+    return request({
+      url: 'comment/deletecomment',
+      method: 'post',
+      data: qs.stringify(params)
     })
   },
   deletecomment(params) {
     return request({
-      url: 'comment/deletecomment',
+      url: 'comment/addcomment',
       method: 'post',
-      data: params
+      data: qs.stringify(params)
     })
   },
   addcomment(params) {
     return request({
-      url: 'comment/addcomment',
+      url: 'comment/addchildrencomment',
       method: 'post',
-      data: params
+      data: qs.stringify(params)
     })
   },
   addchildrencomment(params) {

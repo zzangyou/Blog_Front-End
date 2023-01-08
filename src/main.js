@@ -4,7 +4,7 @@ import { createPinia } from 'pinia';
 import { router } from './router'
 import api from './api/api'
 
-// import './api/mock'//引入mock文件
+//  import './api/mock'//引入mock文件
 import './style.css';
 import 'reset-css';
 import App from './App.vue';

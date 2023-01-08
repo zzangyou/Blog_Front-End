@@ -7,8 +7,8 @@
       <div class="logo">logo</div>
 
       <!-- 首页选项 -->
-      <el-menu-item index="1" @click="backToHome">首页</el-menu-item>
-
+      <el-menu-item index="1" @click="backToHome">
+      首页</el-menu-item>
       <div class="search">
         <!-- 搜索框 -->
         <input type="text" v-model="searchkeyword" placeholder="请输入搜索关键字" />
@@ -42,7 +42,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref,getCurrentInstance } from 'vue';
 import { ArrowDown } from '@element-plus/icons-vue';
 import { router } from '../router/index';
 
@@ -70,6 +70,7 @@ function backToHome() {
     //replace模式
     path: '/',
   });
+/* window.location.reload(); */
   //选中“首页”
   activeIndex.value = '1';
 }

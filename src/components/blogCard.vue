@@ -14,6 +14,7 @@
           </div>
         </div>
       </section>
+
       <div class="text-box">
         <h2 class="jss180 css-t1nuxs">{{ item.title }}</h2>
         <!-- 后期修改：将json字符串转为模板字符串插入html -->
@@ -48,13 +49,13 @@
 
       <section class="jss275">
         <div class="jss276">
-          <el-button @click="changelike(item.bid, index)" class="likebtn" circle text
-            ><i class="iconfont icon-dianzan"></i>
+          <el-button @click="changelike(item.bid, index)" class="likebtn" circle text>
+            <i class="iconfont icon-dianzan"></i>
             <span class="css-1u6z2n7">{{ item.like }}</span>
           </el-button>
-          <el-button circle text @click="changeShowComment(item.bid)"
-            ><el-icon size="1.5rem"><ChatLineSquare /></el-icon
-          ></el-button>
+          <el-button circle text @click="changeShowComment(item.bid)">
+            <el-icon size="1.5rem"><ChatLineSquare /></el-icon>
+          </el-button>
           <el-button v-show="isShowDelete(item.useraccount)" @click="deleteBlog(item.bid, index)" circle text
             ><el-icon size="1.5rem"><Delete /></el-icon
           ></el-button>
