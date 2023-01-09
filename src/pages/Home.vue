@@ -48,16 +48,18 @@
       <!-- 图片上传 -->
       <el-form-item v-show="isShowUpload" class="upload-container" style="justify-content: flex-start">
         <el-upload
+        class="upload-demo"
           v-model:file-list="fileList"
           ref="upload"
           name="blogpicture"
-          :action="uploadUrl"
+          action="http://localhost:8000/public/blog/addPost"
           list-type="picture-card"
           :before-upload="beforeUpload"
           :on-preview="handlePictureCardPreview"
           :on-remove="handleRemove"
           :on-exceed="handleExceedCover"
           :on-success="handleSuccess"
+          :on-change="changeHandler"	
           :auto-upload="false"
           :data="ruleForm"
           limit="9"
@@ -122,6 +124,7 @@ export default defineComponent({
     Carousel,
     BlogCard,
   },
+
   setup() {
     const storePublic = useStore('publicInfo');
     const { proxy } = getCurrentInstance();
@@ -140,6 +143,14 @@ export default defineComponent({
       'warning',
       'info',
     ]);
+    var fileArray=[];
+    const changeHandler=(file,fileList)=>{//on-change绑定的方法
+    console.log('点了')
+        console.log(file)
+      fileArray.push(file)
+      console.log(fileArray)
+      
+      };
     const inputVisible = ref(false);
     const InputRef = ref('');
     //  是否清空富文本编辑器
@@ -147,14 +158,12 @@ export default defineComponent({
     //  获取当前账号
     const useraccount = storePublic.getUseraccount();
     const ruleForm = reactive({
-      title: '',
-      tagname: ['日常', 'ootd', '其他'],
-      content: '',
+      title: '标题',
+      tagname: JSON.stringify('日常', 'ootd', '其他'),
+      content: '内容',
       //  👀后期修改获取账号
       useraccount: useraccount,
       publishtime: '2022/12/23 20:30',
-      blogpicture:
-        'https://img-blog.csdnimg.cn/0b253ba2e9464d21a1eb039ffac308c0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5bSW5Zmr,size_12,color_FFFFFF,t_70,g_se,x_16',
     });
     //  关闭标签
     const handleClose = (tag) => {
@@ -187,15 +196,19 @@ export default defineComponent({
     };
     const submitForm = () => {
       console.log(fileList.value.length);
-      // 若有上传图片
-      if (fileList.value.length !== 0) {
-        // 提交表单实际上是上传图片，表单数据做附带参数
-        proxy.$refs.upload.submit();
-        ElMessage({ message: '发送成功', type: 'success' });
-        // 发布成功后重新获取bloglist
-        proxy.getBlogData();
-      } else {
-        proxy.$api.addPost(ruleForm).then((res) => {
+      console.log(fileList)
+      /* 上传文件的参数在这里编辑 */
+    let postContext=new FormData();
+    postContext.append('useraccount',123456);
+    postContext.append('content','内容')
+  postContext.append('tagname',['标签1','标签2','标签3'])
+  postContext.append('title','标题')
+  /* 这里的代码不用管，是管理图片文件上传的 */
+  fileArray.forEach(res=>{
+    postContext.append('blogpicture',fileArray[0].raw)
+  })
+  console.log(postContext)
+    proxy.$api.addPost(postContext).then((res) => {
           console.log(res);
           if (res.data.code === 100000) {
             proxy.ruleForm.title = '';
@@ -209,7 +222,7 @@ export default defineComponent({
             ElMessage({ message: '发送失败，请稍后再试', type: 'warning' });
           }
         });
-      }
+     
     };
     /* 图片上传模块 */
     // 图片上传显示
@@ -423,7 +436,10 @@ const pageSize=20  */
       setBlogs();
     };
 
+
     return {
+      fileArray,
+      changeHandler,
       inputValue,
       inputVisible,
       InputRef,

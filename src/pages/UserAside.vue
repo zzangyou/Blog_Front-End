@@ -3,11 +3,12 @@
     <!-- im useraside -->
     <!-- 头像昵称 -->
     <div style="margin-top: 3rem">
-      <!-- action 请求url -->
+      <!-- action 请求url 这里的data为额外参数 -->
       <el-upload
         class="avatar-uploader"
-        action="http://43.139.169.47:8080/public/blog/uploadAvater"
-        :data="{ avatar: imageUrl, useraccount: 123456 }"
+        action="http://localhost:8000/public/blog/uploadAvater"
+        :data=user
+        name="ava"
         :show-file-list="false"
         :on-success="handleAvatarSuccess"
         :before-upload="beforeAvatarUpload"
@@ -51,12 +52,14 @@ import UploadProps from 'element-plus';
 //🔷这里用到piana
 import { useStore } from '../models/index.js';
 import { storeToRefs } from 'pinia';
+// 这个user为额外参数，请自行修改
+var user={'useraccount':'123456'};
 // 传入需要获取的pinia数据的模块
 const store = useStore('publicInfo');
 console.log('In UserAside store is ', store);
 //利用pinia的storeToRefs函数，将state中的数据变为了响应式的
 const { username, character } = storeToRefs(store); //对象解构赋值
-
+ 
 const proxy = getCurrentInstance();
 const handleOpen = (key, keyPath) => {
   // console.log(key, keyPath);
@@ -89,6 +92,8 @@ const imageUrl = ref('https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55
 }); */
 // 文件上传成功时
 const handleAvatarSuccess = (response, uploadFile) => {
+  console.log(response)
+  console.log(uploadFile)
   if (typeof uploadFile.raw != 'undefined' && uploadFile.raw != 'null') {
     imageUrl.value = URL.createObjectURL(uploadFile.raw);
     console.log(imageUrl.value);
