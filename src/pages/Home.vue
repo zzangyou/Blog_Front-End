@@ -62,7 +62,7 @@
           :on-change="changeHandler"	
           :auto-upload="false"
           :data="ruleForm"
-          limit="9"
+          limit=9
         >
           <el-icon><Plus /></el-icon>
         </el-upload>
@@ -144,12 +144,15 @@ export default defineComponent({
       'info',
     ]);
     var fileArray=[];
+    var fileTTT=[]
     const changeHandler=(file,fileList)=>{//on-change绑定的方法
     console.log('点了')
         console.log(file)
       fileArray.push(file)
-      console.log(fileArray)
-      
+      // console.log(fileArray)
+      fileTTT=fileList.Target
+      console.log('重新赋值的fileTTT')
+      console.log(fileTTT)
       };
     const inputVisible = ref(false);
     const InputRef = ref('');
@@ -204,9 +207,9 @@ export default defineComponent({
   postContext.append('tagname',['标签1','标签2','标签3'])
   postContext.append('title','标题')
   /* 这里的代码不用管，是管理图片文件上传的 */
-  fileArray.forEach(res=>{
-    postContext.append('blogpicture',fileArray[0].raw)
-  })
+  for(var i=0;i<fileArray.length;i++){
+    postContext.append('blogpicture',fileArray[i].raw)
+  }
   console.log(postContext)
     proxy.$api.addPost(postContext).then((res) => {
           console.log(res);
@@ -243,7 +246,14 @@ export default defineComponent({
 
     // 移除文件
     const handleRemove = (uploadFile, uploadFiles) => {
-      console.log(uploadFile, uploadFiles);
+      // console.log(uploadFile, uploadFiles);
+      console.log(uploadFile.name)
+      console.log(uploadFiles)
+      fileArray.forEach((item,index)=>{
+        if(item.name==uploadFile.name){
+fileArray.splice(index,1);
+        }
+      })
     };
     // 预览图片
     const handlePictureCardPreview = (uploadFile) => {
