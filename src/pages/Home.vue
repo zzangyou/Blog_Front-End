@@ -75,36 +75,37 @@
     </div>
     <!-- 微博显示页 -->
     <div class="blog-container">
-      <div>
+     <div>
         <BlogCard
-          :blogList="blogs"
-          @getlike="getlike"
-          @cancellike="cancellike"
-          @deleteblog="deleteblog"
-          @getcomment="getcomment"
-        ></BlogCard>
-      </div>
+        :blogList="blogs"
+        @getlike="getlike"
+        @cancellike="cancellike"
+        @deleteblog="deleteblog"
+        @getcomment="getcomment"
+      ></BlogCard>
+     </div>
       <!-- 分页查询模块 -->
-      <div class="example-pagination-block">
-        <!-- <div class="example-demonstration">When you have few pages</div> -->
-        <el-pagination
-          background
-          layout="prev, pager, next"
-          :total="totalnumber"
-          v-model:currentPage="currentPage"
-          :page-size="pageSize"
-          :page-sizes="[5, 10, 15]"
-          @current-change="handleCurrentChange"
-          @size-change="handleSizeChange"
-          hide-on-single-page="false"
-        />
-        <!-- 
+          <div class="example-pagination-block">
+      <!-- <div class="example-demonstration">When you have few pages</div> -->
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="totalnumber"
+        v-model:currentPage="currentPage"
+        :page-size="pageSize"
+        :page-sizes="[5, 10, 15]"
+        @current-change="handleCurrentChange"
+        @size-change="handleSizeChange"
+        hide-on-single-page="false"
+      />
+      <!-- 
         current-page	当前页数，支持v-model双向绑定 
         page-size：一页显示多少条
         page-sizes:	每页显示个数的选项  (可有可无)
         @current-change:当前页发生改变时触发
         @size-change: 每页显示数据条数(page-size)改变时触发
-      --></div>
+      -->
+    </div>
     </div>
   </div>
 </template>
@@ -145,16 +146,15 @@ export default defineComponent({
     //  是否清空富文本编辑器
     const isresetText = ref(false);
     //  获取当前账号
-    const useraccount = storePublic.getUseraccount();
-    const ruleForm = reactive({
-      title: '',
-      tagname: ['日常', 'ootd', '其他'],
-      content: '',
+    const useraccount= storePublic.getUseraccount()
+     const ruleForm=reactive({
+       title:'',
+       tagname:JSON.stringify(['日常','ootd','其他']),
+       content:'',
       //  👀后期修改获取账号
       useraccount: useraccount,
-      publishtime: '2022/12/23 20:30',
-      blogpicture:
-        'https://img-blog.csdnimg.cn/0b253ba2e9464d21a1eb039ffac308c0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5bSW5Zmr,size_12,color_FFFFFF,t_70,g_se,x_16',
+      publishtime:'2022/12/23 20:30',
+      // blogpicture:''
     });
     //  关闭标签
     const handleClose = (tag) => {
@@ -182,35 +182,37 @@ export default defineComponent({
     //  获取编辑器文本
     const getText = (text) => {
       console.log(text);
-
-      proxy.ruleForm.content = text;
-    };
-    const submitForm = () => {
-      console.log(fileList.value.length);
-      // 若有上传图片
-      if (fileList.value.length !== 0) {
-        // 提交表单实际上是上传图片，表单数据做附带参数
-        proxy.$refs.upload.submit();
-        ElMessage({ message: '发送成功', type: 'success' });
-        // 发布成功后重新获取bloglist
-        proxy.getBlogData();
-      } else {
-        proxy.$api.addPost(ruleForm).then((res) => {
-          console.log(res);
-          if (res.data.code === 100000) {
-            proxy.ruleForm.title = '';
-            proxy.ruleForm.content = '';
-            proxy.isShowTag = false;
-            proxy.isresetText = true;
-            ElMessage({ message: '发送成功', type: 'success' });
+      proxy.ruleForm.content=text
+    }
+    const submitForm=()=>{
+   console.log(fileList.value.length);
+   // 若有上传图片
+   if(fileList.value.length!==0){
+  // 提交表单实际上是上传图片，表单数据做附带参数
+    proxy.$refs.upload.submit();
+     ElMessage({ message: '发送成功',type: 'success',})
+    // 发布成功后重新获取bloglist
+     proxy.getBlogData()
+   }
+   else{
+     proxy.$api.addPost(ruleForm).then(
+       res=>{
+         console.log(res);
+         if(res.data.code===100000){
+            proxy.ruleForm.title=''
+            proxy.ruleForm.content=''
+            proxy.isShowTag=false
+            proxy.isresetText=true
+            ElMessage({ message: '发送成功',type: 'success',})
             // 发布成功后重新获取bloglist
-            proxy.getBlogData();
-          } else {
-            ElMessage({ message: '发送失败，请稍后再试', type: 'warning' });
-          }
-        });
-      }
-    };
+             proxy.getBlogData()
+         }else{
+          ElMessage({ message: '发送失败，请稍后再试',type: 'warning',})
+         }
+       }
+     )
+   }
+    }
     /* 图片上传模块 */
     // 图片上传显示
     let isShowUpload = ref(false);
@@ -218,117 +220,122 @@ export default defineComponent({
       proxy.isShowUpload = val;
     };
     const fileList = ref([]);
-
     const dialogImageUrl = ref('');
     const dialogVisible = ref(false);
     const uploadUrl = ref(config.baseApi + '/blog/addPost');
-
     //上传前钩子
     const beforeUpload = (file) => {
       return true;
     };
-
-    // 移除文件
-    const handleRemove = (uploadFile, uploadFiles) => {
-      console.log(uploadFile, uploadFiles);
-    };
-    // 预览图片
-    const handlePictureCardPreview = (uploadFile) => {
-      if (uploadFile.url) {
-        dialogImageUrl.value = uploadFile.url;
-      }
-      dialogVisible.value = true;
-    };
-    // 上传成果
-    const handleSuccess = (res) => {
-      console.log(res);
-    };
-    // 图片上传超出限制
-    const handleExceedCover = (files, fileList) => {
-      ElMessage.error({
-        message: '上传图片数量超出限制！',
-        type: 'error',
-      });
-    };
-    /* //分页数据 （👀后期修改）
+// 移除文件
+const handleRemove = (uploadFile, uploadFiles) => {
+  console.log(uploadFile, uploadFiles)
+}
+// 预览图片
+const handlePictureCardPreview = (uploadFile) => {
+  if(uploadFile.url){
+      dialogImageUrl.value = uploadFile.url
+  }
+  dialogVisible.value = true
+}
+// 上传成果
+const handleSuccess=(res)=>{
+  console.log(res);
+}
+// 图片上传超出限制
+const handleExceedCover =(files, fileList)=>{
+   ElMessage.error({
+   message: '上传图片数量超出限制！',
+   type: 'error',
+   });    
+    }
+/* //分页数据 （👀后期修改）
 const pageNumber=1
 const pageSize=20  */
-    //页面初始化 获取微博数据
-    const data = reactive({
-      //  blogList:[],
-      commentList: [],
-    });
-    // 获取微博数据
-    const getBlogData = () => {
-      const config = {
-        pageNumber: 1,
-        pageSize: 5,
-      };
-      proxy.$api.getAllBlog().then((res) => {
-        console.log(res);
-        // const newres=reactive(res.data.data)
-        pageData.totalnumber = res.data.data.length;
-        pageData.allBlogs = res.data.data;
-        setBlogs();
-        // data.blogList=newres
-      });
-    };
-    // 组件一挂载就获取微博
-    onMounted(() => {
-      proxy.getBlogData();
-    });
-    // 点赞
-    const getlike = (obj) => {
-      const config = {
-        bid: obj.bid,
-      };
-      proxy.$api.getlike(config).then((res) => {
-        console.log('点赞了');
-        const index = obj.index;
-        console.log(data.blogList);
-        pageData.blogs[index].like++;
-      });
-    };
-    // 取消点赞
-    const cancellike = (obj) => {
-      const config = {
-        bid: obj.bid,
-      };
-      proxy.$api.cancellike(config).then((res) => {
-        const index = obj.index;
-        pageData.blogs[index].like--;
-      });
-    };
-    // 删除微博
-    const deleteblog = (bid) => {
-      const useraccount = storePublic.getUseraccount();
-      const config = {
-        useraccount,
-        bid,
-      };
-      proxy.$api.deleteblog(config).then((res) => {
-        console.log(res);
-        proxy.getBlogData();
-        const { code } = res.data;
-        if (code == 100000) {
-          ElMessage({ message: '删除成功', type: 'success' });
-        }
-      });
-    };
-
-    // 💬 评论模块
-    let { commentList } = toRefs(data);
-    // 获取评论内容
-    provide('commentList', commentList);
-    const getcomment = (bid) => {
-      console.log(bid);
-      const config = {
-        bid: bid,
-      };
-      proxy.$api.getAllComment(config).then((res) => {
-        console.log(res);
-        const newres = reactive(res.data.data);
-        /*     newres.forEach(item=>{
+//页面初始化 获取微博数据 
+const data=reactive({
+  //  blogList:[],
+   commentList:[]
+})
+// 获取微博数据
+const getBlogData=()=>{
+  const config ={
+    pageNumber:1,
+    pageSize:5
+  }
+    proxy.$api.getAllBlog().then(res=>{
+    console.log(res);
+    // const newres=reactive(res.data.data)
+    pageData.totalnumber = res.data.data.length;
+    pageData.allBlogs = res.data.data;
+    setBlogs();
+    // data.blogList=newres
+  }
+  )
+}
+// 组件一挂载就获取微博
+onMounted(()=>{
+ proxy.getBlogData()
+}
+)
+// 点赞
+const getlike=(obj)=>{
+  const config={
+  bid:obj.bid
+  }
+  proxy.$api.getlike(config).then(
+    res=>{
+      console.log('点赞了');
+      const index=obj.index
+      console.log(data.blogList);
+      pageData.blogs[index].like++
+    }
+  )
+}
+// 取消点赞
+const cancellike=(obj)=>{
+  const config={
+    bid:obj.bid
+  }
+  proxy.$api.cancellike(config).then(
+    res=>{
+      const index=obj.index
+       pageData.blogs[index].like--
+    }
+  )
+}
+// 删除微博
+const deleteblog=(bid)=>{
+  const useraccount= storePublic.getUseraccount()
+  const config={
+    useraccount,
+    bid
+  }
+  proxy.$api.deleteblog(config).then(
+    res=>{
+      console.log(res);
+      proxy.getBlogData()
+      const { code } = res.data;
+      if(code==100000){
+        ElMessage({ message: '删除成功', type: 'success' });
+      }
+    }
+  )
+}  
+// 💬 评论模块
+let {commentList} = toRefs(data)
+// 获取评论内容 
+provide('commentList',commentList)
+const getcomment=(bid)=>{
+  console.log(bid);
+    const config={
+    bid:bid
+  }
+  proxy.$api.getAllComment(config).then(
+    res=>{
+      console.log(res);
+    const newres=reactive(res.data.data)
+/*     newres.forEach(item=>{
     proxy.$api.getChildrenComment(item.cid).then(
     res=>{
       console.log(res);
@@ -337,52 +344,54 @@ const pageSize=20  */
     }
   ) 
     }) */
-        data.commentList = newres;
-        console.log(data.commentList);
-      });
-    };
-    // 发布一级评论
-    const addcomment = (config) => {
-      proxy.$api.addcomment(config).then((res) => {
-        console.log(res);
-        // 孙组件发生变化 重新获取评论
-        proxy.getcomment(config.bid);
-        const { code } = res.data;
-        if (code == 100000) {
-          ElMessage({ message: '发布成功', type: 'success' });
-          console.log(res.data);
-        }
-      });
-    };
-    // 传递给孙组件addcommen方法
-    provide('addcomment', addcomment);
-    // 发布二级评论
-    const addchildrencomment = (config) => {
-      proxy.$api.addchildrencomment(config).then((res) => {
-        console.log(res);
-        // 孙组件发生变化 重新获取评论
-        proxy.getcomment(config.bid);
-        const { code } = res.data;
-        if (code == 100000) {
-          ElMessage({ message: '发布成功', type: 'success' });
-        }
-      });
-    };
-    provide('addchildrencomment', addchildrencomment);
-    // 删除评论
-    const deletecomment = (config) => {
-      proxy.$api.deletecomment(config).then((res) => {
-        console.log(res);
-        // 孙组件发生变化 重新获取评论
-        proxy.getcomment(config.bid);
-        const { code } = res.data;
-        if (code == 100000) {
-          ElMessage({ message: '删除成功', type: 'success' });
-        }
-      });
-    };
-    provide('deletecomment', deletecomment);
-    // 分页查询
+    data.commentList=newres
+    console.log(data.commentList);
+    }
+  )
+}
+  // 发布一级评论
+const addcomment=(config)=>
+  {
+    proxy.$api.addcomment(config).then(res=>{
+      console.log(res); 
+    // 孙组件发生变化 重新获取评论
+    proxy.getcomment(config.bid)
+      const { code } = res.data;
+      if(code==100000){
+        ElMessage({ message: '发布成功', type: 'success' });
+        console.log(res.data);
+      }
+    })
+  }
+  // 传递给孙组件addcommen方法
+provide('addcomment',addcomment)
+// 发布二级评论
+const addchildrencomment=(config)=>{
+  proxy.$api.addchildrencomment(config).then(res=>{
+     console.log(res);
+  // 孙组件发生变化 重新获取评论
+    proxy.getcomment(config.bid)
+     const{code}=res.data;
+     if(code==100000){
+        ElMessage({ message: '发布成功', type: 'success' });
+     }
+  })
+}
+provide('addchildrencomment',addchildrencomment)
+// 删除评论
+const deletecomment=(config)=>{
+  proxy.$api.deletecomment(config).then(res=>{
+    console.log(res);
+    // 孙组件发生变化 重新获取评论
+    proxy.getcomment(config.bid)
+    const { code }=res.data
+    if(code==100000){
+    ElMessage({ message: '删除成功', type: 'success' });
+      }
+  })
+}
+provide('deletecomment',deletecomment)
+// 分页查询
     const pageData = reactive({
       currentPage: 1, //当前页数
       totalnumber: 0, //数据总条数
@@ -390,7 +399,7 @@ const pageSize=20  */
       allBlogs: [], //未经过滤的所有数据
       blogs: [], //用于放经过过滤处理的数据
     });
-    // 将数组过滤处理进行封装
+        // 将数组过滤处理进行封装
     const setBlogs = () => {
       /* filter() 不改变原数组，不检测空数组。
       它将指定数组中符合条件的所有元素以新数组的形式返回 */
@@ -422,46 +431,47 @@ const pageSize=20  */
       pageData.pageSize = size;
       setBlogs();
     };
-
-    return {
-      inputValue,
-      inputVisible,
-      InputRef,
-      handleClose,
-      showInput,
-      handleInputConfirm,
-      isShowTag,
-      isresetText,
-      changeShowTag,
-      types,
-      getText,
-      ruleForm,
-      fileList,
-      dialogImageUrl,
-      dialogVisible,
-      handleRemove,
-      handlePictureCardPreview,
-      submitForm,
-      isShowUpload,
-      changeShowPicture,
-      handleExceedCover,
-      uploadUrl,
-      beforeUpload,
-      handleSuccess,
-      ...toRefs(data),
-      getBlogData,
-      getlike,
-      cancellike,
-      deleteblog,
-      getcomment,
-      deletecomment,
+     return{
+       inputValue,
+       inputVisible,
+       InputRef,
+       handleClose,
+       showInput,
+       handleInputConfirm,
+       isShowTag,
+       isresetText,
+       changeShowTag,
+       types,
+       getText,
+       ruleForm,
+       fileList,
+       dialogImageUrl,
+       dialogVisible,
+       handleRemove,
+       handlePictureCardPreview,
+       submitForm,
+       isShowUpload,
+       changeShowPicture,
+       handleExceedCover,
+       uploadUrl,
+       beforeUpload,
+       handleSuccess,
+       ...toRefs(data),
+       getBlogData,
+       getlike,
+       cancellike,
+       deleteblog,
+       getcomment,
+       deletecomment,
       ...toRefs(pageData),
       handleCurrentChange,
       handleSizeChange,
       BlogCard,
-    };
-  },
-});
+     }
+     
+  }
+}
+) 
 </script>
 <style lang="scss" scoped>
 .home-container {
@@ -478,7 +488,6 @@ const pageSize=20  */
     flex: 1;
     // height: 5rem;
   }
-
   .btn-container {
     position: absolute;
     width: 4rem;
@@ -487,7 +496,6 @@ const pageSize=20  */
     margin-bottom: 0.3rem;
   }
   /*   
-
 :deep .el-form-item__content{
     justify-content: flex-end;
   } */

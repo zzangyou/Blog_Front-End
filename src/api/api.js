@@ -64,7 +64,7 @@ export default {
       data: qs.stringify(params),//发post请求时要传输的数据
       // 发送post请求时需要修改请求头
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+        'Content-Type': 'application/x-www-form-urlencoded'
       },
     })
   },
@@ -91,35 +91,28 @@ export default {
   },
   deleteblog(params) {
     return request({
-      url: 'blog/deleteblog',
-      method: 'post',
-      data: qs.stringify(params)
-    })
-  },
-  deleteblog(params) {
-    return request({
-      url: 'comment/deletecomment',
+      url: 'blog/deletePost',
       method: 'post',
       data: qs.stringify(params)
     })
   },
   deletecomment(params) {
     return request({
-      url: 'comment/addcomment',
+      url: 'comment/deletecomment',
       method: 'post',
       data: qs.stringify(params)
     })
   },
   addcomment(params) {
     return request({
-      url: 'comment/addchildrencomment',
+      url: 'comment/addcomment',
       method: 'post',
       data: qs.stringify(params)
     })
   },
   addchildrencomment(params) {
     return request({
-      url: 'comment/addcomment',
+      url: 'comment/addchildrencomment',
       method: 'post',
       data: params
     })
