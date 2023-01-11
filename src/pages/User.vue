@@ -98,8 +98,8 @@
         <el-input v-model="ruleForm.userData.job" />
       </el-form-item>
 
-      <el-form-item label="个性签名" prop="character">
-        <el-input v-model="ruleForm.userData.character" type="textarea" />
+      <el-form-item label="个性签名" prop="usercharacter">
+        <el-input v-model="ruleForm.userData.usercharacter" type="textarea" />
       </el-form-item>
 
       <div v-show="isShow">
@@ -137,6 +137,7 @@ const formSize = ref('default');
 const ruleFormRef = ref('');
 
 let isShow = ref(false);
+let obj;
 const { proxy } = getCurrentInstance(); //记得要加{ }
 // 数据
 let ruleForm = reactive({
@@ -150,7 +151,7 @@ let ruleForm = reactive({
     birth: '', //生日
     star: '', //星座
     job: '', //职业
-    character: '', //个性签名
+    usercharacter: '', //个性签名
   },
 });
 
@@ -199,7 +200,7 @@ const rules = reactive({
     },
   ],
   job: [{ required: false, message: '请输入职业', trigger: 'change' }],
-  character: [{ required: false, message: '请输入个性简介', trigger: 'change' }],
+  usercharacter: [{ required: false, message: '请输入个性简介', trigger: 'change' }],
 });
 
 // 函数
@@ -210,17 +211,29 @@ const submitForm = async (formEl) => {
   await formEl.validate((valid, fields) => {
     //校验成功
     if (valid) {
-      console.log('保存修改成功!');
       // 将proxy对象转换为普通对象
-      let obj = toRaw(ruleForm.userData);
+      obj = toRaw(ruleForm.userData);
+      if (obj.sex == '男') {
+        obj.sex = 1;
+      } else {
+        obj.sex = 0;
+      }
       console.log('111', obj);
       // 发请求，获得修改后的表单数据
       const changeuserinfo = proxy.$api.changeUserInfo(obj);
       console.log('@@@changeuserinfo', changeuserinfo); //返回一个promise对象
       changeuserinfo.then(
         (value) => {
-          console.log('@@@', value.data);
+          console.log('@@@', value.data.data);
           ruleForm.userData = value.data.data;
+          if (value.data.data.sex == 1) {
+            ruleForm.userData.sex = '男';
+          } else {
+            ruleForm.userData.sex = '女';
+          }
+          console.log('保存修改成功!');
+          // 刷新页面
+          location.reload(); //这种方法有空白页闪一下的问题出现，后续再解决
         },
         (reason) => {},
       );
@@ -232,8 +245,6 @@ const submitForm = async (formEl) => {
           id: 1,
         },
       }); */
-      // 刷新页面
-      // location.reload(); //这种方法有空白页闪一下的问题出现，后续再解决
     } else {
       //校验失败
       console.log('error submit!', fields);
@@ -272,9 +283,14 @@ onMounted(() => {
       // ruleForm = value.data.data;错误，这样就会ruleForm数据就会失去响应式
       // 🔺正确的做法是将数据作为ruleForm的一个对象属性来修改，这样就不会丢失响应式
       ruleForm.userData = value.data.data;
-      // 🔷修改pinia中的username(昵称)和character(个性签名)
+      if (value.data.data.sex == 1) {
+        ruleForm.userData.sex = '男';
+      } else {
+        ruleForm.userData.sex = '女';
+      }
+      // 🔷修改pinia中的username(昵称)和usercharacter(个性签名)
       store.username = value.data.data.username;
-      store.character = value.data.data.character;
+      store.usercharacter = value.data.data.usercharacter;
     },
     (reason) => {},
   );

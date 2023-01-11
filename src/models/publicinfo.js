@@ -9,7 +9,7 @@ export const usePublicInfoStore = defineStore('publicInfo', {
       useraccount: '',
       username: '',//用户名(昵称)
       // avatar: ''
-      character: ''//个性签名
+      usercharacter: ''//个性签名
     };
   },
   getters: {

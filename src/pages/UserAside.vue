@@ -6,8 +6,8 @@
       <!-- action 请求url -->
       <el-upload
         class="avatar-uploader"
-        action="http://43.139.169.47:8080/public/blog/uploadAvater"
-        :data="{ avatar: imageUrl, useraccount: 123456 }"
+        :action="uploadUrl"
+        :data="formData"
         :show-file-list="false"
         :on-success="handleAvatarSuccess"
         :before-upload="beforeAvatarUpload"
@@ -19,7 +19,7 @@
       </el-upload>
       <p style="margin-top: 5px">{{ username }}</p>
     </div>
-    <p style="margin: 20px 0">{{ character }}</p>
+    <p style="margin: 20px 0">{{ usercharacter }}</p>
     <!-- 导航区 -->
     <el-row class="tac">
       <el-col :span="12">
@@ -45,19 +45,29 @@
 <script setup>
 import { Document, Menu as IconMenu, Location, Setting } from '@element-plus/icons-vue';
 import { router } from '../router/index';
-import { getCurrentInstance, ref, onMounted } from 'vue';
+import { getCurrentInstance, ref, onMounted, reactive } from 'vue';
 import { ElMessage } from 'element-plus';
 import UploadProps from 'element-plus';
 //🔷这里用到piana
 import { useStore } from '../models/index.js';
 import { storeToRefs } from 'pinia';
+import config from '../config';
+
 // 传入需要获取的pinia数据的模块
 const store = useStore('publicInfo');
 console.log('In UserAside store is ', store);
 //利用pinia的storeToRefs函数，将state中的数据变为了响应式的
-const { username, character } = storeToRefs(store); //对象解构赋值
+const { username, usercharacter } = storeToRefs(store); //对象解构赋值
 
 const proxy = getCurrentInstance();
+
+const uploadUrl = config.baseApi + 'blog/uploadAvater';
+let imageUrl = ref('https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png');
+let formData = reactive({
+  avater: imageUrl,
+  useraccount: localStorage.getItem('currentuser'),
+});
+
 const handleOpen = (key, keyPath) => {
   // console.log(key, keyPath);
 };
@@ -83,9 +93,9 @@ function changeToComment() {
     path: '/lookcomment',
   });
 }
-const imageUrl = ref('https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png');
+
 /* onMounted(() => {
-  proxy.$api.sendAvatar('https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png');
+  alert('111');
 }); */
 // 文件上传成功时
 const handleAvatarSuccess = (response, uploadFile) => {
