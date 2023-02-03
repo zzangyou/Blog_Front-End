@@ -61,7 +61,7 @@ export default {
     return request({
       url: 'blog/addPost',
       method: 'post',
-      data: qs.stringify(params),//发post请求时要传输的数据
+      data: params,//发post请求时要传输的数据
       // 发送post请求时需要修改请求头
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
@@ -184,6 +184,14 @@ export default {
   getBlogsbyTagname(params) {
     return request({
       url: 'blog/getBlogbyTagname',
+      method: 'get',
+      data: params
+    })
+  },
+  // 根据关键字搜索(标题)
+  getSearchBlog(params) {
+    return request({
+      url: 'getBlogbyKeyword',
       method: 'get',
       data: params
     })

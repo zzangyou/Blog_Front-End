@@ -3,12 +3,13 @@
     <!-- im useraside -->
     <!-- 头像昵称 -->
     <div style="margin-top: 3rem">
-      <!-- action 请求url -->
+      <!-- action 请求url 这里的data为额外参数 -->
       <el-upload
         class="avatar-uploader"
         :action="uploadUrl"
         :data="formData"
         :show-file-list="false"
+        name="avater"
         :on-success="handleAvatarSuccess"
         :before-upload="beforeAvatarUpload"
       >
@@ -57,14 +58,14 @@ import config from '../config';
 const store = useStore('publicInfo');
 console.log('In UserAside store is ', store);
 //利用pinia的storeToRefs函数，将state中的数据变为了响应式的
-const { username, usercharacter } = storeToRefs(store); //对象解构赋值
+const { username, usercharacter, useravatar } = storeToRefs(store); //对象解构赋值
 
 const proxy = getCurrentInstance();
 
 const uploadUrl = config.baseApi + 'blog/uploadAvater';
-let imageUrl = ref('https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png');
+let imageUrl = useravatar;
+
 let formData = reactive({
-  avater: imageUrl,
   useraccount: localStorage.getItem('currentuser'),
 });
 
@@ -94,18 +95,37 @@ function changeToComment() {
   });
 }
 
-/* onMounted(() => {
-  alert('111');
-}); */
+onMounted(() => {
+  if (localStorage.getItem('avater') != '') {
+    store.useravatar = localStorage.getItem('avatar');
+  } else {
+    store.useravatar = 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png';
+  }
+});
 // 文件上传成功时
 const handleAvatarSuccess = (response, uploadFile) => {
+  console.log('response', response);
+  console.log('uploadFile', uploadFile);
   if (typeof uploadFile.raw != 'undefined' && uploadFile.raw != 'null') {
-    imageUrl.value = URL.createObjectURL(uploadFile.raw);
-    console.log(imageUrl.value);
-    console.log(uploadFile.raw);
+    // imageUrl.value = URL.createObjectURL(uploadFile.raw);
+    console.log(response.avater); //http:\43.139.169.47:8080\public\icon\1674024245.jpg
+    let img = changeToUrl(response.avater); //转义
+    store.useravatar = img;
+    localStorage.setItem('avatar', img);
   }
 };
-
+// 将后端图片地址进行转义
+function changeToUrl(str) {
+  let arr = str.split('');
+  console.log(arr);
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i] == '\\') {
+      arr[i - 1] += '//';
+    }
+  }
+  console.log(arr.join(''));
+  return arr.join('');
+}
 // 上传文件之前
 const beforeAvatarUpload = (rawFile) => {
   if (rawFile.type !== 'image/jpeg') {

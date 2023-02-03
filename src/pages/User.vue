@@ -72,7 +72,10 @@
               label="Pick a date"
               placeholder="请选择日期"
               style="width: 100%"
+              value-format="YYYY-MM-DD"
             />
+            <!-- 使用format指定输入框的格式。 
+            使用 value-format 指定绑定值的格式。 -->
           </el-form-item>
         </el-col>
       </el-form-item>

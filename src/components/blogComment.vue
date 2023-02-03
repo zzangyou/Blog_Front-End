@@ -110,7 +110,7 @@ export default defineComponent({
     const childcomment = ref('');
     // 发布子评论模态框
     let dialogVisible = ref(false);
-    // 爷组件需要传递的数据
+    //inject是子组件需要获取的数据
     const List = inject('commentList');
     const addcomment = inject('addcomment');
     const deletecomment = inject('deletecomment');

@@ -97,8 +97,9 @@ export default {
       setBlogs();
     };
 
-    // 🔺provide
+    // 🔺provide 是父级组件需要注入的依赖(即需要提供的数据)
     provide('commentList', data.commentList);
+
     // 自定义事件的回调 获取评论内容
     const getcomment = (bid) => {
       //接收传来的博客id
