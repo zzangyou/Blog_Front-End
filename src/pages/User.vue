@@ -304,7 +304,7 @@ onMounted(() => {
 
 <style scoped>
 .usermain {
-  width: 600px;
+  width: 37.5rem;
   margin: auto;
   background-color: #fff;
 }
