@@ -23,14 +23,14 @@ export default {
     return request({
       url: '/user/register',
       method: 'post',
-      data: params
+      data: qs.stringify(params)
     })
   },
-  sendcaptcha(...params) {
+  sendcaptcha(params) {
     return request({
       url: '/user/sendcaptcha',
       method: 'post',
-      data: { ...params }
+      data: qs.stringify(params)
     })
   },
   // 获取个人信息
@@ -61,7 +61,7 @@ export default {
     return request({
       url: 'blog/addPost',
       method: 'post',
-      data: qs.stringify(params),//发post请求时要传输的数据
+      data: params,//发post请求时要传输的数据
       // 发送post请求时需要修改请求头
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -114,7 +114,7 @@ export default {
     return request({
       url: 'comment/addchildrencomment',
       method: 'post',
-      data: params
+      data: qs.stringify(params)
     })
   },
   getAllComment(params) {

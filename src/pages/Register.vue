@@ -13,6 +13,15 @@ export default defineComponent({
 const ruleFormRef = ref('')
 const {proxy}=getCurrentInstance()
 const router =useRouter()
+const ruleForm = reactive({
+  password: '',
+  checkPass: '',
+  useraccount: '',
+  email:'',
+  checkVerificationCode:'',
+  username:''
+})
+
 // 账号验证
 const checkUseraccount = (rule, value, callback) => {
   if (!value) {
@@ -45,7 +54,7 @@ const validatePass = (rule, value, callback) => {
 const validatePass2 = (rule, value, callback) => {
   if (value === '') {
     callback(new Error('请再次输入密码'))
-  } else if (value !== ruleForm.pass) {
+  } else if (value !== ruleForm.password) {
     callback(new Error('两次输入的密码不一致'))
   } else {
     callback()
@@ -83,7 +92,12 @@ const sendVerificationCode =()=>{
       //将拼接好的字符串赋值给展示的code
       proxy.proxyCode = proxyCode;
      // 调用发送邮箱验证码接口
-        proxy.$api.sendcaptcha(ruleForm.email,proxy.proxyCode).then(res=>{
+        const config={
+          email:ruleForm.email,
+          verificationCode:proxyCode
+
+        }
+        proxy.$api.sendcaptcha(config).then(res=>{
           console.log(res);
       if(res.data.code===100000){
        // 发送验证码后进入倒计时 使用了节流的方法
@@ -115,16 +129,6 @@ const sendVerificationCode =()=>{
      return false;
   }
 }
-
-const ruleForm = reactive({
-  password: '',
-  checkPass: '',
-  useraccount: '',
-  email:'',
-  checkVerificationCode:'',
-  username:''
-})
-
 const rules = reactive({
   password: [{ validator: validatePass, trigger: 'blur',required: true}],
   checkPass: [{ validator: validatePass2, trigger: 'blur',required: true, }],
@@ -133,6 +137,7 @@ const rules = reactive({
 // 表单提交触发事件
 const submitForm = () => {    
      proxy.$api.register(ruleForm).then(res=>{
+       console.log(res);
       if(res.data.code===100000){
         console.log(res.data);
         if(ruleForm.checkVerificationCode===proxy.proxyCode){

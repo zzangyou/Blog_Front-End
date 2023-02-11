@@ -27,7 +27,7 @@
      <el-image v-for="(image,index) in item.blogpicture"
       :key=index
       class="blogimg"
-      :src="image"
+      :src="'/public/'+image"
       :preview-src-list="item.blogpicture"
       :initial-index="4"
       fit="cover"

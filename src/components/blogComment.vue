@@ -51,24 +51,28 @@
        <li class="child-content">
       <div style="text-align:left">
         <span class="child-username">{{citem.username}}:  </span>
-        <span v-show="citem.parentid==item.cid?false:true">回复 <span class="child-username">@{{citem.parentname}} :</span></span>
+<!-- 👀  后期拓展：多级评论-->
+<!--         <span v-show="citem.parentid==item.cid?true:false">回复 <span class="child-username">@{{citem.parentname}} :</span></span> -->
         <span>{{citem.comment}}</span>
       </div>
       <div class="time-content">
      <div>
        <span class="css-rf2lqt time">{{citem.ctime}}</span>
      </div>
-     <el-button circle text class="btn" @click="toAddChildrenComment(citem.cid)">
+   <!-- 👀  后期拓展：多级评论-->
+   <!--      <el-button circle text class="btn" @click="toAddChildrenComment(citem.cid)">
        <el-icon size="1.2rem"><ChatLineSquare /></el-icon>
-       </el-button>
-           <!-- v-show="isShowDelete(item.useraccount)" @click="deleteChildComment(item.bid,index)" -->
+       </el-button> -->
          <el-button circle text  v-show="isShowDelete(citem.username)" @click="ondeleteComment(citem.cid)" ><el-icon size="1.2rem"><Delete /></el-icon></el-button>      
       </div>
-      <!-- 发送子评论弹出框 -->
+    </li>
+  </ul>
+    </section>
+    <!-- 发送子评论弹出框 -->
    <el-dialog
     v-model="dialogVisible"
     title="回复评论"
-    width="30%"
+    :width="dialogWidth"
     align-center
   >
     <el-input
@@ -80,22 +84,19 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="dialogVisible = false, onAddChildrenComment(citem.cid)">
+        <el-button type="primary" @click="onAddChildrenComment">
           发送
         </el-button>
       </span>
     </template>
   </el-dialog>
-    </li>
-  </ul>
-    </section>
    </div>
     </div>
   </el-card>
 </div>
 </template>
 <script>
-import { ref,inject,onMounted, toRefs,reactive,watchEffect, defineComponent,getCurrentInstance} from 'vue';
+import { ref,inject,onMounted, toRefs,reactive,watchEffect, defineComponent,getCurrentInstance, onUpdated} from 'vue';
 import { useStore } from '@/models/index';
 export default defineComponent(
   {
@@ -115,7 +116,8 @@ export default defineComponent(
   const commenttext=ref('')
   const childcomment=ref('')
  // 发布子评论模态框
- let dialogVisible = ref(false) 
+ const dialogVisible = ref(false) 
+ let dialogWidth=ref('30%')
  // 爷组件需要传递的数据 
   const List=inject('commentList')
   const addcomment=inject('addcomment')
@@ -132,7 +134,17 @@ export default defineComponent(
   //  getChildrenComment()
    console.log('commentList变化了');
 }) 
-// 
+// 检测宽度dialog
+ const initWidth=()=> {
+  const width = document.body.clientWidth;
+  console.log(width);
+  if (width < 600) {
+    proxy.dialogWidth = '80%';
+  } else {
+    proxy.dialogWidth = '30%';
+  }
+}
+
 //  判断是否显示删除评论按钮
 //  是的话显示 不是的话隐藏
   const isShowDelete=(commentusername)=>{
@@ -173,10 +185,12 @@ export default defineComponent(
 const toAddChildrenComment=(parentid)=>{
   dialogVisible.value=!dialogVisible.value
   proxy.parentid=parentid
+  initWidth()
 }
 // 发布二级评论
 const onAddChildrenComment=()=>{
   const bid=props.bid
+  console.log(parentid);
   const config={
    bid:bid,
    useraccount:currentUseraccount,
@@ -185,6 +199,7 @@ const onAddChildrenComment=()=>{
   }
  addchildrencomment(config)
  proxy.childcomment=''
+ dialogVisible.value=!dialogVisible.value
 }
   return{
    commenttext,
@@ -192,6 +207,7 @@ const onAddChildrenComment=()=>{
    parentid,
    ...toRefs(state),
    dialogVisible,
+   dialogWidth,
   //  getChildrenComment,
   toAddChildrenComment,
    isShowDelete,
@@ -278,5 +294,10 @@ const onAddChildrenComment=()=>{
        }
     }
   }
+ @media screen and (max-width:600px) {
+   .el-dialog{
+    width: 90% !important;
+  }
+}
 </style>
 

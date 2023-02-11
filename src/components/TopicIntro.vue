@@ -34,7 +34,7 @@ export default {
 <template>
   <div class="topicreco">
     <!-- im topicintroduce -->
-    <h1 style="margin: 15px 0; text-align: center; font-weight: 700">
+    <h1 style="margin: 1.5rem 0; text-align: center; font-weight: 700">
       <el-icon color="brown" size="20px" style="vertical-align: bottom"><Comment /></el-icon>
       今日热门话题
     </h1>
@@ -49,7 +49,7 @@ export default {
 <style lang="scss">
 .topicreco {
   width: 100%;
-  padding: 2rem 0;
+  padding: 1rem .5rem;
   background-color: #fff;
   box-sizing: border-box;
   overflow: hidden; // 超出部分隐藏

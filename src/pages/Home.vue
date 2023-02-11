@@ -48,19 +48,21 @@
       <!-- 图片上传 -->
       <el-form-item v-show="isShowUpload" class="upload-container" style="justify-content: flex-start">
         <el-upload
+        class="upload-demo"
           v-model:file-list="fileList"
           ref="upload"
           name="blogpicture"
-          :action="uploadUrl"
+          action="http://localhost:8000/public/blog/addPost"
           list-type="picture-card"
           :before-upload="beforeUpload"
           :on-preview="handlePictureCardPreview"
           :on-remove="handleRemove"
           :on-exceed="handleExceedCover"
           :on-success="handleSuccess"
+          :on-change="changeHandler"	
           :auto-upload="false"
           :data="ruleForm"
-          limit="9"
+          limit=9
         >
           <el-icon><Plus /></el-icon>
         </el-upload>
@@ -123,6 +125,7 @@ export default defineComponent({
     Carousel,
     BlogCard,
   },
+
   setup() {
     const storePublic = useStore('publicInfo');
     const { proxy } = getCurrentInstance();
@@ -141,24 +144,34 @@ export default defineComponent({
       'warning',
       'info',
     ]);
+    var fileArray=[];
+    var fileTTT=[]
+    const changeHandler=(file,fileList)=>{//on-change绑定的方法
+    console.log('点了')
+        console.log(file)
+      fileArray.push(file)
+      // console.log(fileArray)
+      fileTTT=fileList.Target
+      console.log('重新赋值的fileTTT')
+      console.log(fileTTT)
+      };
     const inputVisible = ref(false);
     const InputRef = ref('');
     //  是否清空富文本编辑器
     const isresetText = ref(false);
     //  获取当前账号
-    const useraccount= storePublic.getUseraccount()
-     const ruleForm=reactive({
-       title:'',
-       tagname:JSON.stringify(['日常','ootd','其他']),
-       content:'',
+    const useraccount = storePublic.getUseraccount();
+    const ruleForm = reactive({
+      title: '标题',
+      tagname: ['日常', 'ootd', '其他'],
+      content: '内容',
       //  👀后期修改获取账号
       useraccount: useraccount,
-      publishtime:'2022/12/23 20:30',
-      // blogpicture:''
+      publishtime: '2022/12/23 20:30',
     });
     //  关闭标签
     const handleClose = (tag) => {
-      proxy.ruleForm.tagname.splice(proxy.ruleForm.tagname.indexOf(tag), 1);
+     ruleForm.tagname.splice(proxy.ruleForm.tagname.indexOf(tag), 1);
     };
     //  显示输入框
     const showInput = () => {
@@ -169,7 +182,7 @@ export default defineComponent({
     };
     const handleInputConfirm = () => {
       if (inputValue.value) {
-        proxy.ruleForm.tagname.push(inputValue.value);
+        ruleForm.tagname.push(inputValue.value);
       }
       inputVisible.value = false;
       inputValue.value = '';
@@ -182,37 +195,39 @@ export default defineComponent({
     //  获取编辑器文本
     const getText = (text) => {
       console.log(text);
-      proxy.ruleForm.content=text
-    }
-    const submitForm=()=>{
-   console.log(fileList.value.length);
-   // 若有上传图片
-   if(fileList.value.length!==0){
-  // 提交表单实际上是上传图片，表单数据做附带参数
-    proxy.$refs.upload.submit();
-     ElMessage({ message: '发送成功',type: 'success',})
-    // 发布成功后重新获取bloglist
-     proxy.getBlogData()
-   }
-   else{
-     proxy.$api.addPost(ruleForm).then(
-       res=>{
-         console.log(res);
-         if(res.data.code===100000){
-            proxy.ruleForm.title=''
-            proxy.ruleForm.content=''
-            proxy.isShowTag=false
-            proxy.isresetText=true
-            ElMessage({ message: '发送成功',type: 'success',})
+
+      proxy.ruleForm.content = text;
+    };
+    const submitForm = () => {
+      console.log(fileList.value.length);
+      console.log(fileList)
+      /* 上传文件的参数在这里编辑 */
+    let postContext=new FormData();
+    postContext.append('useraccount',useraccount);
+    postContext.append('content',ruleForm.content)
+  postContext.append('tagname',ruleForm.tagname)
+  postContext.append('title',ruleForm.title)
+  /* 这里的代码不用管，是管理图片文件上传的 */
+  for(var i=0;i<fileArray.length;i++){
+    postContext.append('blogpicture',fileArray[i].raw)
+  }
+  console.log(postContext)
+    proxy.$api.addPost(postContext).then((res) => {
+          console.log(res);
+          if (res.data.code === 100000) {
+            proxy.ruleForm.title = '';
+            proxy.ruleForm.content = '';
+            proxy.isShowTag = false;
+            proxy.isresetText = true;
+            ElMessage({ message: '发送成功', type: 'success' });
             // 发布成功后重新获取bloglist
-             proxy.getBlogData()
-         }else{
-          ElMessage({ message: '发送失败，请稍后再试',type: 'warning',})
-         }
-       }
-     )
-   }
-    }
+            proxy.getBlogData();
+          } else {
+            ElMessage({ message: '发送失败，请稍后再试', type: 'warning' });
+          }
+        });
+     
+    };
     /* 图片上传模块 */
     // 图片上传显示
     let isShowUpload = ref(false);
@@ -227,29 +242,37 @@ export default defineComponent({
     const beforeUpload = (file) => {
       return true;
     };
-// 移除文件
-const handleRemove = (uploadFile, uploadFiles) => {
-  console.log(uploadFile, uploadFiles)
-}
-// 预览图片
-const handlePictureCardPreview = (uploadFile) => {
-  if(uploadFile.url){
-      dialogImageUrl.value = uploadFile.url
-  }
-  dialogVisible.value = true
-}
-// 上传成果
-const handleSuccess=(res)=>{
-  console.log(res);
-}
-// 图片上传超出限制
-const handleExceedCover =(files, fileList)=>{
-   ElMessage.error({
-   message: '上传图片数量超出限制！',
-   type: 'error',
-   });    
-    }
-/* //分页数据 （👀后期修改）
+
+    // 移除文件
+    const handleRemove = (uploadFile, uploadFiles) => {
+      // console.log(uploadFile, uploadFiles);
+      console.log(uploadFile.name)
+      console.log(uploadFiles)
+      fileArray.forEach((item,index)=>{
+        if(item.name==uploadFile.name){
+          fileArray.splice(index,1);
+        }
+      })
+    };
+    // 预览图片
+    const handlePictureCardPreview = (uploadFile) => {
+      if (uploadFile.url) {
+        dialogImageUrl.value = uploadFile.url;
+      }
+      dialogVisible.value = true;
+    };
+    // 上传成果
+    const handleSuccess = (res) => {
+      console.log(res);
+    };
+    // 图片上传超出限制
+    const handleExceedCover = (files, fileList) => {
+      ElMessage.error({
+        message: '上传图片数量超出限制！',
+        type: 'error',
+      });
+    };
+    /* //分页数据 （👀后期修改）
 const pageNumber=1
 const pageSize=20  */
 //页面初始化 获取微博数据 
@@ -431,38 +454,42 @@ provide('deletecomment',deletecomment)
       pageData.pageSize = size;
       setBlogs();
     };
-     return{
-       inputValue,
-       inputVisible,
-       InputRef,
-       handleClose,
-       showInput,
-       handleInputConfirm,
-       isShowTag,
-       isresetText,
-       changeShowTag,
-       types,
-       getText,
-       ruleForm,
-       fileList,
-       dialogImageUrl,
-       dialogVisible,
-       handleRemove,
-       handlePictureCardPreview,
-       submitForm,
-       isShowUpload,
-       changeShowPicture,
-       handleExceedCover,
-       uploadUrl,
-       beforeUpload,
-       handleSuccess,
-       ...toRefs(data),
-       getBlogData,
-       getlike,
-       cancellike,
-       deleteblog,
-       getcomment,
-       deletecomment,
+
+
+    return {
+      fileArray,
+      changeHandler,
+      inputValue,
+      inputVisible,
+      InputRef,
+      handleClose,
+      showInput,
+      handleInputConfirm,
+      isShowTag,
+      isresetText,
+      changeShowTag,
+      types,
+      getText,
+      ruleForm,
+      fileList,
+      dialogImageUrl,
+      dialogVisible,
+      handleRemove,
+      handlePictureCardPreview,
+      submitForm,
+      isShowUpload,
+      changeShowPicture,
+      handleExceedCover,
+      uploadUrl,
+      beforeUpload,
+      handleSuccess,
+      ...toRefs(data),
+      getBlogData,
+      getlike,
+      cancellike,
+      deleteblog,
+      getcomment,
+      deletecomment,
       ...toRefs(pageData),
       handleCurrentChange,
       handleSizeChange,

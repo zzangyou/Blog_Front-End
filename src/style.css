@@ -349,3 +349,6 @@ label + .css-135qv08 {
 .hidden{
   display: none;
 }
+.flex-center{
+  justify-content: center;
+}

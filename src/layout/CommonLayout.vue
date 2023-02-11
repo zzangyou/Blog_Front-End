@@ -22,18 +22,18 @@ provide('reload', reload); */
         <Header />
       </el-header>
       <el-container>
-        <el-container class="main" style="background-color: purple">
+        <el-container class="main">
           <el-row justify="center">
             <el-col :span="4">
               <!-- 侧边导航栏 -->
-              <el-aside style="background-color: pink; flex: 1" class="hidden-xs-only">
+              <el-aside style="flex: 1" class="hidden-xs-only">
                 <!-- 一个视图使用一个组件渲染，因此对于同个路由，多个视图就需要多个组件 -->
                 <router-view name="aside"></router-view>
               </el-aside>
             </el-col>
             <el-col :xs="24" :sm="14" :md="14" :lg="14" :xl="16">
               <!-- 中间主要内容 -->
-              <el-main style="background-color: orange">
+              <el-main>
                 <router-view name="mainContent"></router-view>
                 <!-- <router-view name="mainContent" v-if="isRouterAlive"></router-view> -->
               </el-main>
@@ -47,13 +47,18 @@ provide('reload', reload); */
           </el-row>
         </el-container>
         <!-- 页脚 -->
-        <el-footer style="background-color: skyblue">im Footer</el-footer>
+        <el-footer style="background-color: #3F51B5">
+        <Footer></Footer>
+        </el-footer>
       </el-container>
     </el-container>
   </div>
 </template>
 
 <style lang="scss">
+.common-layout{
+  background-color: #f5f5f5;
+}
 .el-container {
   display: block;
 }
@@ -82,4 +87,7 @@ provide('reload', reload); */
   margin-top: 61px;
   height: 100%;
 } */
+.el-footer {
+  height: 160%;
+}
 </style>
