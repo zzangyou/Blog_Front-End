@@ -32,7 +32,7 @@ export default {
     // ⭐用watch解决 跳转的路由相同但参数不同时，页面数据不自动刷新的问题
     watch(
       /* 2.【监听】路由的params参数tagname */
-      () => route.params.tagname, // 监听proxy对象所返回的具体属性写法(作函数返回值)
+      () => route.params.tagname, // 监听所返回Proxy对象所返回的具体属性写法(作函数返回值)
       // 所监听数据发生变化时的回调
       (newValue, oldValue) => {
         // console.log('tagname newvalue', newValue, 'tagname oldValue', oldValue);

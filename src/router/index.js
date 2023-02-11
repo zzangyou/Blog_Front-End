@@ -9,6 +9,7 @@ import UserAside from '@/pages/UserAside.vue'
 import WeiBo from '@/pages/WeiBo.vue'
 import Comment from '@/pages/Comment.vue'
 import HomeTagBlogs from '@/pages/HomeTagblogs.vue'
+import blogSearch from '@/pages/blogSearch.vue'
 
 // 路由
 const routes = [
@@ -25,6 +26,15 @@ const routes = [
         }
       },
       {
+        name: 'search',
+        path: 'toBlogSearch/:keyword',
+        components: {
+          mainContent: blogSearch
+        },
+        props: true
+      },
+      {
+        // 注意params传参只能以name来引导路由
         name: 'toHometagblogs',
         path: 'showblogsbytag/:tagname',//声明parmas参数tagname
         components: {

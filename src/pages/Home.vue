@@ -48,7 +48,7 @@
       <!-- 图片上传 -->
       <el-form-item v-show="isShowUpload" class="upload-container" style="justify-content: flex-start">
         <el-upload
-        class="upload-demo"
+          class="upload-demo"
           v-model:file-list="fileList"
           ref="upload"
           name="blogpicture"
@@ -59,10 +59,10 @@
           :on-remove="handleRemove"
           :on-exceed="handleExceedCover"
           :on-success="handleSuccess"
-          :on-change="changeHandler"	
+          :on-change="changeHandler"
           :auto-upload="false"
           :data="ruleForm"
-          limit=9
+          limit="9"
         >
           <el-icon><Plus /></el-icon>
         </el-upload>
@@ -144,17 +144,18 @@ export default defineComponent({
       'warning',
       'info',
     ]);
-    var fileArray=[];
-    var fileTTT=[]
-    const changeHandler=(file,fileList)=>{//on-change绑定的方法
-    console.log('点了')
-        console.log(file)
-      fileArray.push(file)
+    var fileArray = [];
+    var fileTTT = [];
+    const changeHandler = (file, fileList) => {
+      //on-change绑定的方法
+      console.log('点了');
+      console.log(file);
+      fileArray.push(file);
       // console.log(fileArray)
-      fileTTT=fileList.Target
-      console.log('重新赋值的fileTTT')
-      console.log(fileTTT)
-      };
+      fileTTT = fileList.Target;
+      console.log('重新赋值的fileTTT');
+      console.log(fileTTT);
+    };
     const inputVisible = ref(false);
     const InputRef = ref('');
     //  是否清空富文本编辑器
@@ -200,33 +201,32 @@ export default defineComponent({
     };
     const submitForm = () => {
       console.log(fileList.value.length);
-      console.log(fileList)
+      console.log(fileList);
       /* 上传文件的参数在这里编辑 */
-    let postContext=new FormData();
-    postContext.append('useraccount',useraccount);
-    postContext.append('content',ruleForm.content)
-  postContext.append('tagname',ruleForm.tagname)
-  postContext.append('title',ruleForm.title)
-  /* 这里的代码不用管，是管理图片文件上传的 */
-  for(var i=0;i<fileArray.length;i++){
-    postContext.append('blogpicture',fileArray[i].raw)
-  }
-  console.log(postContext)
-    proxy.$api.addPost(postContext).then((res) => {
-          console.log(res);
-          if (res.data.code === 100000) {
-            proxy.ruleForm.title = '';
-            proxy.ruleForm.content = '';
-            proxy.isShowTag = false;
-            proxy.isresetText = true;
-            ElMessage({ message: '发送成功', type: 'success' });
-            // 发布成功后重新获取bloglist
-            proxy.getBlogData();
-          } else {
-            ElMessage({ message: '发送失败，请稍后再试', type: 'warning' });
-          }
-        });
-     
+      let postContext = new FormData();
+      postContext.append('useraccount', 123456);
+      postContext.append('content', '内容');
+      postContext.append('tagname', ['标签1', '标签2', '标签3']);
+      postContext.append('title', '标题');
+      /* 这里的代码不用管，是管理图片文件上传的 */
+      for (var i = 0; i < fileArray.length; i++) {
+        postContext.append('blogpicture', fileArray[i].raw);
+      }
+      console.log(postContext);
+      proxy.$api.addPost(postContext).then((res) => {
+        console.log(res);
+        if (res.data.code === 100000) {
+          proxy.ruleForm.title = '';
+          proxy.ruleForm.content = '';
+          proxy.isShowTag = false;
+          proxy.isresetText = true;
+          ElMessage({ message: '发送成功', type: 'success' });
+          // 发布成功后重新获取bloglist
+          proxy.getBlogData();
+        } else {
+          ElMessage({ message: '发送失败，请稍后再试', type: 'warning' });
+        }
+      });
     };
     /* 图片上传模块 */
     // 图片上传显示
@@ -246,13 +246,13 @@ export default defineComponent({
     // 移除文件
     const handleRemove = (uploadFile, uploadFiles) => {
       // console.log(uploadFile, uploadFiles);
-      console.log(uploadFile.name)
-      console.log(uploadFiles)
-      fileArray.forEach((item,index)=>{
-        if(item.name==uploadFile.name){
-          fileArray.splice(index,1);
+      console.log(uploadFile.name);
+      console.log(uploadFiles);
+      fileArray.forEach((item, index) => {
+        if (item.name == uploadFile.name) {
+          fileArray.splice(index, 1);
         }
-      })
+      });
     };
     // 预览图片
     const handlePictureCardPreview = (uploadFile) => {
@@ -454,7 +454,6 @@ provide('deletecomment',deletecomment)
       pageData.pageSize = size;
       setBlogs();
     };
-
 
     return {
       fileArray,

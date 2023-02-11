@@ -7,24 +7,23 @@
       <div class="logo">logo</div>
 
       <!-- 首页选项 -->
-      <el-menu-item index="1" @click="backToHome">
-      首页</el-menu-item>
+      <el-menu-item index="1" @click="backToHome"> 首页</el-menu-item>
       <div class="search">
         <!-- 搜索框 -->
         <input type="text" v-model="searchkeyword" placeholder="请输入搜索关键字" />
         <span>
-          <el-icon size="18"><Search /></el-icon>
+          <el-icon size="18"><Search @click="searchBlogs" /></el-icon>
         </span>
       </div>
 
-      <!-- 关于换头像？？？ -->
+      <!-- 关于换头像 -->
       <!-- 下拉菜单 -->
       <el-dropdown class="el-drown">
         <span class="el-dropdown-link">
           <!-- 头像 -->
           <div class="demo-type">
             <!-- 图片头像 -->
-            <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
+            <el-avatar :src="imageUrl" />
           </div>
         </span>
         <template #dropdown>
@@ -42,15 +41,26 @@
 </template>
 
 <script setup>
-import { ref,getCurrentInstance } from 'vue';
+import { ref, getCurrentInstance, reactive } from 'vue';
 import { ArrowDown } from '@element-plus/icons-vue';
 import { router } from '../router/index';
+import { useStore } from '../models/index';
+import { storeToRefs } from 'pinia';
+const store = useStore('publicInfo');
+const { useravatar } = storeToRefs(store); //storeToRefs使修改pinia数据时是响应式的
 
 const activeIndex = ref('1');
 const searchkeyword = ref('');
 const handleSelect = (key, keyPath) => {
   console.log(key, keyPath); //得到被选择项的index，及保存有被选择项相关信息的数组
 };
+let imageUrl = ref(useravatar); //借助pinia使数据能够动态匹配(数据共享)，那么其它地方换了头像，导航栏的头像也会跟着换
+if (localStorage.getItem('avatar') != '') {
+  store.useravatar = localStorage.getItem('avatar');
+} else {
+  store.useravatar = 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png';
+}
+
 // 跳去个人信息页
 function personInfo() {
   // console.log(this); //undefined
@@ -70,9 +80,27 @@ function backToHome() {
     //replace模式
     path: '/',
   });
-/* window.location.reload(); */
+  /* window.location.reload(); */
   //选中“首页”
   activeIndex.value = '1';
+}
+
+// 搜索框
+function searchBlogs() {
+  console.log('searchkeyword is', searchkeyword);
+  // 应先做判断，
+  if (searchkeyword.value) {
+    // 再 路由切换 并 传递params参数
+    router.replace({
+      // 注意params传参只能以name来引导路由
+      name: 'search',
+      params: {
+        keyword: searchkeyword.value,
+      },
+    });
+  } else {
+    alert('请输入需要搜索的标题内容！');
+  }
 }
 </script>
 
@@ -131,7 +159,7 @@ function backToHome() {
   input {
     width: 15rem;
     height: 1.5rem;
-    border-radius: 15px;
+    border-radius: 1rem;
     border: 1px solid #999;
     outline: none;
   }

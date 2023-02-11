@@ -180,5 +180,13 @@ export default {
       method: 'get',
       data: params
     })
+  },
+  // 根据关键字搜索(标题)
+  getSearchBlog(params) {
+    return request({
+      url: 'getBlogbyKeyword',
+      method: 'get',
+      data: params
+    })
   }
 }
