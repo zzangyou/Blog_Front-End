@@ -8,7 +8,7 @@
         全部标签</div>
         <el-menu class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
           <el-menu-item
-            v-for="(tname, index) in tagnamesArr"
+            v-for="(tname, index) in tagnamesArr.slice(0,12)"
             class="menu-item"
             :key="index"
             :index="index"
@@ -16,6 +16,26 @@
           >
             <span class="tag-icon" :style="{ background: tagColor[index] }"></span>
             <span>{{ tname }}</span>
+          </el-menu-item>
+          <el-menu-item  @click="dialogVisible=true">
+           <li class="tag-title">
+             查看更多...
+           </li>
+           <el-dialog
+           v-model="dialogVisible"
+           title="Tips"
+           width="30%"
+         >
+           <span>This is a message</span>
+           <template #footer>
+           <span class="dialog-footer">
+             <el-button @click="dialogVisible = false">Cancel</el-button>
+             <el-button type="primary" @click="dialogVisible = false">
+               Confirm
+             </el-button>
+           </span>
+           </template>
+         </el-dialog>
           </el-menu-item>
         </el-menu>
       </el-col>
@@ -33,7 +53,7 @@ export default {
     const data = reactive({
       tagnamesArr: [], //标签名数组
     });
-    const tagColor=['#3F51B5','#ead0d1','#b5c4b1','#faead3','#c9c0d3','#8696a7','#e4ebf6','#eee5f8','#ead0d1','#3F51B5','#ead0d1','#b5c4b1','#faead3','#e4ebf6','#eee5f8','#ead0d1']
+    const tagColor=['#3F51B5','#ead0d1','#b5c4b1','#faead3','#c9c0d3','#8696a7','#e4ebf6','#eee5f8','#ead0d1','#3F51B5','#ead0d1','#b5c4b1','#faead3','#e4ebf6']
     onMounted(() => {
       // 获取已有标签名
       const tagnames = proxy.$api.getTagnames();
@@ -62,10 +82,12 @@ export default {
     const handleClose = (key, keyPath) => {
       // console.log(key, keyPath);
     };
+    const dialogVisible = ref(false)
     return {
       handleOpen,
       handleClose,
       tagColor,
+      dialogVisible,
       // 扩展运算符可将数组或对象转换成以逗号分隔的参数序列
       ...toRefs(data), //toRefs
       changeToHomeTagblogs,
