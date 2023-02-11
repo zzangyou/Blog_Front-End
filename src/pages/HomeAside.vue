@@ -5,7 +5,7 @@
       <el-col :span="12">
       <div class="tag-title flex flex-center">
         <el-icon color="#3F51B5" style="margin-right:4px;"><PriceTag /></el-icon>
-        全部标签</div>
+        标签推荐</div>
         <el-menu class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
           <el-menu-item
             v-for="(tname, index) in tagnamesArr.slice(0,12)"
@@ -21,18 +21,25 @@
            <li class="tag-title">
              查看更多...
            </li>
+           <!-- 所有标签弹出框 -->
            <el-dialog
            v-model="dialogVisible"
-           title="Tips"
            width="30%"
          >
-           <span>This is a message</span>
+         <el-card class="box-card">
+           <template #header>
+             <div class="card-header">
+               <span>Card name</span>
+               <el-button class="button" text>Operation button</el-button>
+             </div>
+           </template>
+        <el-button v-for="(tag,index) in item.tagname" :key="index" :color="tagcolor[index]">
+        {{tag}}
+        </el-button>
+         </el-card>
            <template #footer>
            <span class="dialog-footer">
-             <el-button @click="dialogVisible = false">Cancel</el-button>
-             <el-button type="primary" @click="dialogVisible = false">
-               Confirm
-             </el-button>
+             <el-button @click="dialogVisible = false">关闭</el-button>
            </span>
            </template>
          </el-dialog>
