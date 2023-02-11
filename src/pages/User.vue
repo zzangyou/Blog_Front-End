@@ -2,120 +2,122 @@
   <!-- im usermain -->
   <!-- model绑定	表单数据对象	
       rules绑定	表单验证规则  -->
-  <div class="usermain">
-    <el-form
-      ref="ruleFormRef"
-      :model="ruleForm.userData"
-      :rules="rules"
-      label-width="120px"
-      class="demo-ruleForm"
-      :size="formSize"
-      status-icon
-      :disabled="!isShow"
-    >
-      <!-- label标签文本 -->
-      <!-- propmodel model(数据)的键名。它可以是一个路径数组(例如 ['a', 'b', 0])。
-       在定义了 validate、resetFields 的方法时，该属性是必填的 -->
-      <el-form-item label="账号" prop="useraccount">
-        <el-input v-model="ruleForm.userData.useraccount" disabled />
-      </el-form-item>
-
-      <el-form-item label="昵称" prop="username">
-        <el-input v-model="ruleForm.userData.username" />
-      </el-form-item>
-
-      <el-form-item label="密码" prop="password">
-        <el-input v-model="ruleForm.userData.password" />
-      </el-form-item>
-
-      <el-form-item
-        prop="email"
-        label="邮箱"
-        :rules="[
-          {
-            required: true,
-            message: 'Please input email address',
-            trigger: 'blur',
-          },
-          {
-            type: 'email',
-            message: 'Please input correct email address',
-            trigger: ['blur', 'change'],
-          },
-        ]"
+  <div style="display: flex">
+    <div class="usermain">
+      <el-form
+        ref="ruleFormRef"
+        :model="ruleForm.userData"
+        :rules="rules"
+        label-width="120px"
+        class="demo-ruleForm"
+        :size="formSize"
+        status-icon
+        :disabled="!isShow"
       >
-        <el-input v-model="ruleForm.userData.email" />
-      </el-form-item>
-
-      <el-form-item label="性别" prop="sex">
-        <el-radio-group v-model="ruleForm.userData.sex">
-          <el-radio label="男" />
-          <el-radio label="女" />
-        </el-radio-group>
-      </el-form-item>
-
-      <el-form-item label="地区" prop="region">
-        <el-select v-model="ruleForm.userData.region" placeholder="请选择所来自地区">
-          <el-option label="北京" value="beijing" />
-          <el-option label="上海" value="shanghai" />
-          <el-option label="广州" value="guangzhou" />
-          <el-option label="深圳" value="shenzheng" />
-        </el-select>
-      </el-form-item>
-
-      <el-form-item label="生日">
-        <el-col :span="11">
-          <el-form-item prop="birth">
-            <el-date-picker
-              v-model="ruleForm.userData.birth"
-              type="date"
-              label="Pick a date"
-              placeholder="请选择日期"
-              style="width: 100%"
-              value-format="YYYY-MM-DD"
-            />
-            <!-- 使用format指定输入框的格式。 
-            使用 value-format 指定绑定值的格式。 -->
-          </el-form-item>
-        </el-col>
-      </el-form-item>
-
-      <el-form-item label="星座" prop="star">
-        <el-select v-model="ruleForm.userData.star" placeholder="请选择星座">
-          <el-option label="狮子" value="shizi" />
-          <el-option label="白羊" value="baiyang" />
-          <el-option label="射手" value="sheshou" />
-          <el-option label="双子" value="shuangzi" />
-          <el-option label="水瓶" value="shuiping" />
-          <el-option label="处女" value="chunv" />
-          <el-option label="魔蝎" value="moxie" />
-          <el-option label="天蝎" value="tianxie" />
-          <el-option label="天秤" value="tianchen" />
-          <el-option label="双鱼" value="shuangyu" />
-          <el-option label="巨蟹" value="juxie" />
-          <el-option label="金牛" value="jinniu" />
-        </el-select>
-      </el-form-item>
-
-      <el-form-item label="职业" prop="job">
-        <el-input v-model="ruleForm.userData.job" />
-      </el-form-item>
-
-      <el-form-item label="个性签名" prop="usercharacter">
-        <el-input v-model="ruleForm.userData.usercharacter" type="textarea" />
-      </el-form-item>
-
-      <div v-show="isShow">
-        <el-form-item>
-          <el-button type="primary" @click="submitForm(ruleFormRef)">保存</el-button>
-          <el-button @click="resetForm(ruleFormRef)">重置</el-button>
-          <button @click="cancelSubmit" style="margin-left: 10px; background-color: skyblue">取消</button>
+        <!-- label标签文本 -->
+        <!-- propmodel model(数据)的键名。它可以是一个路径数组(例如 ['a', 'b', 0])。
+        在定义了 validate、resetFields 的方法时，该属性是必填的 -->
+        <el-form-item label="账号" prop="useraccount">
+          <el-input v-model="ruleForm.userData.useraccount" disabled />
         </el-form-item>
-      </div>
-    </el-form>
 
-    <div v-show="!isShow">
-      <button @click="isShow = !isShow" style="background-color: skyblue">修改个人信息</button>
+        <el-form-item label="昵称" prop="username">
+          <el-input v-model="ruleForm.userData.username" />
+        </el-form-item>
+
+        <el-form-item label="密码" prop="password">
+          <el-input v-model="ruleForm.userData.password" />
+        </el-form-item>
+
+        <el-form-item
+          prop="email"
+          label="邮箱"
+          :rules="[
+            {
+              required: true,
+              message: 'Please input email address',
+              trigger: 'blur',
+            },
+            {
+              type: 'email',
+              message: 'Please input correct email address',
+              trigger: ['blur', 'change'],
+            },
+          ]"
+        >
+          <el-input v-model="ruleForm.userData.email" />
+        </el-form-item>
+
+        <el-form-item label="性别" prop="sex">
+          <el-radio-group v-model="ruleForm.userData.sex">
+            <el-radio label="男" />
+            <el-radio label="女" />
+          </el-radio-group>
+        </el-form-item>
+
+        <el-form-item label="地区" prop="region">
+          <el-select v-model="ruleForm.userData.region" placeholder="请选择所来自地区">
+            <el-option label="北京" value="beijing" />
+            <el-option label="上海" value="shanghai" />
+            <el-option label="广州" value="guangzhou" />
+            <el-option label="深圳" value="shenzheng" />
+          </el-select>
+        </el-form-item>
+
+        <el-form-item label="生日">
+          <el-col :span="11">
+            <el-form-item prop="birth">
+              <el-date-picker
+                v-model="ruleForm.userData.birth"
+                type="date"
+                label="Pick a date"
+                placeholder="请选择日期"
+                style="width: 100%"
+                value-format="YYYY-MM-DD"
+              />
+              <!-- 使用format指定输入框的格式。 
+              使用 value-format 指定绑定值的格式。 -->
+            </el-form-item>
+          </el-col>
+        </el-form-item>
+
+        <el-form-item label="星座" prop="star">
+          <el-select v-model="ruleForm.userData.star" placeholder="请选择星座">
+            <el-option label="狮子" value="shizi" />
+            <el-option label="白羊" value="baiyang" />
+            <el-option label="射手" value="sheshou" />
+            <el-option label="双子" value="shuangzi" />
+            <el-option label="水瓶" value="shuiping" />
+            <el-option label="处女" value="chunv" />
+            <el-option label="魔蝎" value="moxie" />
+            <el-option label="天蝎" value="tianxie" />
+            <el-option label="天秤" value="tianchen" />
+            <el-option label="双鱼" value="shuangyu" />
+            <el-option label="巨蟹" value="juxie" />
+            <el-option label="金牛" value="jinniu" />
+          </el-select>
+        </el-form-item>
+
+        <el-form-item label="职业" prop="job">
+          <el-input v-model="ruleForm.userData.job" />
+        </el-form-item>
+
+        <el-form-item label="个性签名" prop="usercharacter">
+          <el-input v-model="ruleForm.userData.usercharacter" type="textarea" />
+        </el-form-item>
+
+        <div v-show="isShow">
+          <el-form-item>
+            <el-button type="primary" @click="submitForm(ruleFormRef)">保存</el-button>
+            <el-button @click="resetForm(ruleFormRef)">重置</el-button>
+            <button @click="cancelSubmit" style="margin-left: 10px; background-color: skyblue">取消</button>
+          </el-form-item>
+        </div>
+      </el-form>
+
+      <div v-show="!isShow">
+        <button @click="isShow = !isShow" style="background-color: skyblue">修改个人信息</button>
+      </div>
     </div>
   </div>
 </template>

@@ -159,7 +159,7 @@ function searchBlogs() {
   input {
     width: 15rem;
     height: 1.5rem;
-    border-radius: 15px;
+    border-radius: 1rem;
     border: 1px solid #999;
     outline: none;
   }
