@@ -21,21 +21,29 @@
            <li class="tag-title">
              查看更多...
            </li>
+          </el-menu-item>
            <!-- 所有标签弹出框 -->
            <el-dialog
            v-model="dialogVisible"
            width="30%"
          >
-         <el-card class="box-card">
-           <template #header>
-             <div class="card-header">
-               <span>Card name</span>
-               <el-button class="button" text>Operation button</el-button>
-             </div>
+       <template #header>
+       <div class="dialog-title flex">
+        <el-icon color="#3F51B5" style="margin-right:4px;"><PriceTag /></el-icon>
+        全部标签</div>
            </template>
-        <el-button v-for="(tag,index) in item.tagname" :key="index" :color="tagcolor[index]">
+         <el-card class="box-card">
+         <div class="flex flex-wrap">
+         <el-button 
+         v-for="(tag,index) in tagnamesArr" 
+         :key="index" 
+         :color="tagColor[index]"
+          class="flex flex-wrap"
+          @click="changeToHomeTagblogs(tag)"
+          >
         {{tag}}
         </el-button>
+         </div>
          </el-card>
            <template #footer>
            <span class="dialog-footer">
@@ -43,7 +51,6 @@
            </span>
            </template>
          </el-dialog>
-          </el-menu-item>
         </el-menu>
       </el-col>
     </el-row>
@@ -102,7 +109,7 @@ export default {
   },
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .head:hover {
   cursor: pointer;
 }
@@ -136,5 +143,19 @@ export default {
   display: inline-block;
   vertical-align: -3px;
   margin: 0 10px 0 1px;
+}
+::v-deep .el-button {
+   margin:12px 10px 0 0;
+    .el-button{
+      margin-left: 0;
+    }
+}
+.dialog-title{
+  align-items: center;
+  color:#3F51B5;
+  font-weight:550;
+}
+::v-deep .el-card{
+  margin-top: -15px;
 }
 </style>

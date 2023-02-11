@@ -352,3 +352,9 @@ label + .css-135qv08 {
 .flex-center{
   justify-content: center;
 }
+.flex-nowrap{
+   flex-wrap: nowrap;
+}
+.flex-wrap{
+   flex-wrap: wrap;
+}
