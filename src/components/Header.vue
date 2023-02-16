@@ -8,6 +8,7 @@
 
       <!-- 首页选项 -->
       <el-menu-item index="1" @click="backToHome"> 首页</el-menu-item>
+
       <div class="search">
         <!-- 搜索框 -->
         <input type="text" v-model="searchkeyword" placeholder="请输入搜索关键字" />
@@ -30,7 +31,7 @@
           <el-dropdown-menu>
             <!-- 点击个人信息，切换路由（利用编程式路由导航） -->
             <el-dropdown-item @click="personInfo">个人信息</el-dropdown-item>
-            <!-- <el-dropdown-item>退出登录</el-dropdown-item> -->
+            <el-dropdown-item @click="outTologin">退出登录</el-dropdown-item>
             <!-- <el-dropdown-item disabled>Action 4</el-dropdown-item> -->
             <!-- <el-dropdown-item divided>Action 5</el-dropdown-item> -->
           </el-dropdown-menu>
@@ -55,11 +56,12 @@ const handleSelect = (key, keyPath) => {
   console.log(key, keyPath); //得到被选择项的index，及保存有被选择项相关信息的数组
 };
 let imageUrl = ref(useravatar); //借助pinia使数据能够动态匹配(数据共享)，那么其它地方换了头像，导航栏的头像也会跟着换
-if (localStorage.getItem('avatar') != '') {
-  store.useravatar = localStorage.getItem('avatar');
-} else {
-  store.useravatar = 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png';
-}
+store.useravatar = localStorage.getItem('avatar');
+// if (localStorage.getItem('avatar') != '') {
+//   store.useravatar = localStorage.getItem('avatar');
+// } else {
+//   store.useravatar = 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png';
+// }
 
 // 跳去个人信息页
 function personInfo() {
@@ -102,11 +104,26 @@ function searchBlogs() {
     alert('请输入需要搜索的标题内容！');
   }
 }
+// 退出登录
+function outTologin() {
+  // 清除token
+  store.clearToken();
+  // 清除用户账号
+  store.clearUseraccount();
+  // 清除用户名
+  store.clearUsername();
+  // 跳回到登录页
+  router.replace({
+    path: '/login',
+  });
+}
 </script>
 
 <style lang="scss" scoped>
 // 导航栏
 .header {
+  display: flex;
+  flex-wrap: nowrap;
   position: fixed;
   z-index: 999;
   top: 0;
@@ -123,7 +140,9 @@ function searchBlogs() {
 }
 .el-menu-demo {
   display: flex;
+  width: 100%;
   // padding-left: 20px;
+  position: relative;
 }
 // logo
 .logo {
@@ -154,7 +173,9 @@ function searchBlogs() {
 } */
 
 .search {
-  margin-left: 35rem;
+  position: absolute;
+  right: 15rem;
+  // margin-right: 5rem;
   line-height: 3.8rem;
   input {
     width: 15rem;
@@ -167,5 +188,14 @@ function searchBlogs() {
     vertical-align: middle;
     margin-left: 0.5rem;
   }
+}
+
+.el-col {
+  border-radius: 4px;
+}
+
+.grid-content {
+  border-radius: 4px;
+  min-height: 36px;
 }
 </style>

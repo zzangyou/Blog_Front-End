@@ -308,6 +308,11 @@ onMounted(() => {
 .usermain {
   width: 37.5rem;
   margin: auto;
+  padding-right: 1.5rem;
   background-color: #fff;
+  box-sizing: border-box;
+}
+.el-form-item--default >>> .el-form-item__label {
+  width: 6rem !important;
 }
 </style>

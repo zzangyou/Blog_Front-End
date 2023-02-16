@@ -37,7 +37,7 @@ export default defineConfig({
     },
   },
 
-  //本地运行配置，以及反向代理配置
+  //本地运行配置，以及【反向代理】配置
   server: {
     host: 'localhost',
     https: false,//是否启用 http
@@ -50,8 +50,8 @@ export default defineConfig({
     // 反向代理配置
     proxy: {
       '/public/': { // 匹配所有以'/public/' 开头的请求路径
-        target: 'http://43.139.169.47:8080', // 代理目标的基础路径
-        changeOrigin: true,              // 控制请求头中host值。如果为true，在请求服务器时不表明自己是代理服务器
+        target: 'http://43.139.169.47:8080', // 代理目标(请求地址)的基础路径
+        changeOrigin: true, // 控制请求头中host值。如果为true，在请求服务器时不表明自己是代理服务器
       }
     }
   },

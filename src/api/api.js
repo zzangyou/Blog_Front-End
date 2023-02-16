@@ -56,7 +56,14 @@ export default {
 
     })
   },
-
+  // 获取用户头像
+  getAvatar(params) {
+    return request({
+      url: 'blog/getAvater',
+      method: 'get',
+      data: params
+    })
+  },
   addPost(params) {
     return request({
       url: 'blog/addPost',
@@ -188,5 +195,6 @@ export default {
       method: 'get',
       data: params
     })
-  }
+  },
+
 }

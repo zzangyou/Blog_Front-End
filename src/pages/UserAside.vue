@@ -2,7 +2,7 @@
   <div class="useraside">
     <!-- im useraside -->
     <!-- 头像昵称 -->
-    <div style="margin-top: 3rem">
+    <div style="margin-top: 3rem; padding-top: 2rem">
       <!-- action 请求url 这里的data为额外参数 -->
       <el-upload
         class="avatar-uploader"
@@ -20,9 +20,9 @@
       </el-upload>
       <p style="margin-top: 5px">{{ username }}</p>
     </div>
-    <p style="margin: 20px 0">{{ usercharacter }}</p>
+    <p style="margin-top: 10px; font-size: 14px">{{ usercharacter }}</p>
     <!-- 导航区 -->
-    <el-row class="tac">
+    <el-row class="tac" style="margin-top: 2rem; padding-bottom: 3rem">
       <el-col :span="12">
         <el-menu default-active="1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
           <el-menu-item index="1" @click="changeToUser">
@@ -33,10 +33,10 @@
             <el-icon><document /></el-icon>
             <span>已发布微博</span>
           </el-menu-item>
-          <el-menu-item index="3" @click="changeToComment">
+          <!-- <el-menu-item index="3" @click="changeToComment">
             <el-icon><icon-menu /></el-icon>
             <span>已发布评论</span>
-          </el-menu-item>
+          </el-menu-item> -->
         </el-menu>
       </el-col>
     </el-row>
@@ -60,7 +60,7 @@ console.log('In UserAside store is ', store);
 //利用pinia的storeToRefs函数，将state中的数据变为了响应式的
 const { username, usercharacter, useravatar } = storeToRefs(store); //对象解构赋值
 
-const proxy = getCurrentInstance();
+const { proxy } = getCurrentInstance(); //记得要加{ }!!!!!
 
 const uploadUrl = config.baseApi + 'blog/uploadAvater';
 let imageUrl = useravatar;
@@ -89,18 +89,27 @@ function changeToWeiBo() {
     path: '/lookweibo',
   });
 }
-function changeToComment() {
+/* function changeToComment() {
   router.push({
     path: '/lookcomment',
   });
-}
+} */
 
 onMounted(() => {
-  if (localStorage.getItem('avater') != '') {
-    store.useravatar = localStorage.getItem('avatar');
-  } else {
-    store.useravatar = 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png';
-  }
+  // 获取头像
+  proxy.$api.getAvatar({ useraccount: localStorage.getItem('currentuser') }).then(
+    (value) => {
+      console.log('获取头像', value);
+      localStorage.setItem('avatar', changeToUrl(value.data.data.avatar));
+      store.useravatar = localStorage.getItem('avatar');
+    },
+    (reason) => {},
+  );
+  // if (localStorage.getItem('avater') != '') {
+  //   store.useravatar = localStorage.getItem('avatar');
+  // } else {
+  //   store.useravatar = 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png';
+  // }
 });
 // 文件上传成功时
 const handleAvatarSuccess = (response, uploadFile) => {
@@ -155,7 +164,10 @@ const beforeAvatarUpload = (rawFile) => {
 
 .useraside {
   box-sizing: border-box;
-  height: 35rem;
+  /* height: 35rem; */
   text-align: center;
+  background-color: #fff;
+  margin-top: 5rem;
+  border-radius: 20px;
 }
 </style>

@@ -4,12 +4,18 @@
     <h2>{{ b.title }}</h2>
     <p>{{ b.content }}</p>
   </div> -->
-  <BlogCard :blogList="blogsArr" @getcomment="getcomment"></BlogCard>
+  <BlogCard
+    :blogList="blogsArr"
+    @getcomment="getcomment"
+    @getlike="getlike"
+    @cancellike="cancellike"
+    @deleteblog="deleteblog"
+  ></BlogCard>
   {{ props.tagname }}
 </template>
 
 <script>
-import { getCurrentInstance, toRef, ref, reactive, onMounted, watch, provide } from 'vue';
+import { getCurrentInstance, toRef, ref, reactive, onMounted, watch, provide, toRefs } from 'vue';
 import { useRoute } from 'vue-router';
 export default {
   //组件的props配置接收，这个tagname是路由的props配置设置传来的
@@ -56,20 +62,110 @@ export default {
       );
     };
     // 🔺provide
-    provide('commentList', data.commentList);
-    // 自定义事件的回调 获取评论内容
+    let { commentList } = toRefs(data);
+    provide('commentList', commentList);
+    // 组件自定义事件的回调 获取评论内容
     const getcomment = (bid) => {
-      //接收传来的博客id
-      proxy.$api.getAllComment(bid).then((res) => {
+      console.log(bid);
+      const config = {
+        bid: bid,
+      };
+      proxy.$api.getAllComment(config).then((res) => {
+        console.log('获取当下微博所有评论', res);
         const newres = reactive(res.data.data);
         data.commentList = newres;
         console.log(data.commentList);
       });
     };
+
+    // 发布一级评论函数封装
+    const addcomment = (config) => {
+      proxy.$api.addcomment(config).then((res) => {
+        console.log(res);
+        // 孙组件发生变化 重新获取评论
+        proxy.getcomment(config.bid);
+        const { code } = res.data;
+        if (code == 100000) {
+          ElMessage({ message: '发布成功', type: 'success' });
+          console.log(res.data);
+        }
+      });
+    };
+    provide('addcomment', addcomment); //提供该函数
+
+    // 发布二级评论
+    const addchildrencomment = (config) => {
+      proxy.$api.addchildrencomment(config).then((res) => {
+        console.log(res);
+        // 孙组件发生变化 重新获取评论
+        proxy.getcomment(config.bid);
+        const { code } = res.data;
+        if (code == 100000) {
+          ElMessage({ message: '发布成功', type: 'success' });
+        }
+      });
+    };
+    provide('addchildrencomment', addchildrencomment);
+
+    // 删除评论
+    const deletecomment = (config) => {
+      proxy.$api.deletecomment(config).then((res) => {
+        console.log(res);
+        // 孙组件发生变化 重新获取评论
+        proxy.getcomment(config.bid);
+        const { code } = res.data;
+        if (code == 100000) {
+          ElMessage({ message: '删除成功', type: 'success' });
+        }
+      });
+    };
+    provide('deletecomment', deletecomment);
+
+    // 点赞
+    const getlike = (obj) => {
+      const config = {
+        bid: obj.bid,
+      };
+      proxy.$api.getlike(config).then((res) => {
+        console.log('点赞了');
+        // const index = obj.index;
+        data.blogsArr[obj.index].like++;
+      });
+    };
+    // 取消点赞
+    const cancellike = (obj) => {
+      const config = {
+        bid: obj.bid,
+      };
+      proxy.$api.cancellike(config).then((res) => {
+        console.log('取消点赞了');
+        data.blogsArr[obj.index].like--;
+      });
+    };
+    // 删除微博
+    const deleteblog = (bid) => {
+      const useraccount = storePublic.getUseraccount();
+      const config = {
+        useraccount,
+        bid,
+      };
+      proxy.$api.deleteblog(config).then((res) => {
+        console.log(res);
+        proxy.getBlogData();
+        const { code } = res.data;
+        if (code == 100000) {
+          ElMessage({ message: '删除成功', type: 'success' });
+        }
+      });
+    };
+
     return {
       blogsArr: toRef(data, 'blogsArr'),
       props, //
       getcomment,
+      getlike,
+      cancellike,
+      deleteblog,
     };
   },
 };

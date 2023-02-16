@@ -16,7 +16,7 @@ export const usePublicInfoStore = defineStore('publicInfo', {
 
   },
   actions: {
-    //  采取 pinia 和 本地存储相结合的方式 来【存储 Token】
+    //  采取 pinia 和 本地存储相结合 的方式 来【存储 Token】
     // 设置并存储token
     setToken(token) {
       this.token = token;
@@ -34,10 +34,7 @@ export const usePublicInfoStore = defineStore('publicInfo', {
       this.token = localStorage.getItem(LS_KEYS.JWT)
       return this.token
     },
-    /*  // 存储头像地址
-     setAvatarurl(url) {
 
-     } */
     //  存储当前登录账号
     setUseraccount(useraccount) {
       this.useraccount = useraccount

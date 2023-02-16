@@ -14,7 +14,7 @@ import { storeToRefs } from 'pinia';
 import { getCurrentInstance } from '@vue/runtime-core';
 import 'animate.css';
 import { LS_KEYS } from '@/utils/const';
-import 'element-plus/theme-chalk/display.css'
+import 'element-plus/theme-chalk/display.css';
 // import { FormInstance } from 'element-plus'
 export default defineComponent({
   components: {},
@@ -72,15 +72,15 @@ export default defineComponent({
     };
     // 表单提交触发事件
     const submitForm = () => {
-      const {useraccount,pass}=ruleForm
-      const config={
+      const { useraccount, pass } = ruleForm;
+      const config = {
         useraccount,
-        password:pass
-      }
+        password: pass,
+      };
       proxy.$api.login(config).then((res) => {
         console.log(res);
         const { code, data } = res.data;
-        if (code ===100000) {
+        if (code === 100000) {
           // 登陆成功后，存储token
           //  存储token 之后每次发送请求都带上token让后台解析
           // window.localStorage.setItem(LS_KEYS.JWT,data.token)
@@ -131,75 +131,74 @@ export default defineComponent({
 <template>
   <div id="root">
     <div class="App container" style="min-height: 754px">
-      
-        <el-row class="row-bg" justify="center">
-      <el-col :xs="{span: 0, offset:0}" :sm="12" :md="12" :lg="12" :xl="12" class="hidden-xs-only">
-      <!-- 图片栏 -->
-    <div class="imgdiv flex">
-      <h3 class="blog animate__animated animate__bounceIn">Hello! Friends</h3>
-      <router-link class="css-1uop71e" active-class="active" to="/register">
-        <button class="css-qqvxpj toregbtn" style="color: #3f51b5">注册</button></router-link
-      >
-      <img src="../assets/images/111122.png" alt="" class="img" />
+      <el-row class="row-bg" justify="center">
+        <el-col :xs="{ span: 0, offset: 0 }" :sm="12" :md="12" :lg="12" :xl="12" class="hidden-xs-only">
+          <!-- 图片栏 -->
+          <div class="imgdiv flex">
+            <h3 class="blog animate__animated animate__bounceIn">Hello! Friends</h3>
+            <router-link class="css-1uop71e" active-class="active" to="/register">
+              <button class="css-qqvxpj toregbtn" style="color: #3f51b5">注册</button></router-link
+            >
+            <img src="../assets/images/111122.png" alt="" class="img" />
+          </div>
+        </el-col>
+        <!-- 表单栏 -->
+        <el-col :xs="{ span: 24, offset: 0 }" :sm="12" :md="12" :lg="12" :xl="12">
+          <div class="ka-wrapper animate__animated animate__backInDown">
+            <div class="ka-content">
+              <div class="jss2 css-ykq3zm">
+                <el-form
+                  ref="ruleFormRef"
+                  :model="ruleForm"
+                  status-icon
+                  :rules="rules"
+                  label-width="120px"
+                  class="demo-ruleForm flex flex-column"
+                  :label-position="labelPosition"
+                >
+                  <h4 class="non-select jss3 css-1pyxybg">登录</h4>
+                  <el-form-item label="账号" prop="useraccount">
+                    <div class="flex border">
+                      <span style="margin-right: 5px; text-align: center">
+                        <el-icon :size="20" :color="color">
+                          <Avatar />
+                        </el-icon>
+                      </span>
+                      <el-input v-model.number="ruleForm.useraccount" class="inputDeep" size="large"> </el-input>
+                    </div>
+                  </el-form-item>
+                  <el-form-item label="密码" prop="pass">
+                    <div class="flex border">
+                      <span style="margin-right: 5px; text-align: center">
+                        <el-icon :size="20" :color="color">
+                          <Lock />
+                        </el-icon>
+                      </span>
+                      <el-input v-model="ruleForm.pass" type="password" autocomplete="off" class="inputDeep" />
+                    </div>
+                  </el-form-item>
+                  <el-form-item style="margin-top: 10px">
+                    <el-button type="primary" @click="submitForm()">提交</el-button>
+                    <router-link class="hidden isShow" active-class="active" to="/register">
+                      <button class="css-qqvxpj" style="color: #3f51b5">注册</button></router-link
+                    >
+                    <el-button @click="resetForm()">Reset</el-button>
+                  </el-form-item>
+                </el-form>
+                <pre
+                  >{{ JSON.stringify(model, null, 2) }}
+       </pre
+                >
+              </div>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
     </div>
-      </el-col>
-      <!-- 表单栏 -->
-      <el-col :xs="{span: 24, offset:0}" :sm="12" :md="12" :lg="12" :xl="12">
-   <div class="ka-wrapper animate__animated animate__backInDown">
-     <div class="ka-content">
-       <div class="jss2 css-ykq3zm">
-         <el-form
-       ref="ruleFormRef"
-       :model="ruleForm"
-       status-icon
-       :rules="rules"
-       label-width="120px"
-       class="demo-ruleForm flex flex-column"
-       :label-position="labelPosition"
-     >
-       <h4 class="non-select jss3 css-1pyxybg">登录</h4>
-       <el-form-item label="账号" prop="useraccount">
-         <div class="flex border">
-           <span style="margin-right: 5px; text-align: center">
-             <el-icon :size="20" :color="color">
-               <Avatar />
-             </el-icon>
-           </span>
-           <el-input v-model.number="ruleForm.useraccount" class="inputDeep" size="large"> </el-input>
-         </div>
-       </el-form-item>
-       <el-form-item label="密码" prop="pass">
-         <div class="flex border">
-           <span style="margin-right: 5px; text-align: center">
-             <el-icon :size="20" :color="color">
-               <Lock />
-             </el-icon>
-           </span>
-           <el-input v-model="ruleForm.pass" type="password" autocomplete="off" class="inputDeep" />
-         </div>
-       </el-form-item>
-       <el-form-item style="margin-top: 10px">
-         <el-button type="primary" @click="submitForm()">提交</el-button>
-        <router-link class="hidden isShow" active-class="active" to="/register">
-        <button class="css-qqvxpj" style="color: #3f51b5">注册</button></router-link>
-         <el-button @click="resetForm()">Reset</el-button>
-       </el-form-item>
-     </el-form>
-     <pre
-       >{{ JSON.stringify(model, null, 2) }}
-       </pre>
-       </div>
-     </div>
-        </div>
-      </el-col>
-  </el-row>
-
-      </div>
-
   </div>
 </template>
 <style lang="scss" scoped>
-.container{
+.container {
   align-items: center;
 }
 .logo-box {
@@ -264,13 +263,13 @@ button:hover {
   border: transparent;
   border-bottom: 2.5px solid #212f80;
 }
-.row-bg{
+.row-bg {
   margin-top: 5rem;
 }
- @media screen and (max-width:768px) {
-  .isShow{
+@media screen and (max-width: 768px) {
+  .isShow {
     display: block;
     font-weight: bold;
   }
-     }
+}
 </style>

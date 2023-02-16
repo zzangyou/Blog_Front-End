@@ -4,7 +4,13 @@
     <div>
       <!-- {{ totalnumber }}
       <div v-for="b in blogs" :key="b.bid" class="myblog">博客标题：{{ b.title }}。。。。。。</div> -->
-      <BlogCard :blogList="blogs" @getcomment="getcomment"></BlogCard>
+      <BlogCard
+        :blogList="blogs"
+        @getcomment="getcomment"
+        @getlike="getlike"
+        @cancellike="cancellike"
+        @deleteblog="deleteblog"
+      ></BlogCard>
     </div>
 
     <div class="example-pagination-block">
@@ -97,24 +103,123 @@ export default {
       setBlogs();
     };
 
+    // 微博模块
+    // 点赞
+    const getlike = (obj) => {
+      const config = {
+        bid: obj.bid,
+      };
+      proxy.$api.getlike(config).then((res) => {
+        console.log('点赞了');
+        data.blogs[obj.index].like++;
+      });
+    };
+    // 取消点赞
+    const cancellike = (obj) => {
+      const config = {
+        bid: obj.bid,
+      };
+      proxy.$api.cancellike(config).then((res) => {
+        console.log('取消点赞了');
+        data.blogs[obj.index].like--;
+      });
+    };
+    // 删除微博
+    const deleteblog = (bid) => {
+      const useraccount = storePublic.getUseraccount();
+      const config = {
+        useraccount,
+        bid,
+      };
+      proxy.$api.deleteblog(config).then((res) => {
+        console.log(res);
+        proxy.getBlogData();
+        const { code } = res.data;
+        if (code == 100000) {
+          ElMessage({ message: '删除成功', type: 'success' });
+        }
+      });
+    };
     // 🔺provide 是父级组件需要注入的依赖(即需要提供的数据)
-    provide('commentList', data.commentList);
+    let commentList = toRef(data, 'commentList');
+    // 或 let {commentList} = toRefs(data);
+    /*
+    -toRef()用于创建一个对应的 ref。
+      这样创建的ref会与其源属性【保持同步】：改变源属性的值将更新ref的值，反之亦然。
+    -而toRefs()将一个响应式对象转换为一个普通对象，
+      这个普通对象的 每个属性 都是指向源对象相应属性的 ref。
+      这每个单独的 ref 都是使用 toRef() 创建的。
+    */
+    provide('commentList', commentList);
+    /* 🔺provide传过去的值一定要是proxy直接进行过代理的或者计算属性才能有响应式！！
+    如果这data.commentList这样传给子组件将不是响应式（因为data.listData不是proxy类型）*/
+    /*所以使用toRef就不会失去响应性 */
 
     // 自定义事件的回调 获取评论内容
     const getcomment = (bid) => {
-      //接收传来的博客id
-      proxy.$api.getAllComment(bid).then((res) => {
+      console.log(bid);
+      const config = {
+        bid: bid,
+      };
+      proxy.$api.getAllComment(config).then((res) => {
+        console.log('获取当下微博所有评论', res);
         const newres = reactive(res.data.data);
         data.commentList = newres;
         console.log(data.commentList);
       });
     };
+    // 发布一级评论函数封装
+    const addcomment = (config) => {
+      proxy.$api.addcomment(config).then((res) => {
+        console.log(res);
+        // 孙组件发生变化 重新获取评论
+        proxy.getcomment(config.bid);
+        const { code } = res.data;
+        if (code == 100000) {
+          ElMessage({ message: '发布成功', type: 'success' });
+          console.log(res.data);
+        }
+      });
+    };
+    provide('addcomment', addcomment); //提供该函数
+
+    // 发布二级评论
+    const addchildrencomment = (config) => {
+      proxy.$api.addchildrencomment(config).then((res) => {
+        console.log(res);
+        // 孙组件发生变化 重新获取评论
+        proxy.getcomment(config.bid);
+        const { code } = res.data;
+        if (code == 100000) {
+          ElMessage({ message: '发布成功', type: 'success' });
+        }
+      });
+    };
+    provide('addchildrencomment', addchildrencomment);
+
+    // 删除评论
+    const deletecomment = (config) => {
+      proxy.$api.deletecomment(config).then((res) => {
+        console.log(res);
+        // 孙组件发生变化 重新获取评论
+        proxy.getcomment(config.bid);
+        const { code } = res.data;
+        if (code == 100000) {
+          ElMessage({ message: '删除成功', type: 'success' });
+        }
+      });
+    };
+    provide('deletecomment', deletecomment);
+
     return {
       // 扩展运算符... 可将数组或对象转换成 以逗号分隔的参数序列
       ...toRefs(data),
       handleCurrentChange,
       handleSizeChange,
       BlogCard,
+      getlike,
+      cancellike,
+      deleteblog,
       getcomment,
     };
   },
