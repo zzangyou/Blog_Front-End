@@ -39,7 +39,7 @@
          :key="index" 
          :color="tagColor[index]"
           class="flex flex-wrap"
-          @click="changeToHomeTagblogs(tag)"
+          @click="changeToHomeTagblogs(tag);dialogVisible=false"
           >
         {{tag}}
         </el-button>

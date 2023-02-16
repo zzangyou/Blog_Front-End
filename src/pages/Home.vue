@@ -52,8 +52,9 @@
           v-model:file-list="fileList"
           ref="upload"
           name="blogpicture"
-          action="http://localhost:8000/public/blog/addPost"
+          action="uploadUrl"
           list-type="picture-card"
+          :http-request="submitForm"
           :before-upload="beforeUpload"
           :on-preview="handlePictureCardPreview"
           :on-remove="handleRemove"
@@ -146,6 +147,7 @@ export default defineComponent({
     ]);
     var fileArray = [];
     var fileTTT = [];
+    const uploadUrl = config.baseApi + 'blog/addPost';
     const changeHandler = (file, fileList) => {
       //on-change绑定的方法
       console.log('点了');
@@ -160,14 +162,16 @@ export default defineComponent({
     const InputRef = ref('');
     //  是否清空富文本编辑器
     const isresetText = ref(false);
-    //  获取当前账号
+    //  获取当前账号及用户名
     const useraccount = storePublic.getUseraccount();
+    const username = storePublic.getUsername();
     const ruleForm = reactive({
       title: '标题',
       tagname: ['日常', 'ootd', '其他'],
       content: '内容',
       //  👀后期修改获取账号
       useraccount: useraccount,
+      username:username,
       publishtime: '2022/12/23 20:30',
     });
     //  关闭标签
@@ -204,10 +208,11 @@ export default defineComponent({
       console.log(fileList);
       /* 上传文件的参数在这里编辑 */
       let postContext = new FormData();
-      postContext.append('useraccount', 123456);
-      postContext.append('content', '内容');
-      postContext.append('tagname', ['标签1', '标签2', '标签3']);
-      postContext.append('title', '标题');
+      postContext.append('useraccount', ruleForm.useraccount);
+      postContext.append('content', ruleForm.content);
+      postContext.append('tagname', ruleForm.tagname);
+      postContext.append('title', ruleForm.title);
+      postContext.append('username',ruleForm.username)
       /* 这里的代码不用管，是管理图片文件上传的 */
       for (var i = 0; i < fileArray.length; i++) {
         postContext.append('blogpicture', fileArray[i].raw);
@@ -237,7 +242,6 @@ export default defineComponent({
     const fileList = ref([]);
     const dialogImageUrl = ref('');
     const dialogVisible = ref(false);
-    const uploadUrl = ref(config.baseApi + '/blog/addPost');
     //上传前钩子
     const beforeUpload = (file) => {
       return true;
@@ -272,14 +276,7 @@ export default defineComponent({
         type: 'error',
       });
     };
-    /* //分页数据 （👀后期修改）
-const pageNumber=1
-const pageSize=20  */
-//页面初始化 获取微博数据 
-const data=reactive({
-  //  blogList:[],
-   commentList:[]
-})
+
 // 获取微博数据
 const getBlogData=()=>{
   const config ={
@@ -345,75 +342,7 @@ const deleteblog=(bid)=>{
     }
   )
 }  
-// 💬 评论模块
-let {commentList} = toRefs(data)
-// 获取评论内容 
-provide('commentList',commentList)
-const getcomment=(bid)=>{
-  console.log(bid);
-    const config={
-    bid:bid
-  }
-  proxy.$api.getAllComment(config).then(
-    res=>{
-      console.log(res);
-    const newres=reactive(res.data.data)
-/*     newres.forEach(item=>{
-    proxy.$api.getChildrenComment(item.cid).then(
-    res=>{
-      console.log(res);
-      const newres=reactive(res.data.data)
-      item['childList']=newres
-    }
-  ) 
-    }) */
-    data.commentList=newres
-    console.log(data.commentList);
-    }
-  )
-}
-  // 发布一级评论
-const addcomment=(config)=>
-  {
-    proxy.$api.addcomment(config).then(res=>{
-      console.log(res); 
-    // 孙组件发生变化 重新获取评论
-    proxy.getcomment(config.bid)
-      const { code } = res.data;
-      if(code==100000){
-        ElMessage({ message: '发布成功', type: 'success' });
-        console.log(res.data);
-      }
-    })
-  }
-  // 传递给孙组件addcommen方法
-provide('addcomment',addcomment)
-// 发布二级评论
-const addchildrencomment=(config)=>{
-  proxy.$api.addchildrencomment(config).then(res=>{
-     console.log(res);
-  // 孙组件发生变化 重新获取评论
-    proxy.getcomment(config.bid)
-     const{code}=res.data;
-     if(code==100000){
-        ElMessage({ message: '发布成功', type: 'success' });
-     }
-  })
-}
-provide('addchildrencomment',addchildrencomment)
-// 删除评论
-const deletecomment=(config)=>{
-  proxy.$api.deletecomment(config).then(res=>{
-    console.log(res);
-    // 孙组件发生变化 重新获取评论
-    proxy.getcomment(config.bid)
-    const { code }=res.data
-    if(code==100000){
-    ElMessage({ message: '删除成功', type: 'success' });
-      }
-  })
-}
-provide('deletecomment',deletecomment)
+
 // 分页查询
     const pageData = reactive({
       currentPage: 1, //当前页数
@@ -479,7 +408,6 @@ provide('deletecomment',deletecomment)
       isShowUpload,
       changeShowPicture,
       handleExceedCover,
-      uploadUrl,
       beforeUpload,
       handleSuccess,
       ...toRefs(data),
@@ -487,8 +415,8 @@ provide('deletecomment',deletecomment)
       getlike,
       cancellike,
       deleteblog,
-      getcomment,
-      deletecomment,
+/*       getcomment,
+      deletecomment, */
       ...toRefs(pageData),
       handleCurrentChange,
       handleSizeChange,
