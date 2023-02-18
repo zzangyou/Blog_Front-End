@@ -1,7 +1,7 @@
 <template>
   i am blogSearch
   <!-- 使用组件 -->
-  <BlogCard :blogList="data.blogs"></BlogCard>
+  <BlogCard :blogList="data.blogs" @getlike="getlike" @cancellike="cancellike" @deleteblog="deleteblog"></BlogCard>
   <p v-show="isShow">没有博客与该标题相关噢~</p>
 </template>
 <script>
@@ -63,7 +63,42 @@ export default {
         },
       );
     }
-
+    // 点赞
+    const getlike = (obj) => {
+      const config = {
+        bid: obj.bid,
+      };
+      proxy.$api.getlike(config).then((res) => {
+        console.log('点赞了');
+        data.blogs[obj.index].like++;
+      });
+    };
+    // 取消点赞
+    const cancellike = (obj) => {
+      const config = {
+        bid: obj.bid,
+      };
+      proxy.$api.cancellike(config).then((res) => {
+        console.log('取消点赞了');
+        data.blogs[obj.index].like--;
+      });
+    };
+    // 删除微博
+    const deleteblog = (bid) => {
+      const useraccount = storePublic.getUseraccount();
+      const config = {
+        useraccount,
+        bid,
+      };
+      proxy.$api.deleteblog(config).then((res) => {
+        console.log(res);
+        proxy.getBlogData();
+        const { code } = res.data;
+        if (code == 100000) {
+          ElMessage({ message: '删除成功', type: 'success' });
+        }
+      });
+    };
     return {
       BlogCard,
       data,

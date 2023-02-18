@@ -25,7 +25,6 @@
           <el-menu-item @click="dialogVisible = true">
             <li class="tag-title">查看更多...</li>
           </el-menu-item>
-
           <!-- 所有标签弹出框 -->
           <el-dialog v-model="dialogVisible" width="30%">
             <template #header>
@@ -41,13 +40,15 @@
                   :key="index"
                   :color="tagColor[index]"
                   class="flex flex-wrap"
-                  @click="changeToHomeTagblogs(tag)"
+                  @click="
+                    changeToHomeTagblogs(tag);
+                    dialogVisible = false;
+                  "
                 >
                   {{ tag }}
                 </el-button>
               </div>
             </el-card>
-
             <template #footer>
               <span class="dialog-footer">
                 <el-button @click="dialogVisible = false">关闭</el-button>

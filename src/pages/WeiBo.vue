@@ -4,13 +4,8 @@
     <div>
       <!-- {{ totalnumber }}
       <div v-for="b in blogs" :key="b.bid" class="myblog">博客标题：{{ b.title }}。。。。。。</div> -->
-      <BlogCard
-        :blogList="blogs"
-        @getcomment="getcomment"
-        @getlike="getlike"
-        @cancellike="cancellike"
-        @deleteblog="deleteblog"
-      ></BlogCard>
+      <BlogCard :blogList="blogs" @getlike="getlike" @cancellike="cancellike" @deleteblog="deleteblog"></BlogCard>
+      <!-- @getcomment="getcomment" -->
     </div>
 
     <div class="example-pagination-block">
@@ -140,8 +135,9 @@ export default {
         }
       });
     };
+    // 评论模块
     // 🔺provide 是父级组件需要注入的依赖(即需要提供的数据)
-    let commentList = toRef(data, 'commentList');
+    // let commentList = toRef(data, 'commentList');
     // 或 let {commentList} = toRefs(data);
     /*
     -toRef()用于创建一个对应的 ref。
@@ -150,11 +146,11 @@ export default {
       这个普通对象的 每个属性 都是指向源对象相应属性的 ref。
       这每个单独的 ref 都是使用 toRef() 创建的。
     */
-    provide('commentList', commentList);
+    // provide('commentList', commentList);
     /* 🔺provide传过去的值一定要是proxy直接进行过代理的或者计算属性才能有响应式！！
     如果这data.commentList这样传给子组件将不是响应式（因为data.listData不是proxy类型）*/
     /*所以使用toRef就不会失去响应性 */
-
+    /* 
     // 自定义事件的回调 获取评论内容
     const getcomment = (bid) => {
       console.log(bid);
@@ -209,7 +205,7 @@ export default {
         }
       });
     };
-    provide('deletecomment', deletecomment);
+    provide('deletecomment', deletecomment); */
 
     return {
       // 扩展运算符... 可将数组或对象转换成 以逗号分隔的参数序列
@@ -220,7 +216,7 @@ export default {
       getlike,
       cancellike,
       deleteblog,
-      getcomment,
+      // getcomment,
     };
   },
 };

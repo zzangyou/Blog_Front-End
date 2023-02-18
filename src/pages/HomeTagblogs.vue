@@ -4,13 +4,8 @@
     <h2>{{ b.title }}</h2>
     <p>{{ b.content }}</p>
   </div> -->
-  <BlogCard
-    :blogList="blogsArr"
-    @getcomment="getcomment"
-    @getlike="getlike"
-    @cancellike="cancellike"
-    @deleteblog="deleteblog"
-  ></BlogCard>
+  <BlogCard :blogList="blogsArr" @getlike="getlike" @cancellike="cancellike" @deleteblog="deleteblog"></BlogCard>
+  <!-- @getcomment="getcomment" -->
   {{ props.tagname }}
 </template>
 
@@ -62,7 +57,7 @@ export default {
       );
     };
     // 🔺provide
-    let { commentList } = toRefs(data);
+    /* let { commentList } = toRefs(data);
     provide('commentList', commentList);
     // 组件自定义事件的回调 获取评论内容
     const getcomment = (bid) => {
@@ -118,8 +113,8 @@ export default {
           ElMessage({ message: '删除成功', type: 'success' });
         }
       });
-    };
-    provide('deletecomment', deletecomment);
+    }; 
+    provide('deletecomment', deletecomment);*/
 
     // 点赞
     const getlike = (obj) => {
@@ -162,7 +157,7 @@ export default {
     return {
       blogsArr: toRef(data, 'blogsArr'),
       props, //
-      getcomment,
+      // getcomment,
       getlike,
       cancellike,
       deleteblog,

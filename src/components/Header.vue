@@ -116,6 +116,27 @@ function outTologin() {
   router.replace({
     path: '/login',
   });
+  /*  
+  let isMobile = ref(false);
+  function getScreen() {
+    let screenWidth = document.body.clientWidth; //获取屏幕的宽
+    let screenHeight = document.body.clientHeight; //获取屏幕的高
+    return screenWidth / screenHeight; //返回宽除以高
+  }
+  function listenScreen() {
+    let initScale = getScreen(); //初始化判断
+    if (initScale < 1) {
+      //如果小于1说明宽度小于高度，则识别为手机反之为PC
+      isMobile.value = true;
+    }
+    window.addEventListener('resize', () => {
+      //添加屏幕变化监听，判断逻辑与上方相同
+      isMobile.value = getScreen() < 1 ? true : false;
+    });
+  }
+  onMounted(() => {
+    listenScreen();
+  }); */
 }
 </script>
 
