@@ -53,7 +53,7 @@
           <el-button circle text @click="changeShowComment(item.bid, index)"
             ><el-icon size="1.5rem"><ChatLineSquare /></el-icon
           ></el-button>
-          <el-button v-show="isShowDelete(item.useraccount)" @click="deleteBlog(item.bid)" circle text
+          <el-button v-show="isShowDelete(item.username)" @click="deleteBlog(item.bid)" circle text
             ><el-icon size="1.5rem"><Delete /></el-icon
           ></el-button>
         </div>
@@ -112,9 +112,9 @@ export default defineComponent({
     }) */
     //  判断博客发布者与当前登录用户是否为同一人
     //  是的话显示 不是的话隐藏
-    const isShowDelete = (blogUseraccount) => {
-      const currentUseraccount = storePublic.getUseraccount();
-      if (currentUseraccount == blogUseraccount) {
+    const isShowDelete = (blogUsername) => {
+      const currentUsername = storePublic.getUsername();
+      if (currentUsername == blogUsername) {
         return true;
       } else {
         return false;
