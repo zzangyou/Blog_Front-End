@@ -219,4 +219,49 @@ function outTologin() {
   border-radius: 4px;
   min-height: 36px;
 }
+@media screen and (max-width: 750px) {
+  .header {
+    width: 100%;
+    height: 3.8rem;
+  }
+  .el-menu-demo {
+    width: 100%;
+  }
+  // logo
+  .logo {
+    width: 18%;
+    margin-right: 5%;
+  }
+  // 首页选项
+  .el-menu-item {
+    width: 13%;
+  }
+  // 搜索框
+  .search {
+    position: absolute;
+    width: 40%;
+    right: 20%;
+    // margin-right: 5rem;
+    line-height: 3.8rem;
+  }
+  .search input {
+    width: 80%;
+    height: 1.2rem;
+    border-radius: 20px;
+    border: 1px solid #999;
+    outline: none;
+    font-size: 12px;
+  }
+  .search span {
+    vertical-align: middle;
+    margin-left: 0.2rem;
+  }
+  // 下拉菜单
+  .el-dropdown {
+    margin-left: auto; //设置盒子靠右(其父级要有display: flex;) 或使用text-align: right
+    margin-right: 5%;
+    align-items: center; //子项目垂直居中
+    font-size: 12px;
+  }
+}
 </style>
