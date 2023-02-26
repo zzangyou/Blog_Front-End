@@ -5,7 +5,7 @@
     <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
       <!-- logo -->
       <div class="logo">
-        <img src="../assets/images/logo.png" style="width: 100%; height: 100%" />
+        <img src="../assets/images/logo2.png" style="width: 100%; height: 100%" />
       </div>
 
       <!-- 首页选项 -->
