@@ -116,7 +116,7 @@
       </el-form>
 
       <div v-show="!isShow">
-        <button @click="isShow = !isShow" style="background-color: skyblue">修改个人信息</button>
+        <button @click="isShow = !isShow" style="background-color: #3f51b5; color: #fff">修改个人信息</button>
       </div>
     </div>
   </div>
@@ -308,7 +308,7 @@ onMounted(() => {
 .usermain {
   width: 37.5rem;
   margin: auto;
-  padding-right: 1.5rem;
+  padding: 1.2rem 1.5rem 1.2rem 0;
   background-color: #fff;
   box-sizing: border-box;
 }
