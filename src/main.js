@@ -32,8 +32,8 @@ const storePublic = useStore('publicInfo');
 router.beforeEach((to, from, next) => {
   // 获取用户登录态
   const isLogin = storePublic.isLogin
-  /*   // 获取token
-    const token = window.localStorage.getItem('token'); */
+  // 获取token
+  const token = window.localStorage.getItem('token');
   // 有token
   if (isLogin) {
     // 直接放行

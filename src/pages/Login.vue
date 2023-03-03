@@ -77,6 +77,7 @@ export default defineComponent({
         useraccount,
         password: pass,
       };
+      // 传入用户名和密码，发送登录请求
       proxy.$api.login(config).then((res) => {
         console.log(res);
         const { code, data } = res.data;

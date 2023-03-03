@@ -472,4 +472,9 @@ export default defineComponent({
     margin-bottom: 16px;
   }
 }
+@media screen and (max-width: 750px) {
+  :deep .el-pagination.is-background .el-pager li {
+    min-width: 1.2rem;
+  }
+}
 </style>

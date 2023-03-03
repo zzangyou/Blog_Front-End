@@ -39,8 +39,8 @@ export default defineConfig({
 
   //本地运行配置，以及【反向代理】配置
   server: {
-    host: 'localhost',
-    https: false,//是否启用 http
+    host: 'localhost',//指定服务器应该监听哪个 IP 地址
+    https: false,//是否启用 https
     cors: true,//为开发服务器配置 CORS , 默认启用并允许任何源
     open: true,//服务启动时自动在浏览器中打开应用
     port: '8000',

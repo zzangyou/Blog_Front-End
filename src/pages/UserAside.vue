@@ -95,7 +95,7 @@ function changeToWeiBo() {
   });
 } */
 
-onMounted(() => {
+/* onMounted(() => {
   // 获取头像
   proxy.$api.getAvatar({ useraccount: localStorage.getItem('currentuser') }).then(
     (value) => {
@@ -104,13 +104,14 @@ onMounted(() => {
       store.useravatar = localStorage.getItem('avatar');
     },
     (reason) => {},
-  );
+  ); 
+  store.useravatar = localStorage.getItem('avatar');
   // if (localStorage.getItem('avater') != '') {
   //   store.useravatar = localStorage.getItem('avatar');
   // } else {
   //   store.useravatar = 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png';
   // }
-});
+});*/
 // 文件上传成功时
 const handleAvatarSuccess = (response, uploadFile) => {
   console.log('response', response);
@@ -123,7 +124,7 @@ const handleAvatarSuccess = (response, uploadFile) => {
     localStorage.setItem('avatar', img);
   }
 };
-// 将后端图片地址进行转义
+/* // 将后端图片地址进行转义
 function changeToUrl(str) {
   let arr = str.split('');
   console.log(arr);
@@ -134,7 +135,7 @@ function changeToUrl(str) {
   }
   console.log(arr.join(''));
   return arr.join('');
-}
+} */
 // 上传文件之前
 const beforeAvatarUpload = (rawFile) => {
   if (rawFile.type !== 'image/jpeg') {

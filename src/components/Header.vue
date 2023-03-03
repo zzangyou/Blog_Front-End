@@ -44,7 +44,7 @@
 </template>
 
 <script setup>
-import { ref, getCurrentInstance, reactive } from 'vue';
+import { ref, getCurrentInstance, reactive, onMounted } from 'vue';
 import { ArrowDown } from '@element-plus/icons-vue';
 import { router } from '../router/index';
 import { useStore } from '../models/index';
@@ -52,19 +52,36 @@ import { storeToRefs } from 'pinia';
 const store = useStore('publicInfo');
 const { useravatar } = storeToRefs(store); //storeToRefs使修改pinia数据时是响应式的
 
+const { proxy } = getCurrentInstance();
 const activeIndex = ref('1');
 const searchkeyword = ref('');
 const handleSelect = (key, keyPath) => {
   console.log(key, keyPath); //得到被选择项的index，及保存有被选择项相关信息的数组
 };
 let imageUrl = ref(useravatar); //借助pinia使数据能够动态匹配(数据共享)，那么其它地方换了头像，导航栏的头像也会跟着换
-store.useravatar = localStorage.getItem('avatar');
-// if (localStorage.getItem('avatar') != '') {
-//   store.useravatar = localStorage.getItem('avatar');
-// } else {
-//   store.useravatar = 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png';
-// }
-
+onMounted(() => {
+  // 获取头像
+  proxy.$api.getAvatar({ useraccount: localStorage.getItem('currentuser') }).then(
+    (value) => {
+      console.log('获取头像', value);
+      localStorage.setItem('avatar', changeToUrl(value.data.data.avatar));
+      store.useravatar = localStorage.getItem('avatar');
+    },
+    (reason) => {},
+  );
+});
+// 将后端图片地址进行转义
+function changeToUrl(str) {
+  let arr = str.split('');
+  console.log(arr);
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i] == '\\') {
+      arr[i - 1] += '//';
+    }
+  }
+  console.log(arr.join(''));
+  return arr.join('');
+}
 // 跳去个人信息页
 function personInfo() {
   // console.log(this); //undefined
