@@ -4,7 +4,9 @@
     <!-- default-active	指定页面加载时默认激活菜单的 index -->
     <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
       <!-- logo -->
-      <div class="logo">logo</div>
+      <div class="logo">
+        <img src="../assets/images/logo2.png" style="width: 100%; height: 100%" />
+      </div>
 
       <!-- 首页选项 -->
       <el-menu-item index="1" @click="backToHome"> 首页</el-menu-item>
