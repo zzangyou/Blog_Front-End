@@ -158,6 +158,7 @@ export default defineComponent({
     //  获取当前账号及用户名
     const useraccount = storePublic.getUseraccount();
     const username = storePublic.getUsername();
+    const avatar =localStorage.getItem('avatar')
     const ruleForm = reactive({
       title: '标题',
       tagname: ['日常', 'ootd', '其他'],
@@ -166,6 +167,7 @@ export default defineComponent({
       useraccount: useraccount,
       username: username,
       publishtime: '2022/12/23 20:30',
+      avatar:avatar
     });
     //  关闭标签
     const handleClose = (tag) => {
@@ -206,6 +208,7 @@ export default defineComponent({
       postContext.append('tagname', ruleForm.tagname);
       postContext.append('title', ruleForm.title);
       postContext.append('username', ruleForm.username);
+      postContext.append('avatar', ruleForm.avatar);
       /* 这里的代码不用管，是管理图片文件上传的 */
       for (var i = 0; i < fileArray.length; i++) {
         postContext.append('blogpicture', fileArray[i].raw);
