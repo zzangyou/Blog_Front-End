@@ -5,7 +5,7 @@
         <div class="jss178 css-faujvq">
           <div class="css-1p83tvv">
             <div class="css-3i9vrz">
-              <img :src="item.avater" alt="" class="css-1hy9t21" />
+              <el-avatar :src="changeToUrl(item.avatar)" alt=""  />
             </div>
           </div>
           <div class="userinfo">

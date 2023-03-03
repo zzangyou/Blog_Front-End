@@ -4,24 +4,39 @@
       >Switch when indicator is hovered (default)</span
     >
     <el-carousel height="150px">
-      <el-carousel-item v-for="item in 4" :key="item">
-        <h3 class="small justify-center" text="2xl">{{ item }}</h3>
+      <el-carousel-item v-for="item in carouselItem" :key="item">
+       <div class="small justify-center" style="height: 100%;width: 100%;">
+          <a :href="item.link"> 
+          <img :src="item.imgsrc" alt="" style="height: 100%;width: 100%;">
+           </a> 
+       </div>
+        <!-- <h3 class="small justify-center" text="2xl">{{ item }}</h3> -->
       </el-carousel-item>
     </el-carousel>
   </div>
 </template>
 <script>
-import {defineComponent} from 'vue'
+import {defineComponent, reactive} from 'vue'
 export default defineComponent(
   {
-    components:{
-
-    },
+    components: {},
     setup(){
-
+     const carouselItem=reactive([
+       {imgsrc:new URL('../assets/images/carousel-1.jpg', import.meta.url).href,
+        link:'https://github.com/zzangyou/Blog_Front-End'
+       },
+       {
+         imgsrc:new URL('../assets/images/carousel-2.jpg', import.meta.url).href,
+         link:'https://zzangyou.gitee.io/'
+       },
+       {
+         imgsrc:new URL('../assets/images/carousel-3.png', import.meta.url).href,
+         link:''
+       }
+     ])
 
       return{
-        
+        carouselItem
       }
     }
   }
