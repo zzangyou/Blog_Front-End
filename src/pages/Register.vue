@@ -118,7 +118,10 @@ export default defineComponent({
                 ElMessage({ message: '已发送验证码,请稍后再试', type: 'warning' });
               }
             }
-          })
+            else if(res.data.code === 100002)
+                ElMessage({ message: '该邮箱已被注册，请直接登录或更换注册邮箱', type: 'warning' });
+            }
+          )
           .catch((err) => {
             ElMessage.error({ message: err });
           });
