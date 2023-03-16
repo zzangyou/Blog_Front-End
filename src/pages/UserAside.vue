@@ -106,7 +106,7 @@ function changeToWeiBo() {
     (reason) => {},
   ); 
   store.useravatar = localStorage.getItem('avatar');
-  // if (localStorage.getItem('avater') != '') {
+  // if (localStorage.getItem('avatar') != '') {
   //   store.useravatar = localStorage.getItem('avatar');
   // } else {
   //   store.useravatar = 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png';
@@ -124,7 +124,7 @@ const handleAvatarSuccess = (response, uploadFile) => {
     localStorage.setItem('avatar', img);
   }
 };
-/* // 将后端图片地址进行转义
+// 将后端图片地址进行转义
 function changeToUrl(str) {
   let arr = str.split('');
   console.log(arr);
@@ -135,7 +135,7 @@ function changeToUrl(str) {
   }
   console.log(arr.join(''));
   return arr.join('');
-} */
+}
 // 上传文件之前
 const beforeAvatarUpload = (rawFile) => {
   if (rawFile.type !== 'image/jpeg') {

@@ -16,7 +16,7 @@
             <div class="jss178 css-faujvq">
               <div class="css-1p83tvv">
                 <div class="css-3i9vrz">
-                  <img :src="item.avater" alt="" class="css-1hy9t21 avater" />
+                  <img :src="item.avatar" alt="" class="css-1hy9t21 avatar" />
                 </div>
               </div>
               <div class="userinfo">
@@ -221,7 +221,7 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 @import 'http://at.alicdn.com/t/c/font_3274443_xjbb5lzlw7n.css';
-.avater {
+.avatar {
   width: 2.3rem;
 }
 .userinfo {

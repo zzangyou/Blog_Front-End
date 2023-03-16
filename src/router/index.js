@@ -23,7 +23,8 @@ const routes = [
         components: {
           aside: HomeAside,
           mainContent: Home
-        }
+        },
+
       },
       {
         name: 'search',

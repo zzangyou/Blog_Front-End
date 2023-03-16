@@ -64,7 +64,7 @@ onMounted(() => {
   proxy.$api.getAvatar({ useraccount: localStorage.getItem('currentuser') }).then(
     (value) => {
       console.log('获取头像', value);
-      localStorage.setItem('avatar', changeToUrl(value.data.data.avatar));
+      localStorage.setItem('avatar', changeToUrl(value.data.data.avater));
       store.useravatar = localStorage.getItem('avatar');
     },
     (reason) => {},
@@ -72,6 +72,7 @@ onMounted(() => {
 });
 // 将后端图片地址进行转义
 function changeToUrl(str) {
+  console.log('str is', str);
   let arr = str.split('');
   console.log(arr);
   for (var i = 0; i < arr.length; i++) {
@@ -101,7 +102,6 @@ function backToHome() {
     //replace模式
     path: '/',
   });
-  /* window.location.reload(); */
   //选中“首页”
   activeIndex.value = '1';
 }
@@ -135,27 +135,6 @@ function outTologin() {
   router.replace({
     path: '/login',
   });
-  /*  
-  let isMobile = ref(false);
-  function getScreen() {
-    let screenWidth = document.body.clientWidth; //获取屏幕的宽
-    let screenHeight = document.body.clientHeight; //获取屏幕的高
-    return screenWidth / screenHeight; //返回宽除以高
-  }
-  function listenScreen() {
-    let initScale = getScreen(); //初始化判断
-    if (initScale < 1) {
-      //如果小于1说明宽度小于高度，则识别为手机反之为PC
-      isMobile.value = true;
-    }
-    window.addEventListener('resize', () => {
-      //添加屏幕变化监听，判断逻辑与上方相同
-      isMobile.value = getScreen() < 1 ? true : false;
-    });
-  }
-  onMounted(() => {
-    listenScreen();
-  }); */
 }
 </script>
 
@@ -284,3 +263,7 @@ function outTologin() {
   }
 }
 </style>
+
+
+
+
